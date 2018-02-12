@@ -1,9 +1,12 @@
-<GridLayout rows="auto,auto,*" width="100%" height="90%">
-    <Label text="Pick a date and time for your appointment with" textWrap="true" *ngIf="showHeader" class="m-x-auto text-muted"></Label>
-    <GridLayout row="1" columns="auto,*" *ngIf="showHeader">
-        <Image width="40" height="40" class="p-10" [src]="item.small_image_url"></Image>
-        <Label col="1" [text]="item.prefix + ' ' + item.first_name + ' ' + item.last_name" class="font-weight-bold"></Label>
-    </GridLayout>
-    <RadCalendar row="2" viewMode="Month" transitionMode="Slide" selectionMode="Single" (dateSelected)="onCalendarDateSelected($event)"
+<GridLayout rows="auto,*" width="100%" height="80%">
+    <StackLayout>
+        <Button class="pull-right fa" text="&#xf00d;" (tap)="onCloseButtonTap()"></Button>
+        <Label text="Pick a date and time for your appointment with" textWrap="true" *ngIf="showHeader" class="m-x-auto text-muted"></Label>
+        <GridLayout columns="auto,*" *ngIf="showHeader">
+            <Image width="40" height="40" class="p-10" [src]="item.small_image_url"></Image>
+            <Label col="1" [text]="item.prefix + ' ' + item.first_name + ' ' + item.last_name" class="font-weight-bold"></Label>
+        </GridLayout>
+    </StackLayout>
+    <RadCalendar row="1" viewMode="Month" transitionMode="Slide" selectionMode="Single" (dateSelected)="onCalendarDateSelected($event)"
         (dayViewEventSelected)="onCalendarEventSelected($event)" [minDate]="dateToday" [dayViewStyle]="getDayViewStyle()"></RadCalendar>
 </GridLayout>

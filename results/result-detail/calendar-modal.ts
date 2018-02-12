@@ -17,6 +17,7 @@ export class CalendarModalViewComponent implements OnInit {
 
     constructor(private params: ModalDialogParams, private page: Page) {
         this.dateToday = new Date();
+        this.item = params.context;
         this.page.on("unloaded", () => {
             // using the unloaded event to close the modal when there is user interaction
             // e.g. user taps outside the modal page
@@ -26,7 +27,10 @@ export class CalendarModalViewComponent implements OnInit {
 
     ngOnInit() {
         this.showHeader = true;
-        this.item = new Provider({});
+    }
+
+    onCloseButtonTap(){
+        this.params.closeCallback();
     }
 
     onCalendarDateSelected(args: CalendarSelectionEventData) {

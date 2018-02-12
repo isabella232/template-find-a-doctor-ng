@@ -116,7 +116,7 @@ export class ResultDetailComponent {
 		const today = new Date();
 		const options: ModalDialogOptions = {
 			viewContainerRef: this._vcRef,
-			context: this.item._id,
+			context: this.item,
 			fullscreen: false,
 		};
 	
