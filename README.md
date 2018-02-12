@@ -15,6 +15,10 @@ tns create my-find-a-doctor --template tns-template-find-a-doctor-ng
 If you want to create a new app that uses the source of the template from the `master` branch, you can execute the following:
 
 ```
+tns create my-find-a-doctor --template git+ssh://git@github.com/NativeScript/template-find-a-doctor-ng.git
+
+# OR when the template repo is public:
+
 tns create my-find-a-doctor --template https://github.com/NativeScript/template-find-a-doctor-ng
 ```
 
