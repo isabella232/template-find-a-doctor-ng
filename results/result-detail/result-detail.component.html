@@ -15,7 +15,7 @@
     </StackLayout>
     <GridLayout row="1" columns="*,3*" rows="auto,auto,auto,auto,auto,auto">
         <Label row="0" col="0" text="Education:" class="font-weight-bold"></Label>
-        <Label row="0" col="1" [text]="formatEducation(item)" class="text-muted" textWrap="true"></Label>
+        <Label row="0" col="1" [text]="formatEducation(item.education)" class="text-muted" textWrap="true"></Label>
         <Label row="1" col="0" text="Residencies:" class="font-weight-bold"></Label>
         <Label row="1" col="1" [text]="formatResidencies(item.residencies)" class="text-muted" textWrap="true"></Label>
         <Label row="2" col="0" text="Degree:" class="font-weight-bold"></Label>
