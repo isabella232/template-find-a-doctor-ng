@@ -90,12 +90,23 @@ export class SearchComponent {
 
     specialitySelected(args: ListViewEventData) {
         this.specialityItems.forEach(item => item.selected = false);
-        var item = this.specialityItems.getItem(args.index);
+        const item = this.specialityItems.getItem(args.index);
         item.selected = true;
     }
 
     specialityDeselected(args: ListViewEventData) {
-        var item = this.specialityItems.getItem(args.index);
+        const item = this.specialityItems.getItem(args.index);
         item.selected = false;
+    }
+
+    onProfileButtonTap() {
+        this._routerExtensions.navigate(["/plan"],
+            {
+                animated: true,
+                transition: {
+                    name: "fade",
+                    duration: 200
+                }
+            });
     }
 }

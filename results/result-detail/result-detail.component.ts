@@ -126,7 +126,7 @@ export class ResultDetailComponent {
 	onCancelButtonTap(dataItem: Provider): void {
 		dialogs.confirm({
 			title: "Dear __",
-			message: "You are canceling the appointment with __ on __",
+			message: `You are canceling the appointment with ${this.title} on __`,
 			okButtonText: "Confirm",
 			cancelButtonText: "Cancel"
 		}).then(result => {
@@ -136,4 +136,15 @@ export class ResultDetailComponent {
 			}
 		});
 	}
+
+	onProfileButtonTap() {
+        this._routerExtensions.navigate(["/plan"],
+            {
+                animated: true,
+                transition: {
+                    name: "fade",
+                    duration: 200
+                }
+            });
+    }
 }

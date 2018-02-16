@@ -56,15 +56,6 @@
     text-transform: none;
 }
 
-.search-common-list-header {
-    background-color: #efeff4;
-    color: #6d6d72;
-}
-
-.search-common-list-label {
-    color: #000000;
-}
-
 .zip-text-field {
     horizontal-align: right;
     margin-right: 15;

@@ -72,30 +72,29 @@ export class CalendarModalViewComponent implements OnInit {
         if (args.eventData.title !== this.availableText) {
             return;
         }
-        
+
         const selectedDate = args.eventData.startDate;
         Kinvey.User.me().then(user => {
-            var data = user && user.data as any;
-        dialogs.confirm({
+            const data = user && user.data as any;
+            dialogs.confirm({
                 title: `Dear ${(data && data.givenName) || "patient"}`,
                 message: `Please confirm the appointment with ${this.getProviderName(this.item)} on ${selectedDate.toLocaleString()}`,
-			okButtonText: "Confirm",
-			cancelButtonText: "Cancel"
-		}).then(result => {
-			if (result) {
-				console.log("TODO: Create apointment");
-                // TODO: Create apointment
-                this.params.closeCallback(args.eventData);
-			}
-		});
+                okButtonText: "Confirm",
+                cancelButtonText: "Cancel"
+            }).then(result => {
+                if (result) {
+                    console.log("TODO: Create apointment");
+                    // TODO: Create apointment
+                    this.params.closeCallback(args.eventData);
+                }
+            });
         }, error => {
             alert({
                 title: "Backend operation failed",
                 message: error.message,
                 okButtonText: "Ok"
             });
-        })
-
+        });
     }
 
     getProviderName(providerItem: Provider) {
@@ -103,7 +102,7 @@ export class CalendarModalViewComponent implements OnInit {
     }
 
     getDayViewStyle(): CalendarDayViewStyle {
-        var dayViewStyle = new CalendarDayViewStyle();
+        const dayViewStyle = new CalendarDayViewStyle();
         dayViewStyle.showWeekNumbers = false;
         dayViewStyle.showDayNames = true;
         dayViewStyle.showTitle = true;
