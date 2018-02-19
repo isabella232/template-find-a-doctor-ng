@@ -1,32 +1,34 @@
 <ActionBar class="action-bar">
-        <NavigationButton android.systemIcon="ic_menu_back" (tap)="onBackButtonTap()"></NavigationButton>
-        <GridLayout columns="*,auto">
-            <Label class="action-bar-title" [text]="title"></Label>
-            <Label col="1" text="&#xf2bd;" class="fa plan-button" (tap)="onProfileButtonTap()"></Label>
-        </GridLayout>
-    </ActionBar>
-
-<GridLayout rows="auto,auto">
-    <ActivityIndicator rowspan="2" class="activity-indicator" [busy]="isLoading"></ActivityIndicator>
-    <StackLayout>
-        <Image width="80" height="80" class="p-10 m-x-auto" [src]="item.small_image_url"></Image>
-        <Label [text]="title" class="font-weight-bold m-x-auto" textWrap="true"></Label>
-        <Label [text]="item.residencies[0] && item.residencies[0].institution_name" class="text-muted m-x-auto" textWrap="true"></Label>
-        <Label [text]="item.specialty_primary[0]" class="m-x-auto" textWrap="true"></Label>
-        <Button class="btn btn-rounded-lg btn-margin btn-primary btn-lime" *ngIf="!btnRemove" text="Book an Appointment" (tap)="onBookButtonTap(item)"></Button>
-        <Button class="btn btn-rounded-lg btn-margin btn-primary btn-lemon" *ngIf="btnRemove" text="Cancel Appointment" (tap)="onCancelButtonTap(item)"></Button>
-    </StackLayout>
-    <GridLayout row="1" columns="*,3*" rows="auto,auto,auto,auto,auto,auto">
-        <Label row="0" col="0" text="Education:" class="font-weight-bold"></Label>
-        <Label row="0" col="1" [text]="formatEducation(item.education)" class="text-muted" textWrap="true"></Label>
-        <Label row="1" col="0" text="Residencies:" class="font-weight-bold"></Label>
-        <Label row="1" col="1" [text]="formatResidencies(item.residencies)" class="text-muted" textWrap="true"></Label>
-        <Label row="2" col="0" text="Degree:" class="font-weight-bold"></Label>
-        <Label row="2" col="1" [text]="item.degree" class="text-muted"></Label>
-        <Label row="3" colspan="2" text="Contact Information" class="text-muted text-uppercase" textWrap="true"></Label>
-        <Label row="4" col="0" text="Phone:" class="font-weight-bold"></Label>
-        <Label row="4" col="1" [text]="item.phone" class="c-blue" textWrap="true" (tap)="onPhoneTap(item)"></Label>
-        <Label row="5" col="0" text="Locations:" class="font-weight-bold"></Label>
-        <Label row="5" col="1" [text]="formatLocations(item.locations)" class="text-muted" textWrap="true"></Label>
+    <NavigationButton android.systemIcon="ic_menu_back" (tap)="onBackButtonTap()"></NavigationButton>
+    <GridLayout columns="*,auto">
+        <Label class="action-bar-title" [text]="title"></Label>
+        <Label col="1" text="&#xf2bd;" class="fa plan-button" (tap)="onProfileButtonTap()"></Label>
     </GridLayout>
-</GridLayout>
+</ActionBar>
+<ScrollView>
+    <GridLayout rows="auto,auto">
+        <StackLayout class="c-bg-lg p-10">
+            <Image width="80" height="80" class="m-15 m-x-auto" [src]="item.small_image_url"></Image>
+            <Label [text]="title" class="c-black t-25 font-weight-bold text-center" textWrap="true"></Label>
+            <Label [text]="item.residencies[0] && item.residencies[0].institution_name" class="text-muted text-center" textWrap="true"></Label>
+            <Label [text]="item.specialty_primary[0]" class="c-black text-center m-5" textWrap="true"></Label>
+            <Button class="btn btn-rounded-lg btn-margin btn-primary btn-lime" *ngIf="!btnRemove" text="Book an Appointment" (tap)="onBookButtonTap(item)"></Button>
+            <Button class="btn btn-rounded-lg btn-margin btn-primary cancel-button" *ngIf="btnRemove" text="Cancel this Appointment"
+                (tap)="onCancelButtonTap(item)"></Button>
+        </StackLayout>
+        <GridLayout row="1" columns="*,3*" rows="auto,auto,auto,auto,auto,auto" class="p-l-15 t-18">
+            <Label row="0" col="0" text="Education" class="c-black"></Label>
+            <Label row="0" col="1" [text]="formatEducation(item.education)" class="text-muted" textWrap="true"></Label>
+            <Label row="1" col="0" text="Residencies:" class="c-black"></Label>
+            <Label row="1" col="1" [text]="formatResidencies(item.residencies)" class="text-muted" textWrap="true"></Label>
+            <Label row="2" col="0" text="Degree:" class="c-black"></Label>
+            <Label row="2" col="1" [text]="item.degree" class="text-muted"></Label>
+            <Label row="3" colspan="2" text="Contact Information" class="text-muted text-uppercase" textWrap="true"></Label>
+            <Label row="4" col="0" text="Phone:" class="c-black"></Label>
+            <Label row="4" col="1" [text]="item.phone" class="c-blue" textWrap="true" (tap)="onPhoneTap(item)"></Label>
+            <Label row="5" col="0" text="Locations:" class="c-black"></Label>
+            <Label row="5" col="1" [text]="formatLocations(item.locations)" class="text-muted" textWrap="true"></Label>
+        </GridLayout>
+        <ActivityIndicator rowspan="2" class="activity-indicator" [busy]="isLoading"></ActivityIndicator>
+    </GridLayout>
+</ScrollView>
