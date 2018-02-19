@@ -3,7 +3,7 @@ import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { Provider, ProviderResidency, ProviderLocation } from "../../shared/models/provider.model";
 import * as phoneModule from "nativescript-phone";
-import { ProviderService } from "../shared/provider.service";
+import { ProviderService } from  "../../shared/services/provider.service";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { ModalDialogOptions, ModalDialogService } from "nativescript-angular/modal-dialog";
 import { CalendarModalViewComponent } from "./calendar-modal";
@@ -36,10 +36,10 @@ export class ResultDetailComponent {
 		this._pageRoute.activatedRoute
 			.switchMap((activatedRoute) => activatedRoute.params)
 			.forEach((params) => {
-				const id = params.id;
+				const npi = params.npi;
 				this.btnRemove = !!params.remove;
-				if (id) {
-					this._providerService.getProviderById(id).then(providerItem => {
+				if (npi) {
+					this._providerService.getProviderByNpi(npi).then(providerItem => {
 						this.item = providerItem;
 						this.title = this.item.prefix + ' ' + this.item.first_name + ' ' + this.item.last_name;
 						this.isLoading = false;
@@ -131,8 +131,8 @@ export class ResultDetailComponent {
 			cancelButtonText: "Cancel"
 		}).then(result => {
 			if (result) {
-				console.log("TODO: Delete apointment");
-				// TODO: Delete apointment
+				console.log("TODO: Delete appointment");
+				// TODO: Delete appointment
 			}
 		});
 	}

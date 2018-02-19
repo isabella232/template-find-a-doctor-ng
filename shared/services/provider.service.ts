@@ -11,10 +11,13 @@ export class ProviderService {
     private _providerStore = Kinvey.DataStore.collection<any>("Providers");
     private _providersPromise: Promise<any>;
 
-    getProviderById(id: string): Promise<any> {
-        return this._providerStore.findById(id).toPromise()
+    getProviderByNpi(npi: string): Promise<any> {
+        const npiQuery = new Kinvey.Query();
+        npiQuery.equalTo("npi", npi);
+
+        return this._providerStore.find(npiQuery).toPromise()
             .then(data => {
-                return <Provider>data;
+                return data.length ? data[0] as Provider : null;
             })
             .catch((error: Kinvey.BaseError) => {
                 alert({

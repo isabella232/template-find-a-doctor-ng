@@ -7,19 +7,24 @@ import { SearchRoutingModule } from "./search-routing.module";
 import { SearchComponent } from "./search.component";
 
 import { SpecialityService } from "./shared/speciality.service";
+import { ProviderService } from "../shared/services/provider.service";
+
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
         NativeScriptUIListViewModule,
         NativeScriptFormsModule,
-        SearchRoutingModule
+        SearchRoutingModule,
+        SharedModule
     ],
     declarations: [
         SearchComponent
     ],
     providers: [
-        SpecialityService
+        SpecialityService,
+        ProviderService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

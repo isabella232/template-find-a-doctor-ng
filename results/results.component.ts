@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
-import { ProviderService } from "./shared/provider.service";
+import { ProviderService } from "../shared/services/provider.service";
 import { Provider } from "../shared/models/provider.model";
 
 @Component({
@@ -17,7 +17,7 @@ export class ResultsComponent {
 	public resultItems: ObservableArray<Provider>;
 
 	constructor(
-		private _providerSerivce: ProviderService,
+		private _providerService: ProviderService,
 		private _pageRoute: PageRoute,
 		private _routerExtensions: RouterExtensions
 	) { }
@@ -29,7 +29,7 @@ export class ResultsComponent {
 			.switchMap((activatedRoute) => activatedRoute.params)
 			.forEach((params) => {
 				this.filter = JSON.stringify(params);
-				this._providerSerivce.getProviders()
+				this._providerService.getProviders()
 					.then(providers => {
 						this.isLoading = false;
 						this.resultItems = providers;
@@ -44,7 +44,7 @@ export class ResultsComponent {
 	}
 
 	onResultTap(item: Provider) {
-		this._routerExtensions.navigate(["results/result-detail", { id: item._id }],
+		this._routerExtensions.navigate(["results/result-detail", { npi: item.npi }],
 			{
 				animated: true,
 				transition: {
