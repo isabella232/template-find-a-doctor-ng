@@ -22,6 +22,11 @@ refer to http://docs.nativescript.org/ui/theme.
 .c-cb {
     color: #5b57d9;
 }
+
+.c-bg-lg {
+    background-color: #efeff4;
+}
+
 .plan-button {
     color: #5b57d9;
     font-size: 24;

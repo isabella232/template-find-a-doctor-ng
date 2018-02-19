@@ -3,6 +3,7 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { Plan } from "../shared/models/plan.model";
 import { PlanService } from "./shared/plan.service";
+import { openUrl } from "utils/utils";
 
 @Component({
     selector: "PlanComponent",
@@ -58,5 +59,9 @@ export class PlanComponent {
         }
 
         return this.formatter.format(value);
+    }
+
+    onBenefitsTap(url: string): void {
+        openUrl(url || 'about:blank');
     }
 }
