@@ -8,7 +8,7 @@ import { Appointment } from "../models/appointment.model";
 export class AppointmentService {
     private _appointments: Array<Appointment>;
 
-    private _appointmentStore = Kinvey.DataStore.collection<any>("Appointments");
+    private _appointmentStore = Kinvey.DataStore.collection<Appointment>("Appointments");
     private _appointmentsPromise: Promise<any>;
 
     getAppointmentById(id: string): Promise<any> {
@@ -16,7 +16,7 @@ export class AppointmentService {
         query.equalTo("appointment_id",id);
         return this._appointmentStore.find(query).toPromise()
             .then(data => {
-                return <Appointment>data[0];
+                return data[0];
             })
             .catch((error: Kinvey.BaseError) => {
                 alert({

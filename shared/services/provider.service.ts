@@ -8,7 +8,7 @@ import { Provider } from "../../shared/models/provider.model";
 export class ProviderService {
     private _providers: Array<Provider>;
 
-    private _providerStore = Kinvey.DataStore.collection<any>("Providers");
+    private _providerStore = Kinvey.DataStore.collection<Provider>("Providers");
     private _providersPromise: Promise<any>;
 
     getProviderByNpi(npi: string): Promise<any> {

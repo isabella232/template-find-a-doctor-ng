@@ -3,10 +3,12 @@ import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { Provider, ProviderResidency, ProviderLocation } from "../../shared/models/provider.model";
 import * as phoneModule from "nativescript-phone";
-import { ProviderService } from  "../../shared/services/provider.service";
+import { ProviderService } from "../../shared/services/provider.service";
+import { AppointmentService } from "../../shared/services/appointment.service";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { ModalDialogOptions, ModalDialogService } from "nativescript-angular/modal-dialog";
 import { CalendarModalViewComponent } from "./calendar-modal";
+import { Kinvey } from "kinvey-nativescript-sdk";
 
 @Component({
 	selector: "ResultDetailComponent",
@@ -18,11 +20,13 @@ export class ResultDetailComponent {
 	isLoading: boolean;
 	btnRemove: boolean;
 	title: string;
+	appointmentId: string;
 	public item: Provider;
 
 	constructor(
 		private _modalService: ModalDialogService,
 		private _vcRef: ViewContainerRef,
+		private _appointmentService: AppointmentService,
 		private _providerService: ProviderService,
 		private _pageRoute: PageRoute,
 		private _routerExtensions: RouterExtensions
@@ -38,6 +42,7 @@ export class ResultDetailComponent {
 			.forEach((params) => {
 				const npi = params.npi;
 				this.btnRemove = !!params.remove;
+				this.appointmentId = params.appointment;
 				if (npi) {
 					this._providerService.getProviderByNpi(npi).then(providerItem => {
 						this.item = providerItem;
@@ -90,18 +95,22 @@ export class ResultDetailComponent {
 		phoneModule.dial(dataItem.phone, true);
 	}
 
+	goToSearch() {
+		this._routerExtensions.navigate(["/search"], {
+			clearHistory: true,
+			animated: true,
+			transition: {
+				name: "slide",
+				duration: 200,
+				curve: "ease"
+			}
+		});
+	}
+
 	onBookButtonTap(dataItem: Provider): void {
 		this.createModelView().then(result => {
 			if (result) {
-				this._routerExtensions.navigate(["/search"], {
-					clearHistory: true,
-					animated: true,
-					transition: {
-						name: "slide",
-						duration: 200,
-						curve: "ease"
-					}
-				});
+				this.goToSearch();
 			}
 		}).catch(error => {
 			alert({
@@ -111,7 +120,7 @@ export class ResultDetailComponent {
 			});
 		});
 	}
-	
+
 	private createModelView(): Promise<any> {
 		const today = new Date();
 		const options: ModalDialogOptions = {
@@ -119,32 +128,48 @@ export class ResultDetailComponent {
 			context: this.item,
 			fullscreen: false,
 		};
-	
+
 		return this._modalService.showModal(CalendarModalViewComponent, options);
 	}
 
 	onCancelButtonTap(dataItem: Provider): void {
-		dialogs.confirm({
-			title: "Dear __",
-			message: `You are canceling the appointment with ${this.title} on __`,
-			okButtonText: "Confirm",
-			cancelButtonText: "Cancel"
-		}).then(result => {
-			if (result) {
-				console.log("TODO: Delete appointment");
-				// TODO: Delete appointment
-			}
-		});
+		if (this.appointmentId) {
+			let data;
+			Kinvey.User.me().then(user => {
+				data = user && user.data as any;
+				return this._appointmentService.getAppointmentById(this.appointmentId);
+			}).then(appointment => {
+				const startDate = new Date(appointment.start_date);
+				dialogs.confirm({
+					title: `Dear ${(data && data.givenName) || "patient"}`,
+					message: `You are canceling the appointment with ${this.title} on ${startDate.toLocaleString()}`,
+					okButtonText: "Confirm",
+					cancelButtonText: "Cancel"
+				}).then(result => {
+					if (result) {
+						console.log("TODO: Delete appointment with ID " + this.appointmentId);
+						// TODO: Delete appointment
+						this.goToSearch();
+					}
+				});
+			}, error => {
+				alert({
+					title: "Backend operation failed",
+					message: error.message,
+					okButtonText: "Ok"
+				});
+			});
+		}
 	}
 
 	onProfileButtonTap() {
-        this._routerExtensions.navigate(["/plan"],
-            {
-                animated: true,
-                transition: {
-                    name: "fade",
-                    duration: 200
-                }
-            });
-    }
+		this._routerExtensions.navigate(["/plan"],
+			{
+				animated: true,
+				transition: {
+					name: "fade",
+					duration: 200
+				}
+			});
+	}
 }

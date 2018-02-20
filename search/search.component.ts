@@ -159,7 +159,7 @@ export class SearchComponent {
     onAppointmentTap(appointment: Appointment) {
         // TODO: get actual provider npi from the appointment - appointment.provider_scheduler_uuid ? 
         const providerNpi = "1467560003"; 
-        this._routerExtensions.navigate(["results/result-detail", { npi: providerNpi, remove: true }],
+        this._routerExtensions.navigate(["results/result-detail", { npi: providerNpi, remove: true, appointment: appointment.appointment_id }],
 			{
 				animated: true,
 				transition: {

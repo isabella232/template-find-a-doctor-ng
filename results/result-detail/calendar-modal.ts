@@ -83,8 +83,8 @@ export class CalendarModalViewComponent implements OnInit {
                 cancelButtonText: "Cancel"
             }).then(result => {
                 if (result) {
-                    console.log("TODO: Create apointment");
-                    // TODO: Create apointment
+                    console.log("TODO: Create appointment");
+                    // TODO: Create appointment
                     this.params.closeCallback(args.eventData);
                 }
             });
