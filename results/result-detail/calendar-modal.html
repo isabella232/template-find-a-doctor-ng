@@ -1,11 +1,7 @@
 <GridLayout rows="auto,*" width="100%" height="80%">
     <StackLayout>
         <Button class="pull-right fa" text="&#xf00d;" (tap)="onCloseButtonTap()"></Button>
-        <Label text="Pick a date and time for your appointment with" textWrap="true" *ngIf="showHeader" class="m-x-auto text-muted"></Label>
-        <GridLayout columns="auto,*" *ngIf="showHeader">
-            <Image width="40" height="40" class="p-10" [src]="item.small_image_url"></Image>
-            <Label col="1" [text]="getProviderName(item)" class="font-weight-bold"></Label>
-        </GridLayout>
+        <Label text="Pick a date and time for your appointment" textWrap="true" *ngIf="showHeader" class="text-center text-muted t-16"></Label>
     </StackLayout>
     <RadCalendar row="1" viewMode="Month" transitionMode="Slide" selectionMode="Single" (dateSelected)="onCalendarDateSelected($event)"
         (dayViewEventSelected)="onCalendarEventSelected($event)" [minDate]="dateToday" [maxDate]="dateNextMonth" [dayViewStyle]="getDayViewStyle()"></RadCalendar>

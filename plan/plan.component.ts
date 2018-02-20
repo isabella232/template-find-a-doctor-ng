@@ -15,6 +15,7 @@ export class PlanComponent {
     title: string;
     item: Plan;
     user: any;
+    isLoading: boolean;
     private formatter: Intl.NumberFormat;
 
     constructor(
@@ -23,23 +24,18 @@ export class PlanComponent {
     ) { }
 
     ngOnInit(): void {
-        this.formatter = new Intl.NumberFormat("en-US", {style: 'currency', currency: 'USD'});
+        this.formatter = new Intl.NumberFormat("en-US", { style: 'currency', currency: 'USD' });
         this.title = "Plan Information";
         this.item = new Plan({});
         this.user = {};
+        this.isLoading = true;
         Kinvey.User.me().then(user => {
             this.user = user && user.data;
             const planId = (this.user && this.user.plan_id) || "33602TX0420001";
-            this._planService.getPlanById(planId).then(plan => {
-                this.item = plan;
-            },
-                error => {
-                    alert({
-                        title: "Backend operation failed",
-                        message: error.message,
-                        okButtonText: "Ok"
-                    });
-                });
+            return this._planService.getPlanById(planId);
+        }).then(plan => {
+            this.item = plan;
+            this.isLoading = false;
         }, error => {
             alert({
                 title: "Backend operation failed",
@@ -53,6 +49,9 @@ export class PlanComponent {
         this._routerExtensions.backToPreviousPage();
     }
 
+    getUserName(user: any):string {
+        return user && user.givenName && user.familyName ? user.givenName + " " + user.familyName : "";
+    }
     formatCurrency(value: number): string {
         if (isNaN(value)) {
             value = 0;
@@ -63,5 +62,27 @@ export class PlanComponent {
 
     onBenefitsTap(url: string): void {
         openUrl(url || 'about:blank');
+    }
+
+    onSignOutButtonTap(): void {
+        this.isLoading = true;
+        Kinvey.User.logout().then(() => {
+            this.isLoading = true;
+            this._routerExtensions.navigate(["/login"], {
+                clearHistory: true,
+                animated: true,
+                transition: {
+                    name: "slide",
+                    duration: 200,
+                    curve: "ease"
+                }
+            });
+        }, error => {
+            alert({
+                title: "Backend operation failed",
+                message: error.message,
+                okButtonText: "Ok"
+            });
+        });
     }
 }

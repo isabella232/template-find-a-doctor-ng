@@ -2,17 +2,17 @@
     <NavigationButton android.systemIcon="ic_menu_back" (tap)="onBackButtonTap()"></NavigationButton>
     <GridLayout columns="*,auto">
         <Label class="action-bar-title" [text]="title"></Label>
-        <Label col="1" text="&#xf2bd;" class="fa plan-button" (tap)="onProfileButtonTap()"></Label>
+        <Label col="1" text="&#xf2bd;" class="fa action-button" (tap)="onProfileButtonTap()"></Label>
     </GridLayout>
 </ActionBar>
 <ScrollView>
     <StackLayout>
         <StackLayout class="c-bg-lg p-10">
-            <Image width="80" height="80" class="m-15 m-x-auto" [src]="item.small_image_url"></Image>
+            <Image width="80" height="80" class="m-15 m-x-auto img-circle-large" [src]="item.small_image_url"></Image>
             <Label [text]="title" class="c-black t-25 font-weight-bold text-center" textWrap="true"></Label>
             <Label [text]="item.residencies[0] && item.residencies[0].institution_name" class="text-muted text-center" textWrap="true"></Label>
             <Label [text]="item.specialty_primary[0]" class="c-black text-center m-5" textWrap="true"></Label>
-            <Button class="btn btn-rounded-lg btn-margin btn-primary btn-lime" *ngIf="!btnRemove" text="Book an Appointment" (tap)="onBookButtonTap(item)"></Button>
+            <Button class="btn btn-rounded-lg btn-margin btn-primary book-button" *ngIf="!btnRemove" text="Book an Appointment" (tap)="onBookButtonTap(item)"></Button>
             <Button class="btn btn-rounded-lg btn-margin btn-primary cancel-button" *ngIf="btnRemove" text="Cancel this Appointment"
                 (tap)="onCancelButtonTap(item)"></Button>
         </StackLayout>
