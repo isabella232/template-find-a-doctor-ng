@@ -13,7 +13,7 @@ export class AppointmentService {
 
     getAppointmentById(id: string): Promise<any> {
         const query = new Kinvey.Query();
-        query.equalTo("appointment_id",id);
+        query.equalTo("appointment_id", id);
         return this._appointmentStore.find(query).toPromise()
             .then(data => {
                 return data[0];
@@ -37,6 +37,15 @@ export class AppointmentService {
                         data.forEach((appointmentData: any) => {
                             const appointment = new Appointment(appointmentData);
                             appointments.push(appointment);
+							//TODO: remove test appointments added here
+                            const appointment2 = new Appointment(appointmentData);
+                            appointment2.start_date = new Date(2017, 4, 4, 13, 0).toString();
+                            appointment2.end_date = new Date(2017, 4, 4, 14, 0).toString();
+                            appointments.push(appointment2);
+                            const appointment3 = new Appointment(appointmentData);
+                            appointment3.start_date = new Date(2018, 4, 4, 13, 0).toString();
+                            appointment3.end_date = new Date(2018, 4, 4, 14, 0).toString();
+                            appointments.push(appointment3);
                         });
                     }
 

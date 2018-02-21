@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef } from "@angular/core";
+import { Component, ViewContainerRef, ViewChild } from "@angular/core";
 import { EventData } from "data/observable";
 import { StackLayout } from "ui/layouts/stack-layout";
 import { SearchBar } from "ui/search-bar";
@@ -10,6 +10,7 @@ import { SpecialityService } from "./shared/speciality.service";
 import { AppointmentService } from "../shared/services/appointment.service";
 import { ProviderService } from "../shared/services/provider.service";
 import { Appointment } from "../shared/models/appointment.model";
+import { RadListViewComponent } from "nativescript-pro-ui/listview/angular";
 
 @Component({
     selector: "SearchComponent",
@@ -24,9 +25,10 @@ export class SearchComponent {
     selectedFilter: string;
     public specialityItems: ObservableArray<DataItem>;
     public recentItems: ObservableArray<any>;
-    public outdatedItems: ObservableArray<any>;
     public zipCode: string;
     public searchText: string;
+
+     @ViewChild("recentItemsListView") recentItemsListView: RadListViewComponent;
 
     constructor(
         private _appointmentService: AppointmentService,
@@ -42,8 +44,6 @@ export class SearchComponent {
         this.selectedFilter = "";
         this.searchText = "";
         this.zipCode = "";
-        this.recentItems = new ObservableArray();
-        this.outdatedItems = new ObservableArray();
         this._specialityService.getSpecialities()
             .then(specialities => {
                 this.specialityItems = specialities;
@@ -56,18 +56,10 @@ export class SearchComponent {
             });
         this._appointmentService.getAppointments()
             .then(appointments => {
-                const past = [];
-                const future = [];
-                appointments.forEach(element => {
-                    var endDate = element.end_date && new Date(element.end_date);
-                    if (endDate && (endDate > new Date())) {
-                        future.push(element);
-                    } else {
-                        past.push(element);
-                    }
-                });
-                this.recentItems = new ObservableArray(future);
-                this.outdatedItems = new ObservableArray(past);
+                appointments = appointments.sort((a, b) => { return a.start_date < b.start_date ? 1 : -1; });
+                (<any>this.recentItemsListView.listView).defaultGroupTemplate = '<StackLayout class="m-b-15"><Label text="{{ category }}" class="header text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label><StackLayout class="hr-light"></StackLayout></StackLayout>';
+                this.recentItemsListView.listView.groupingFunction = this.listGroupingFunc;
+                this.recentItems = new ObservableArray(appointments);
             }, error => {
                 alert({
                     title: "Backend operation failed",
@@ -168,5 +160,11 @@ export class SearchComponent {
 					curve: "ease"
 				}
 			});
+    }
+
+    listGroupingFunc(item: any): any {
+        var endDate = item.end_date && new Date(item.end_date);
+        // non-braking space used to force Outdated group to be at the bottom
+        return (endDate && (endDate > new Date())) ? " Your Recent Appointments" : "\u00a0Outdated";
     }
 }
