@@ -20,13 +20,11 @@ import { RadListViewComponent } from "nativescript-pro-ui/listview/angular";
 })
 export class SearchComponent {
     title: string;
-    filterLabel: string;
-    filterExpanded: Boolean;
     selectedFilter: string;
-    public specialityItems: ObservableArray<DataItem>;
-    public recentItems: ObservableArray<any>;
-    public zipCode: string;
-    public searchText: string;
+    speciality: string;
+    specialityItems: ObservableArray<DataItem>;
+    recentItems: ObservableArray<any>;
+    zipCode: string;
 
      @ViewChild("recentItemsListView") recentItemsListView: RadListViewComponent;
 
@@ -38,12 +36,10 @@ export class SearchComponent {
     ) { }
 
     ngOnInit(): void {
-        this.filterExpanded = true;
         this.title = "Find a Doctor";
-        this.filterLabel = "filter by \u2303";
         this.selectedFilter = "";
-        this.searchText = "";
         this.zipCode = "";
+        this.speciality = "";
         this._specialityService.getSpecialities()
             .then(specialities => {
                 this.specialityItems = specialities;
@@ -69,15 +65,11 @@ export class SearchComponent {
             });
     }
 
-    onFilterLabelTap() {
-        this.filterExpanded = !this.filterExpanded;
-        this.filterLabel = "filter by " + (this.filterExpanded ? "\u2303" : "\u2304");
-    }
 
     onResetLabelTap() {
         this.selectedFilter = "";
-        this.searchText = "";
         this.zipCode = "";
+        this.speciality = "";
         this.specialityItems && this.specialityItems.forEach(item => item.selected = false);
     }
 
@@ -93,12 +85,9 @@ export class SearchComponent {
             searchTextBar.dismissSoftInput();
         }
 
-        const speciality = this.specialityItems && this.specialityItems.filter(item => item.selected)[0];
-
         let filter = {
-            text: this.searchText,
             zipCode: this.zipCode,
-            speciality: speciality ? speciality.name : ""
+            speciality: this.speciality
         };
         this._routerExtensions.navigate(["/results", filter],
             {
@@ -115,11 +104,13 @@ export class SearchComponent {
         this.specialityItems.forEach(item => item.selected = false);
         const item = this.specialityItems.getItem(args.index);
         item.selected = true;
+        this.speciality = item.name;
     }
 
     specialityDeselected(args: ListViewEventData) {
         const item = this.specialityItems.getItem(args.index);
         item.selected = false;
+        this.speciality = "";
     }
 
     onProfileButtonTap() {

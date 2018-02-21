@@ -1,0 +1,5 @@
+@import './app-common.css';
+
+.action-button {
+    padding-right: 15;
+}

@@ -1,8 +1,5 @@
 <ActionBar class="action-bar" [title]="title">
-    <NavigationButton android.systemIcon="ic_menu_close_clear_cancel" (tap)="onBackButtonTap()"></NavigationButton>
-    <ActionItem android.position="actionBar" ios.position="right"  (tap)="onSignOutButtonTap()">
-        <Label text="Logout" class="c-cb"></Label>
-    </ActionItem>
+    <NavigationButton android.systemIcon="ic_menu_close_clear_cancel" text="Close" (tap)="onBackButtonTap()"></NavigationButton>
 </ActionBar>
 <ScrollView>
     <GridLayout rows="*" columns="*">

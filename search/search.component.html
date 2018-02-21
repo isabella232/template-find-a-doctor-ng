@@ -1,23 +1,21 @@
 <ActionBar class="action-bar" [title]="title">
+    <ActionItem android.position="actionBar" ios.position="left" text="Log out" (tap)="onProfileButtonTap()"></ActionItem>
     <ActionItem android.position="actionBar" ios.position="right" (tap)="onProfileButtonTap()">
-        <Label text="&#xf2bd;" class="fa action-button text-right m-r-15"></Label>
+        <Label text="&#xf2c2;" class="fa action-button text-right m-r-15"></Label>
     </ActionItem>
 </ActionBar>
 <GridLayout rows="auto,*,auto" columns="*">
     <StackLayout>
-        <GridLayout rows="auto,auto" columns="auto,*">
-            <Label [text]="filterLabel" class="filter-label text-uppercase" (tap)="onFilterLabelTap()"></Label>
-            <Label text="Reset" col="1" class="reset-label" (tap)="onResetLabelTap()"></Label>
-            <StackLayout orientation="horizontal" row="1" colspan="2">
-                <StackLayout class="filter-grid" data-name="location">
-                    <Button *ngIf="filterExpanded" text="&#xf041;" [class.selected]="selectedFilter==='location'" class="fa filter-button" (tap)="onFilterButtonTap($event)"></Button>
-                    <Label text="Location" [class.selected]="selectedFilter==='location'" class="filter-text" (tap)="onFilterButtonTap($event)"></Label>
-                </StackLayout>
-                <StackLayout class="filter-grid" data-name="speciality">
-                    <Button *ngIf="filterExpanded" text="&#xf0fa;" [class.selected]="selectedFilter==='speciality'" class="fa filter-button"
-                        (tap)="onFilterButtonTap($event)"></Button>
-                    <Label text="Speciality" [class.selected]="selectedFilter==='speciality'" class="filter-text" (tap)="onFilterButtonTap($event)"></Label>
-                </StackLayout>
+        <GridLayout rows="auto,auto" columns="*,*" class="m-t-10 p-l-15 p-r-15">
+            <Label text="Search by" class="text-muted text-uppercase t-12"></Label>
+            <Label text="Reset" col="1" class="text-right m-r-5 c-cr" (tap)="onResetLabelTap()"></Label>
+            <StackLayout row="1" col="0" class="pull-right m-r-30" data-name="location">
+                <Button text="&#xf041;" [class.active]="zipCode !== ''" [class.selected]="selectedFilter==='location'" class="fa filter-button" (tap)="onFilterButtonTap($event)"></Button>
+                <Label text="Location" class="text-center c-cb" (tap)="onFilterButtonTap($event)"></Label>
+            </StackLayout>
+            <StackLayout row="1" col="1" class="pull-left m-l-30" data-name="speciality">
+                <Button text="&#xf0fa;" [class.active]="speciality !== ''" [class.selected]="selectedFilter==='speciality'" class="fa filter-button" (tap)="onFilterButtonTap($event)"></Button>
+                <Label text="Speciality" class="text-center c-cb" (tap)="onFilterButtonTap($event)"></Label>
             </StackLayout>
         </GridLayout>
         <StackLayout class="hr-light"></StackLayout>
@@ -34,7 +32,7 @@
                     </GridLayout>
                 </ng-template>
             </RadListView>
-                    </GridLayout>
+        </GridLayout>
         <StackLayout *ngIf="selectedFilter==='location'">
             <StackLayout>
                 <Label text="Location" class="header text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label>
