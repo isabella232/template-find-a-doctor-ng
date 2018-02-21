@@ -36,7 +36,6 @@ export class ResultsComponent {
 					})
 			});
 		this.resultItems = new ObservableArray<Provider>();
-
 	}
 
 	onBackButtonTap(): void {
