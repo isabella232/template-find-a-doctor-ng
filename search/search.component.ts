@@ -53,8 +53,8 @@ export class SearchComponent {
         this._appointmentService.getAppointments()
             .then(appointments => {
                 appointments = appointments.sort((a, b) => { return a.start_date < b.start_date ? 1 : -1; });
-                (<any>this.recentItemsListView.listView).defaultGroupTemplate = '<StackLayout class="m-b-15"><Label text="{{ category }}" class="header text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label><StackLayout class="hr-light"></StackLayout></StackLayout>';
-                this.recentItemsListView.listView.groupingFunction = this.listGroupingFunc;
+                // TODO: enable group header template when exposed by listview
+                // (<any>this.recentItemsListView.listView).defaultGroupTemplate = '<StackLayout class="m-b-15"><Label text="{{ category }}" class="header text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label><StackLayout class="hr-light"></StackLayout></StackLayout>';
                 this.recentItems = new ObservableArray(appointments);
             }, error => {
                 alert({

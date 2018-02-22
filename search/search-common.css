@@ -24,17 +24,11 @@
     background-color: #F42952;
     color: #efeff4;
     text-transform: none;
-}
-
-.zip-text-field {
-    horizontal-align: right;
-    margin-right: 15;
+    font-weight: bold;
+    padding-top: 10;
+    padding-bottom: 15;
 }
 
 .checkmark {
     color: #F5486B;
-}
-
-.filterListView {
-    background-color: #ffffff;
 }
