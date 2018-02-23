@@ -63,3 +63,11 @@ refer to http://docs.nativescript.org/ui/theme.
 .img-circle-large {
     border-radius: 40;
 }
+
+.platform-button {
+    color: white;
+    font-size: 16;
+    height: 36;
+    width: 70%;
+    text-transform: none;
+}

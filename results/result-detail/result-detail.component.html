@@ -12,8 +12,8 @@
                 <Label [text]="title" class="c-black t-25 font-weight-bold text-center" textWrap="true"></Label>
                 <Label [text]="item.residencies[0] && item.residencies[0].institution_name" class="text-muted text-center" textWrap="true"></Label>
                 <Label [text]="item.specialty_primary[0]" class="c-black text-center m-5" textWrap="true"></Label>
-                <Button class="btn btn-rounded-lg btn-margin btn-primary book-button" *ngIf="!btnRemove" text="Book an Appointment" (tap)="onBookButtonTap(item)"></Button>
-                <Button class="btn btn-rounded-lg btn-margin btn-primary cancel-button" *ngIf="btnRemove" text="Cancel this Appointment"
+                <Button class="btn btn-margin btn-primary book-button platform-button" *ngIf="!btnRemove" text="Book an Appointment" (tap)="onBookButtonTap(item)"></Button>
+                <Button class="btn btn-margin btn-primary cancel-button platform-button" *ngIf="btnRemove" text="Cancel this Appointment"
                     (tap)="onCancelButtonTap(item)"></Button>
             </StackLayout>
             <GridLayout columns="*,3*" rows="auto,auto,auto,auto,auto,auto" class="p-l-15 t-17">

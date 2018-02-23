@@ -13,7 +13,8 @@ import { RegistrationForm } from "./registration-form.model";
 @Component({
     selector: "Registration",
     moduleId: module.id,
-    templateUrl: "./registration.component.html"
+    templateUrl: "./registration.component.html",
+	styleUrls: ["../login-common.css"]    
 })
 export class RegistrationComponent implements OnInit {
     @ViewChild("registrationFormElement") registrationFormElement: RadDataFormComponent;

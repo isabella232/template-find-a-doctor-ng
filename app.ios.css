@@ -1,2 +1,6 @@
 @import './app-common.css';
 
+.platform-button {
+    border-radius: 40;
+    padding: 0
+}
