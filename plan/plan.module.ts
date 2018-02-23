@@ -1,11 +1,11 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
-import { NativeScriptUIListViewModule } from "nativescript-pro-ui/listview/angular";
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
+import { SharedModule } from "../shared/shared.module";
 
 import { PlanRoutingModule } from "./plan-routing.module";
 import { PlanComponent } from "./plan.component";
-import { PlanService } from "./shared/plan.service";
 
 
 @NgModule({
@@ -13,13 +13,13 @@ import { PlanService } from "./shared/plan.service";
         NativeScriptCommonModule,
         NativeScriptUIListViewModule,
         NativeScriptFormsModule,
-        PlanRoutingModule
+        PlanRoutingModule,
+        SharedModule
     ],
     declarations: [
         PlanComponent
     ],
     providers: [
-        PlanService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

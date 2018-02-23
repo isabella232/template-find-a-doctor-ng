@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { Observable } from "rxjs/Rx";
-import { Plan } from "../../shared/models/plan.model";
+import { Plan } from "../models/plan.model";
 
 
 @Injectable()
 export class PlanService {
     private _plans: Array<Plan>;
 
-    private _planStore = Kinvey.DataStore.collection<any>("Plans");
+    private _planStore = Kinvey.DataStore.collection<Plan>("Plans");
     private _plansPromise: Promise<any>;
 
     getPlanById(id: string): Promise<any> {
@@ -27,7 +27,7 @@ export class PlanService {
             });
     }
 
-    getPlans(): Promise<any> {
+    getPlans(): Promise<Plan[]> {
         if (!this._plansPromise) {
             this._plansPromise = this._planStore.find().toPromise()
                 .then((data) => {

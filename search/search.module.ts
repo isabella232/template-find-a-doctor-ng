@@ -1,7 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
-import { NativeScriptUIListViewModule } from "nativescript-pro-ui/listview/angular";
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 import { SearchRoutingModule } from "./search-routing.module";
 import { SearchComponent } from "./search.component";
@@ -23,8 +23,7 @@ import { SharedModule } from "../shared/shared.module";
         SearchComponent
     ],
     providers: [
-        SpecialityService,
-        ProviderService
+        SpecialityService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

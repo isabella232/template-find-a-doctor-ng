@@ -17,7 +17,8 @@ export class UserService {
             familyName: registrationForm.familyName,
             email: registrationForm.email,
             gender: registrationForm.gender,
-            dateOfBirth: registrationForm.dateOfBirth
+            dateOfBirth: registrationForm.dateOfBirth,
+            planId: registrationForm.planId
         });
     }
 }

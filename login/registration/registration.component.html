@@ -67,6 +67,13 @@
                             </TKPropertyEditor>
                             <TKNonEmptyValidator tkEntityPropertyValidators errorMessage="Date of birth is required."></TKNonEmptyValidator>
                         </TKEntityProperty>
+
+                        <TKEntityProperty tkPropertyGroupProperties name="planId" displayName="Plan" hintText="Pick a plan" required="true" index="7"
+                            [valuesProvider]="planProvider">
+                            <TKPropertyEditor tkEntityPropertyEditor type="Picker">
+                                <TKPropertyEditorStyle tkPropertyEditorStyle labelFontStyle="Bold"></TKPropertyEditorStyle>
+                            </TKPropertyEditor>
+                        </TKEntityProperty>
                     </TKPropertyGroup>
                 </RadDataForm>
             </StackLayout>

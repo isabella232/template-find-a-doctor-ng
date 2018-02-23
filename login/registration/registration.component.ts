@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { RouterExtensions } from "nativescript-angular/router";
-import { DataFormEventData } from "nativescript-pro-ui/dataform";
-import { RadDataFormComponent } from "nativescript-pro-ui/dataform/angular";
+import { DataFormEventData } from "nativescript-ui-dataform";
+import { RadDataFormComponent } from "nativescript-ui-dataform/angular";
 import { isAndroid, isIOS } from "platform";
 import { Page } from "ui/page";
 import { layout } from "utils/utils";
@@ -14,12 +14,12 @@ import { RegistrationForm } from "./registration-form.model";
     selector: "Registration",
     moduleId: module.id,
     templateUrl: "./registration.component.html",
-	styleUrls: ["../login-common.css"]    
+    styleUrls: ["../login-common.css"]
 })
 export class RegistrationComponent implements OnInit {
     @ViewChild("registrationFormElement") registrationFormElement: RadDataFormComponent;
     isLoading: boolean;
-
+    planProvider: Array<any>;
     private _registrationForm: RegistrationForm;
 
     constructor(
@@ -33,6 +33,16 @@ export class RegistrationComponent implements OnInit {
         if (isAndroid) {
             this._page.actionBarHidden = true;
         }
+
+        //TODO: Add available plans here or remove the plan choice if set in the backend.
+        this.planProvider = [{
+            key: "",
+            label: "None"
+        },{
+            key: "33602TX0420001",
+            label: "Blue Choice Gold PPO? 001"
+        }]
+
         this._registrationForm = new RegistrationForm();
     }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { ModalDialogParams } from "nativescript-angular/modal-dialog";
 import { Page, Color } from "tns-core-modules/ui/page/page";
-import { CalendarSelectionEventData, RadCalendar, CalendarViewMode, CalendarDayViewStyle, CalendarDayViewEventSelectedData, CalendarEvent } from "nativescript-pro-ui/calendar";
+import { CalendarSelectionEventData, RadCalendar, CalendarViewMode, CalendarDayViewStyle, CalendarDayViewEventSelectedData, CalendarEvent } from "nativescript-ui-calendar";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { Provider } from "../../shared/models/provider.model";
 

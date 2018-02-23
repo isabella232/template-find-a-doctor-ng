@@ -2,7 +2,7 @@ import { Component, ViewContainerRef, ViewChild } from "@angular/core";
 import { EventData } from "data/observable";
 import { StackLayout } from "ui/layouts/stack-layout";
 import { SearchBar } from "ui/search-bar";
-import { ListViewEventData } from "nativescript-pro-ui/listview";
+import { ListViewEventData } from "nativescript-ui-listview";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { DataItem } from "./shared/dataItem";
 import { RouterExtensions } from "nativescript-angular/router";
@@ -10,7 +10,7 @@ import { SpecialityService } from "./shared/speciality.service";
 import { AppointmentService } from "../shared/services/appointment.service";
 import { ProviderService } from "../shared/services/provider.service";
 import { Appointment } from "../shared/models/appointment.model";
-import { RadListViewComponent } from "nativescript-pro-ui/listview/angular";
+import { RadListViewComponent } from "nativescript-ui-listview/angular";
 
 @Component({
     selector: "SearchComponent",

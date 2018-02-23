@@ -2,7 +2,7 @@ import { Component, ViewContainerRef } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { Plan } from "../shared/models/plan.model";
-import { PlanService } from "./shared/plan.service";
+import { PlanService } from "../shared/services/plan.service";
 import { openUrl } from "utils/utils";
 
 @Component({
@@ -16,6 +16,7 @@ export class PlanComponent {
     item: Plan;
     user: any;
     isLoading: boolean;
+    noImage: boolean;
     private formatter: Intl.NumberFormat;
 
     constructor(
@@ -31,9 +32,11 @@ export class PlanComponent {
         this.isLoading = true;
         Kinvey.User.me().then(user => {
             this.user = user && user.data;
-            const planId = (this.user && this.user.plan_id) || "33602TX0420001";
+            const planId = (this.user && this.user.planId) || "33602TX0420001";
             return this._planService.getPlanById(planId);
         }).then(plan => {
+            // Display a placeholder when no image is available
+            this.noImage = !plan.profileImage;
             this.item = plan;
             this.isLoading = false;
         }, error => {
