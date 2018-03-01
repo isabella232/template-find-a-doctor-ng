@@ -9,12 +9,14 @@
             <Label text="Search by" class="text-muted text-uppercase t-12"></Label>
             <Label text="Reset" col="1" class="text-right m-r-5 c-cr" (tap)="onResetLabelTap()"></Label>
             <StackLayout row="1" col="0" class="pull-right m-r-30" data-name="location">
-                <Button text="&#xf041;" [class.active]="zipCode !== ''" [class.selected]="selectedFilter==='location'" class="fa filter-button" (tap)="onFilterButtonTap($event)"></Button>
+                <Button text="&#xf041;" [class.active]="zipCode !== ''" [class.selected]="selectedFilter==='location'" class="fa filter-button"
+                    (tap)="onFilterButtonTap($event)"></Button>
                 <Label text="Location" class="text-center c-cb" (tap)="onFilterButtonTap($event)"></Label>
             </StackLayout>
-            <StackLayout row="1" col="1" class="pull-left m-l-30" data-name="speciality">
-                <Button text="&#xf0fa;" [class.active]="speciality !== ''" [class.selected]="selectedFilter==='speciality'" class="fa filter-button" (tap)="onFilterButtonTap($event)"></Button>
-                <Label text="Speciality" class="text-center c-cb" (tap)="onFilterButtonTap($event)"></Label>
+            <StackLayout row="1" col="1" class="pull-left m-l-30" data-name="specialty">
+                <Button text="&#xf0fa;" [class.active]="specialty !== ''" [class.selected]="selectedFilter==='specialty'" class="fa filter-button"
+                    (tap)="onFilterButtonTap($event)"></Button>
+                <Label text="Specialty" class="text-center c-cb" (tap)="onFilterButtonTap($event)"></Label>
             </StackLayout>
         </GridLayout>
         <StackLayout class="hr-light"></StackLayout>
@@ -45,16 +47,19 @@
                 <StackLayout class="hr-light"></StackLayout>
             </StackLayout>
         </StackLayout>
-        <GridLayout rows="*" *ngIf="selectedFilter==='speciality'" class="p-l-15">
-            <RadListView [items]="specialityItems" selectionBehavior="Press" (itemSelected)="specialitySelected($event)" (itemDeselected)="specialityDeselected($event)">
+        <GridLayout rows="auto,*" *ngIf="selectedFilter==='specialty'" class="p-l-15">
+            <TextField hint="Filter..." [visibility]="!isSpecialtyLoading && (specialtyItems && specialtyItems.length) ? 'visible' : 'hidden'"
+                class="m-r-15" [(ngModel)]="filterSpecialties" (ngModelChange)="onFilterSpecialtiesChange($event)"></TextField>
+            <RadListView #specialtyListView row="1" [filteringFunction]="listFilteringFunc" [items]="specialtyItems" selectionBehavior="Press" (itemSelected)="specialtySelected($event)">
                 <ng-template tkListItemTemplate let-item="item">
                     <GridLayout class="c-bg-white p-t-10" columns="*,auto" rows="*,auto">
-                        <Label [text]="item.name" class="itemLabel t-18 p-b-10"></Label>
+                        <Label [text]="item.specialty" class="itemLabel t-18 p-b-10"></Label>
                         <Label col="1" text="&#xf00c;" [visibility]="item.selected ? 'visible':'hidden'" class="fa checkmark t-19 text-right p-r-20 p-b-10"></Label>
                         <StackLayout row="1" colspan="2" class="hr-light"></StackLayout>
                     </GridLayout>
                 </ng-template>
             </RadListView>
+            <ActivityIndicator rowSpan="2" class="activity-indicator" [busy]="isSpecialtyLoading"></ActivityIndicator>
         </GridLayout>
     </StackLayout>
     <Button *ngIf="selectedFilter!==''" text="Find Physician" class="find-button" row="2" (tap)="onFindButtonTap()"></Button>

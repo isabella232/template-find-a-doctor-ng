@@ -5,6 +5,8 @@ import { Page, Color } from "tns-core-modules/ui/page/page";
 import { CalendarSelectionEventData, RadCalendar, CalendarViewMode, CalendarDayViewStyle, CalendarDayViewEventSelectedData, CalendarEvent } from "nativescript-ui-calendar";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { Provider } from "../../shared/models/provider.model";
+import { AppointmentService } from "../../shared/services/appointment.service";
+import { Appointment } from "../../shared/models/appointment.model";
 
 @Component({
     moduleId: module.id,
@@ -19,7 +21,9 @@ export class CalendarModalViewComponent implements OnInit {
     availableText: string = "Book Now";
     unavailableText: string = "Booked";
 
-    constructor(private params: ModalDialogParams, private page: Page) {
+    constructor(private _appointmentService: AppointmentService,
+        private params: ModalDialogParams,
+        private page: Page) {
         this.dateToday = new Date();
         //set the maximum date to today + one month
         const tempDate = new Date(this.dateToday.valueOf());
@@ -83,9 +87,28 @@ export class CalendarModalViewComponent implements OnInit {
                 cancelButtonText: "Cancel"
             }).then(result => {
                 if (result) {
-                    console.log("TODO: Create appointment");
                     // TODO: Create appointment
-                    this.params.closeCallback(args.eventData);
+                    const appointment = new Appointment({
+                        pd_appointment_uuid: "ef987691-0a19-447f-814d-f8f3abbf4859",
+                        appointment_id: "UYQDUHSMIRCA",
+                        appointment_type: "OV1",
+                        patient: {
+                            "first_name": "John",
+                            "last_name": "Doe",
+                            "_uuid": "8b21f7b0-8535-11e4-a6cb-0800272e8da1",
+                            "phone": "800-555-1212",
+                            "member_id": "M000001",
+                            "birth_date": "1970-01-25",
+                            "email": "john@johndoe.com"
+                        },
+                        status: "booked",
+                        provider_scheduler_uuid: "8b21efa4-8535-11e4-a6cb-0800272e8da1",
+                        start_date: args.eventData.startDate.toISOString(),
+                        end_date: args.eventData.endDate.toISOString()
+                    });
+                    this._appointmentService.create(appointment).then(newAppointment => {
+                        this.params.closeCallback(args.eventData);
+                    });
                 }
             });
         }, error => {

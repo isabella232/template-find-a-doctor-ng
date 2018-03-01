@@ -6,7 +6,7 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { SearchRoutingModule } from "./search-routing.module";
 import { SearchComponent } from "./search.component";
 
-import { SpecialityService } from "./shared/speciality.service";
+import { SpecialtyService } from "./shared/specialty.service";
 import { ProviderService } from "../shared/services/provider.service";
 
 import { SharedModule } from "../shared/shared.module";
@@ -23,7 +23,7 @@ import { SharedModule } from "../shared/shared.module";
         SearchComponent
     ],
     providers: [
-        SpecialityService
+        SpecialtyService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

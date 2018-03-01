@@ -11,57 +11,61 @@ export class AppointmentService {
     private _appointmentStore = Kinvey.DataStore.collection<Appointment>("Appointments");
     private _appointmentsPromise: Promise<any>;
 
-    getAppointmentById(id: string): Promise<any> {
-        const query = new Kinvey.Query();
-        query.equalTo("appointment_id", id);
-        return this._appointmentStore.find(query).toPromise()
-            .then(data => {
-                return data[0];
-            })
-            .catch((error: Kinvey.BaseError) => {
-                alert({
-                    title: "Oops something went wrong.",
-                    message: error.message,
-                    okButtonText: "Ok"
-                });
+    load(): Promise<Appointment[]> {
+
+        return this._appointmentStore.sync().then(() => {
+            const sortByDateQuery = new Kinvey.Query();
+            sortByDateQuery.ascending("start_date");
+            const stream = this._appointmentStore.find(sortByDateQuery);
+
+            return stream.toPromise();
+        }).then((data) => {
+            this._appointments = [];
+            data.forEach((appointmentData: any) => {
+                const appointment = new Appointment(appointmentData);
+                this._appointments.push(appointment);
             });
+
+            return this._appointments;
+        }).catch((error: Kinvey.BaseError) => {
+            alert({
+                title: "Oops something went wrong.",
+                message: error.message,
+                okButtonText: "Ok"
+            });
+            return null;
+        });
     }
 
-    getAppointments(): Promise<Appointment[]> {
-        if (!this._appointmentsPromise) {
-            this._appointmentsPromise = this._appointmentStore.find().toPromise()
-                .then((data) => {
-                    const appointments = [];
+    create(appointment: Appointment): Promise<Appointment> {
+        return this._appointmentStore.create(appointment).catch((error: Kinvey.BaseError) => {
+            alert({
+                title: "Oops something went wrong.",
+                message: error.message,
+                okButtonText: "Ok"
+            });
+            return null;
+        });
+    }
 
-                    if (data && data.length) {
-                        data.forEach((appointmentData: any) => {
-                            const appointment = new Appointment(appointmentData);
-                            appointments.push(appointment);
-							//TODO: remove test appointments added here
-                            const appointment2 = new Appointment(appointmentData);
-                            appointment2.start_date = new Date(2017, 4, 4, 13, 0).toString();
-                            appointment2.end_date = new Date(2017, 4, 4, 14, 0).toString();
-                            appointments.push(appointment2);
-                            const appointment3 = new Appointment(appointmentData);
-                            appointment3.start_date = new Date(2018, 4, 4, 13, 0).toString();
-                            appointment3.end_date = new Date(2018, 4, 4, 14, 0).toString();
-                            appointments.push(appointment3);
-                        });
-                    }
+    delete(appointment: Appointment): Promise<{ count: number }> {
+        return this._appointmentStore.removeById(appointment._id).catch((error: Kinvey.BaseError) => {
+            alert({
+                title: "Oops something went wrong.",
+                message: error.message,
+                okButtonText: "Ok"
+            });
+            return { count: 0 };
+        });
+    }
 
-                    this._appointments = appointments;
-
-                    return appointments;
-                })
-                .catch((error: Kinvey.BaseError) => {
-                    alert({
-                        title: "Oops something went wrong.",
-                        message: error.message,
-                        okButtonText: "Ok"
-                    });
-                });
+    getAppointmentById(id: string): Appointment {
+        if (!id) {
+            return;
         }
 
-        return this._appointmentsPromise;
+        return this._appointments.filter((appointment) => {
+            return appointment.appointment_id === id;
+        })[0];
     }
 }

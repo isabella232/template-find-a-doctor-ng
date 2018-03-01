@@ -3,3 +3,8 @@
 .action-button {
     padding-right: 15;
 }
+
+.platform-button {
+    border-radius: 1;
+    padding: 0;
+}

@@ -135,11 +135,14 @@ export class ResultDetailComponent {
 	onCancelButtonTap(dataItem: Provider): void {
 		if (this.appointmentId) {
 			let data;
+			this.isLoading = true;
 			Kinvey.User.me().then(user => {
 				data = user && user.data as any;
-				return this._appointmentService.getAppointmentById(this.appointmentId);
-			}).then(appointment => {
+				return this._appointmentService.load();
+			}).then(appointments => {
+				const appointment = this._appointmentService.getAppointmentById(this.appointmentId);
 				const startDate = new Date(appointment.start_date);
+				this.isLoading = false;
 				dialogs.confirm({
 					title: `Dear ${(data && data.givenName) || "patient"}`,
 					message: `You are canceling the appointment with ${this.title} on ${startDate.toLocaleString()}`,
@@ -147,9 +150,9 @@ export class ResultDetailComponent {
 					cancelButtonText: "Cancel"
 				}).then(result => {
 					if (result) {
-						console.log("TODO: Delete appointment with ID " + this.appointmentId);
-						// TODO: Delete appointment
-						this.goToSearch();
+						this._appointmentService.delete(appointment).then(count => {
+							this.goToSearch();
+						})
 					}
 				});
 			}, error => {
@@ -158,6 +161,7 @@ export class ResultDetailComponent {
 					message: error.message,
 					okButtonText: "Ok"
 				});
+				this.isLoading = false;
 			});
 		}
 	}
