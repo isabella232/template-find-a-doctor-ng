@@ -47,7 +47,7 @@ export class SearchComponent {
         this.specialty = "";
         this.isSpecialtyLoading = true;
         const filterFunc = (item: Specialty): boolean => {
-            return item.specialty.includes(this.filterSpecialties);
+            return item.specialty.toLowerCase().includes(this.filterSpecialties.toLowerCase());
         };
         this.listFilteringFunc = filterFunc.bind(this);
         this._specialtyService.getSpecialties().then(specialities => {

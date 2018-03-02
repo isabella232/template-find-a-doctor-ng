@@ -48,7 +48,7 @@
             </StackLayout>
         </StackLayout>
         <GridLayout rows="auto,*" *ngIf="selectedFilter==='specialty'" class="p-l-15">
-            <TextField hint="Filter..." [visibility]="!isSpecialtyLoading && (specialtyItems && specialtyItems.length) ? 'visible' : 'hidden'"
+            <TextField autocapitalizationType="none" hint="Filter..." [visibility]="!isSpecialtyLoading && (specialtyItems && specialtyItems.length) ? 'visible' : 'hidden'"
                 class="m-r-15" [(ngModel)]="filterSpecialties" (ngModelChange)="onFilterSpecialtiesChange($event)"></TextField>
             <RadListView #specialtyListView row="1" [filteringFunction]="listFilteringFunc" [items]="specialtyItems" selectionBehavior="Press" (itemSelected)="specialtySelected($event)">
                 <ng-template tkListItemTemplate let-item="item">
