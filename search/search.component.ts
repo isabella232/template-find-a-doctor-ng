@@ -27,7 +27,7 @@ export class SearchComponent {
     zipCode: string;
     filterSpecialties: string;
     isSpecialtyLoading: boolean;
-    listFilteringFunc: Function;
+    specialtyFilteringFunc: Function;
 
     @ViewChild("recentItemsListView") recentItemsListView: RadListViewComponent;
     @ViewChild("specialtyListView") specialtyListView: RadListViewComponent;
@@ -49,7 +49,7 @@ export class SearchComponent {
         const filterFunc = (item: Specialty): boolean => {
             return item.specialty.toLowerCase().includes(this.filterSpecialties.toLowerCase());
         };
-        this.listFilteringFunc = filterFunc.bind(this);
+        this.specialtyFilteringFunc = filterFunc.bind(this);
         this._specialtyService.getSpecialties().then(specialities => {
             this.specialtyItems = new ObservableArray<Specialty>(specialities);
             this.isSpecialtyLoading = false;
@@ -155,5 +155,9 @@ export class SearchComponent {
         var endDate = item && item.end_date && new Date(item.end_date);
         // non-braking space used to force Outdated group to be at the bottom
         return (endDate && (endDate > new Date())) ? " Your Recent Appointments" : "\u00a0Outdated";
+    }
+
+    specialtyGroupingFunc(item: Specialty): any {
+        return item.specialty[0].toUpperCase();
     }
 }
