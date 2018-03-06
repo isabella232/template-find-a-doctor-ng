@@ -20,6 +20,11 @@ export class SpecialtyService {
 
                     if (data && data.length) {
                         data.forEach((specialtyData: any) => {
+                            //TODO: remove this hack when specialties are updated
+                            if (specialtyData.specialty) {
+                                specialtyData.specialty = specialtyData.specialty.charAt(0).toUpperCase() + specialtyData.specialty.slice(1);
+                            }
+                            
                             const specialty = new Specialty(specialtyData);
                             this._specialities.push(specialty);
                         });

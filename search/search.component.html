@@ -6,15 +6,15 @@
 <GridLayout rows="auto,*,auto" columns="*">
     <StackLayout>
         <GridLayout rows="auto,auto" columns="*,*" class="m-t-10 p-l-15 p-r-15">
-            <Label text="Search by" class="text-muted text-uppercase t-12"></Label>
-            <Label text="Reset" col="1" class="text-right m-r-5 c-cr" (tap)="onResetLabelTap()"></Label>
+            <Label [visibility]="hideFilters ? 'collapsed' : 'visible'" text="Search by" class="text-muted text-uppercase t-12"></Label>
+            <Label [visibility]="hideFilters ? 'collapsed' : 'visible'" text="Reset" col="1" class="text-right m-r-5 c-cr" (tap)="onResetLabelTap()"></Label>
             <StackLayout row="1" col="0" class="pull-right m-r-30" data-name="location">
-                <Button text="&#xf041;" [class.active]="zipCode !== ''" [class.selected]="selectedFilter==='location'" class="fa filter-button"
+                <Button [visibility]="hideFilters ? 'collapsed' : 'visible'" text="&#xf041;" [class.active]="zipCode !== ''" [class.selected]="selectedFilter==='location'" class="fa filter-button"
                     (tap)="onFilterButtonTap($event)"></Button>
                 <Label text="Location" class="text-center c-cb" (tap)="onFilterButtonTap($event)"></Label>
             </StackLayout>
             <StackLayout row="1" col="1" class="pull-left m-l-30" data-name="specialty">
-                <Button text="&#xf0fa;" [class.active]="specialty !== ''" [class.selected]="selectedFilter==='specialty'" class="fa filter-button"
+                <Button [visibility]="hideFilters ? 'collapsed' : 'visible'" text="&#xf0fa;" [class.active]="specialty !== ''" [class.selected]="selectedFilter==='specialty'" class="fa filter-button"
                     (tap)="onFilterButtonTap($event)"></Button>
                 <Label text="Specialty" class="text-center c-cb" (tap)="onFilterButtonTap($event)"></Label>
             </StackLayout>
@@ -49,7 +49,7 @@
         </StackLayout>
         <GridLayout rows="auto,*" *ngIf="selectedFilter==='specialty'" class="p-l-15">
             <TextField autocapitalizationType="none" hint="Filter..." [visibility]="!isSpecialtyLoading && (specialtyItems && specialtyItems.length) ? 'visible' : 'hidden'"
-                [(ngModel)]="filterSpecialties" (ngModelChange)="onFilterSpecialtiesChange($event)"></TextField>
+                [(ngModel)]="filterSpecialties" (ngModelChange)="onFilterSpecialtiesChange($event)" (focus)="hideFilters = true" (blur)="hideFilters = false"></TextField>
             <RadListView #specialtyListView [groupingFunction]="specialtyGroupingFunc" row="1" [filteringFunction]="specialtyFilteringFunc" [items]="specialtyItems" selectionBehavior="Press" (itemSelected)="specialtySelected($event)">
                 <ng-template tkListItemTemplate let-item="item">
                     <GridLayout class="c-bg-white p-t-10" columns="*,auto" rows="*,auto">

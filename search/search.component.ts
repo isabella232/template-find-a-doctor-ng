@@ -28,6 +28,7 @@ export class SearchComponent {
     filterSpecialties: string;
     isSpecialtyLoading: boolean;
     specialtyFilteringFunc: Function;
+    hideFilters: boolean;
 
     @ViewChild("recentItemsListView") recentItemsListView: RadListViewComponent;
     @ViewChild("specialtyListView") specialtyListView: RadListViewComponent;
@@ -45,6 +46,7 @@ export class SearchComponent {
         this.zipCode = "";
         this.filterSpecialties = "";
         this.specialty = "";
+        this.hideFilters = false;
         this.isSpecialtyLoading = true;
         const filterFunc = (item: Specialty): boolean => {
             return item.specialty.toLowerCase().includes(this.filterSpecialties.toLowerCase());
