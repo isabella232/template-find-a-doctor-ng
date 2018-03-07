@@ -6,12 +6,9 @@ import { Provider } from "../../shared/models/provider.model";
 
 @Injectable()
 export class ProviderService {
-    private _providers: Array<Provider>;
-
     private _providerStore = Kinvey.DataStore.collection<Provider>("Providers");
-    private _providersPromise: Promise<any>;
 
-    getProviderByNpi(npi: string): Promise<any> {
+    getProviderByNpi(npi: string): Promise<Provider> {
         const npiQuery = new Kinvey.Query();
         npiQuery.equalTo("npi", npi);
 
@@ -27,37 +24,47 @@ export class ProviderService {
                     message: error.message,
                     okButtonText: "Ok"
                 });
+                return null;
             });
     }
-
-    getProviders(): Promise<any> {
-        if (!this._providersPromise) {
-            this._providersPromise = this._providerStore.find().toPromise()
-                .then((data) => {
-                    const providers = [];
-
-                    if (data && data.length) {
-                        data.forEach((providerData: any) => {
-                            const provider = new Provider(providerData);
-                            // TODO: remove when received images display OK
-                            provider.small_image_url = "https://d585tldpucybw.cloudfront.net/sfimages/default-source/blogs/Author-images/sam_basu.jpg";
-                            providers.push(provider);
-                        });
-                    }
-
-                    this._providers = providers;
-
-                    return providers;
-                })
-                .catch((error: Kinvey.BaseError) => {
-                    alert({
-                        title: "Oops something went wrong.",
-                        message: error.message,
-                        okButtonText: "Ok"
-                    });
-                });
+    findProviders(specialty: string, zipCode: string): Promise<Provider[]> {
+        const query = new Kinvey.Query();
+        if (specialty) {
+            query.equalTo("specialty", specialty);
+        }
+        if (zipCode) {
+            (specialty ? query.and() : query).equalTo("locations.zipcode", zipCode);
         }
 
-        return this._providersPromise;
+        const providersPromise = this._providerStore.find(query).toPromise()
+            .then((data) => {
+                debugger;
+                const providers = [];
+
+                if (data && data.length) {
+                    data.forEach((providerData: any) => {
+                        const provider = new Provider(providerData);
+                        // TODO: remove when received images display OK
+                        provider.small_image_url = "https://d585tldpucybw.cloudfront.net/sfimages/default-source/blogs/Author-images/sam_basu.jpg";
+                        providers.push(provider);
+                    });
+                }
+
+                return providers;
+            })
+            .catch((error: Kinvey.BaseError) => {
+                alert({
+                    title: "Oops something went wrong.",
+                    message: error.message,
+                    okButtonText: "Ok"
+                });
+                return null;
+            });
+
+        return providersPromise;
+    }
+
+    getProviders(): Promise<Provider[]> {
+        return this.findProviders(null, null);
     }
 }

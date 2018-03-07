@@ -12,7 +12,6 @@ import { Provider } from "../shared/models/provider.model";
 })
 export class ResultsComponent {
 	title: string;
-	filter: string;
 	isLoading: boolean;
 	public resultItems: ObservableArray<Provider>;
 
@@ -28,14 +27,13 @@ export class ResultsComponent {
 		this._pageRoute.activatedRoute
 			.switchMap((activatedRoute) => activatedRoute.params)
 			.forEach((params) => {
-				this.filter = JSON.stringify(params);
-				this._providerService.getProviders()
+				params = params || {};
+				this._providerService.findProviders(params.specialty, params.zipCode)
 					.then(providers => {
 						this.isLoading = false;
-						this.resultItems = providers;
+						this.resultItems = new ObservableArray<Provider>(providers);
 					})
 			});
-		this.resultItems = new ObservableArray<Provider>();
 	}
 
 	onBackButtonTap(): void {

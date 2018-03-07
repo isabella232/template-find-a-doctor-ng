@@ -56,7 +56,7 @@
                 [items]="specialtyItems" selectionBehavior="Press" (itemSelected)="specialtySelected($event)">
                 <ng-template tkListItemTemplate let-item="item">
                     <GridLayout class="c-bg-white p-t-10 p-l-15" columns="*,auto" rows="*,auto">
-                        <Label [text]="item.specialty" class="itemLabel t-18 p-b-10"></Label>
+                        <Label [text]="capitalize(item.specialty)" class="itemLabel t-18 p-b-10"></Label>
                         <Label col="1" text="&#xf00c;" [visibility]="item.selected ? 'visible':'hidden'" class="fa checkmark t-19 text-right p-r-20 p-b-10"></Label>
                         <StackLayout row="1" colspan="2" class="hr-light"></StackLayout>
                     </GridLayout>

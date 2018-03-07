@@ -161,6 +161,10 @@ export class SearchComponent {
         return (endDate && (endDate > new Date()))
     }
 
+    capitalize(item: string): string {
+        return item ? item.charAt(0).toUpperCase() + item.slice(1) : "";
+    }
+
     specialtyGroupingFunc(item: Specialty): any {
         return item.specialty[0].toUpperCase();
     }
