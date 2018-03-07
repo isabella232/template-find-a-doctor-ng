@@ -53,15 +53,4 @@ export class ResultsComponent {
 				}
 			});
 	}
-	
-	onProfileButtonTap() {
-        this._routerExtensions.navigate(["/plan"],
-            {
-                animated: true,
-                transition: {
-                    name: "fade",
-                    duration: 200
-                }
-            });
-    }
 }

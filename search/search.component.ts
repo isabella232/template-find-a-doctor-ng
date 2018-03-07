@@ -28,7 +28,7 @@ export class SearchComponent {
     filterSpecialties: string;
     isSpecialtyLoading: boolean;
     specialtyFilteringFunc: Function;
-    hideFilters: boolean;
+    appointmentsGroupingFunc: Function;
 
     @ViewChild("recentItemsListView") recentItemsListView: RadListViewComponent;
     @ViewChild("specialtyListView") specialtyListView: RadListViewComponent;
@@ -46,12 +46,17 @@ export class SearchComponent {
         this.zipCode = "";
         this.filterSpecialties = "";
         this.specialty = "";
-        this.hideFilters = false;
         this.isSpecialtyLoading = true;
         const filterFunc = (item: Specialty): boolean => {
             return item.specialty.toLowerCase().includes(this.filterSpecialties.toLowerCase());
         };
         this.specialtyFilteringFunc = filterFunc.bind(this);
+        const groupingFunc = (item: Appointment): string => {
+            // non-braking space used to force Outdated group to be at the bottom
+            return this.isRecent(item) ? " Your Recent Appointments" : "\u00a0Outdated";
+        }
+        this.appointmentsGroupingFunc = groupingFunc.bind(this);
+
         this._specialtyService.getSpecialties().then(specialities => {
             this.specialtyItems = new ObservableArray<Specialty>(specialities);
             this.isSpecialtyLoading = false;
@@ -59,11 +64,10 @@ export class SearchComponent {
         this._appointmentService.load()
             .then(appointments => {
                 // TODO: enable group header template when exposed by listview
-                // (<any>this.recentItemsListView.listView).defaultGroupTemplate = '<StackLayout class="m-b-15"><Label text="{{ category }}" class="header text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label><StackLayout class="hr-light"></StackLayout></StackLayout>';
+                // (<any>this.recentItemsListView.listView).defaultGroupTemplate = '<StackLayout class="m-b-15"><Label text="{{ category }}" class="text-muted text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label><StackLayout class="hr-light"></StackLayout></StackLayout>';
                 this.recentItems = new ObservableArray(appointments);
             });
     }
-
 
     onResetLabelTap() {
         this.selectedFilter = "";
@@ -78,12 +82,6 @@ export class SearchComponent {
     }
 
     onFindButtonTap(args: EventData) {
-        // hide keyboard if search is still focused
-        if (args) {
-            const searchTextBar = <SearchBar>args.object;
-            searchTextBar.dismissSoftInput();
-        }
-
         let filter = {
             zipCode: this.zipCode,
             specialty: this.specialty
@@ -131,8 +129,13 @@ export class SearchComponent {
     }
 
     getStartTime(start: string): string {
-        var parsed = start && new Date(start);
-        return parsed && parsed.toLocaleString();
+        const parsed = start && new Date(start);
+        let result = "";
+        if (parsed) {
+            const locale = "en-us", hours = parsed.getHours(), minutes = parsed.getMinutes();
+            result = `${parsed.toLocaleDateString(locale)}, at ${hours % 12 === 0 ? 12 : hours % 12}:${minutes > 10 ? minutes : '0' + minutes}${hours < 12 ? 'AM' : 'PM'}.`;
+        }
+        return result;
     }
 
     onAppointmentTap(appointment: Appointment) {
@@ -153,13 +156,19 @@ export class SearchComponent {
         this.specialtyListView.listView.refresh();
     }
 
-    listGroupingFunc(item: Appointment): any {
+    isRecent(item: Appointment): boolean {
         var endDate = item && item.end_date && new Date(item.end_date);
-        // non-braking space used to force Outdated group to be at the bottom
-        return (endDate && (endDate > new Date())) ? " Your Recent Appointments" : "\u00a0Outdated";
+        return (endDate && (endDate > new Date()))
     }
 
     specialtyGroupingFunc(item: Specialty): any {
         return item.specialty[0].toUpperCase();
+    }
+
+    onSpecialtyFilterSubmit(args: EventData) {
+        if (args) {
+            const searchTextBar = <SearchBar>args.object;
+            searchTextBar.dismissSoftInput();
+        }
     }
 }

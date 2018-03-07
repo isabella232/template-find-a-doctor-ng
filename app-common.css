@@ -36,11 +36,6 @@ refer to http://docs.nativescript.org/ui/theme.
     font-size: 24;
 }
 
-.header {
-    background-color: #efeff4;
-    color: #6d6d72;
-}
-
 .itemLabel {
     color: #000000;
 }
