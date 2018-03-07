@@ -1,8 +1,11 @@
-<GridLayout rows="auto,*,auto" width="100%" height="80%">
-    <StackLayout>
-        <Label text="Pick a date and time for your appointment" textWrap="true" *ngIf="showHeader" class="text-center text-muted t-16"></Label>
+<GridLayout rows="auto,*,auto" columns="*,auto" width="100%" height="80%">
+    <StackLayout colSpan="2" class="c-bg-cb p-15" *ngIf="showHeader">
+        <Label text="Pick a date and time for your appointment" textWrap="true" class="t-16 c-white"></Label>
+        <Label [text]="selectedDate.getFullYear()" class="t-16 text-muted"></Label>
+        <Label [text]="formatDate(selectedDate)" class="t-30 c-white font-weight-bold"></Label>
     </StackLayout>
-    <RadCalendar row="1" viewMode="Month" transitionMode="Slide" selectionMode="Single" (dateSelected)="onCalendarDateSelected($event)"
+    <RadCalendar #appointmentDayPicker row="1" colSpan="2" viewMode="Month" transitionMode="Slide" selectionMode="Single" (dateSelected)="onCalendarDateSelected($event)"
         (dayViewEventSelected)="onCalendarEventSelected($event)" [minDate]="dateToday" [maxDate]="dateNextMonth" [dayViewStyle]="getDayViewStyle()"></RadCalendar>
-    <Button row="2" class="cancel-button" text="Cancel" (tap)="onCloseButtonTap()"></Button>
+    <Button row="2" class="c-cb modal-button pull-right" text="Cancel" (tap)="onCloseButtonTap()"></Button>
+    <Button row="2" col="1" class="c-cb modal-button" text="OK" (tap)="onOkButtonTap()" *ngIf="showHeader"></Button>
 </GridLayout>

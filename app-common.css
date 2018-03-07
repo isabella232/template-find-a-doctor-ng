@@ -31,6 +31,10 @@ refer to http://docs.nativescript.org/ui/theme.
     background-color: #efeff4;
 }
 
+.c-bg-cb {
+    background-color: #5b57d9;
+}
+
 .action-button {
     color: #5b57d9;
     font-size: 24;
@@ -65,4 +69,10 @@ refer to http://docs.nativescript.org/ui/theme.
     height: 36;
     width: 70%;
     text-transform: none;
+}
+
+.modal-button {
+    border-color: transparent;
+    border-width: 1;
+    background-color: transparent;
 }

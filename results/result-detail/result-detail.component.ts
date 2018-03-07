@@ -140,9 +140,13 @@ export class ResultDetailComponent {
 				data = user && user.data as any;
 				return this._appointmentService.load();
 			}).then(appointments => {
-				const appointment = this._appointmentService.getAppointmentById(this.appointmentId);
-				const startDate = new Date(appointment.start_date);
 				this.isLoading = false;
+				const appointment = this._appointmentService.getAppointmentById(this.appointmentId);
+				if (!appointment) {
+					return;
+				}
+				
+				const startDate = new Date(appointment.start_date);
 				dialogs.confirm({
 					title: `Dear ${(data && data.givenName) || "patient"}`,
 					message: `You are canceling the appointment with ${this.title} on ${startDate.toLocaleString()}`,

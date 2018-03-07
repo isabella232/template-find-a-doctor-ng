@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { ModalDialogParams } from "nativescript-angular/modal-dialog";
 import { Page, Color } from "tns-core-modules/ui/page/page";
 import { CalendarSelectionEventData, RadCalendar, CalendarViewMode, CalendarDayViewStyle, CalendarDayViewEventSelectedData, CalendarEvent } from "nativescript-ui-calendar";
+import { RadCalendarComponent } from "nativescript-ui-calendar/angular/calendar-directives";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { Provider } from "../../shared/models/provider.model";
 import { AppointmentService } from "../../shared/services/appointment.service";
@@ -20,11 +21,15 @@ export class CalendarModalViewComponent implements OnInit {
     item: Provider;
     availableText: string = "Book Now";
     unavailableText: string = "Booked";
+    selectedDate: Date;
+
+    @ViewChild("appointmentDayPicker") appointmentDayPicker: RadCalendarComponent;
 
     constructor(private _appointmentService: AppointmentService,
         private params: ModalDialogParams,
         private page: Page) {
         this.dateToday = new Date();
+        this.selectedDate = this.dateToday;
         //set the maximum date to today + one month
         const tempDate = new Date(this.dateToday.valueOf());
         tempDate.setMonth(tempDate.getMonth() + 1);
@@ -39,29 +44,31 @@ export class CalendarModalViewComponent implements OnInit {
 
     ngOnInit() {
         this.showHeader = true;
+        this.appointmentDayPicker.calendar.selectedDate = this.dateToday;
     }
 
     onCloseButtonTap() {
-        this.params.closeCallback();
+        const calendar = this.appointmentDayPicker.calendar;
+        if (calendar.viewMode === CalendarViewMode.Day) {
+            calendar.eventSource = [];
+            calendar.viewMode = CalendarViewMode.Month;
+            this.showHeader = true;
+        } else {
+            this.params.closeCallback();
+        }
     }
 
-    onCalendarDateSelected(args: CalendarSelectionEventData) {
-        const calendar = <RadCalendar>args.object;
-        if (calendar.viewMode !== CalendarViewMode.Day) {
-            this.showHeader = false;
-            calendar.displayedDate = args.date;
-            calendar.viewMode = CalendarViewMode.Day;
-        }
+    _updateCalendarAppointments() {
         // TODO: Retrieve open slots and set calendar.eventSource here
         // in this example we simply generate slots every 30 min and randomly assign free/busy 
-        let rSeed = args.date.getMonth() * 100 + args.date.getDate();
+        let rSeed = this.selectedDate.getMonth() * 100 + this.selectedDate.getDate();
         const seedRandom = () => {
             rSeed = rSeed = (rSeed * 9301 + 49297) % 233280;
             return rSeed / 233280;
         }
         const testEvents = [];
         for (let startTime = 0; startTime < 16; startTime++) {
-            const startDate = new Date(args.date.getFullYear(), args.date.getMonth(), args.date.getDate(),
+            const startDate = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate(),
                 9 + Math.floor(startTime / 2), 30 * (startTime % 2), 0, 0);
             const endDate = new Date(startDate.valueOf());
             endDate.setMinutes(endDate.getMinutes() + 30);
@@ -69,7 +76,26 @@ export class CalendarModalViewComponent implements OnInit {
             const testEvent = new CalendarEvent(isBusy ? this.unavailableText : this.availableText, startDate, endDate, false, isBusy ? new Color("Gray") : new Color("Green"));
             testEvents.push(testEvent);
         }
-        calendar.eventSource = testEvents;
+        this.appointmentDayPicker.eventSource = testEvents;
+    }
+
+    onCalendarDateSelected(args: CalendarSelectionEventData) {
+        this.selectedDate = args.date;
+        if (args.object.viewMode === CalendarViewMode.Day) {
+            this._updateCalendarAppointments();
+        }
+    }
+
+    onOkButtonTap() {
+        const calendar = this.appointmentDayPicker.calendar;
+
+        if (calendar.viewMode !== CalendarViewMode.Day) {
+            this.showHeader = false;
+            calendar.displayedDate = this.selectedDate;
+            calendar.viewMode = CalendarViewMode.Day;
+        }
+
+        this._updateCalendarAppointments();
     }
 
     onCalendarEventSelected(args: CalendarDayViewEventSelectedData) {
@@ -133,4 +159,9 @@ export class CalendarModalViewComponent implements OnInit {
         return dayViewStyle;
     }
 
+    formatDate(date: Date): string {
+        const split = date.toDateString().split(" ");
+        split.pop();
+        return split.join(" ");
+    }
 }
