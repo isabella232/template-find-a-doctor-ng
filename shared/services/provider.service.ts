@@ -38,7 +38,6 @@ export class ProviderService {
 
         const providersPromise = this._providerStore.find(query).toPromise()
             .then((data) => {
-                debugger;
                 const providers = [];
 
                 if (data && data.length) {
