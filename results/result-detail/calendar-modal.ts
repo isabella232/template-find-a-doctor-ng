@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { ModalDialogParams } from "nativescript-angular/modal-dialog";
 import { Page, Color } from "tns-core-modules/ui/page/page";
-import { CalendarSelectionEventData, RadCalendar, CalendarViewMode, CalendarDayViewStyle, CalendarDayViewEventSelectedData, CalendarEvent } from "nativescript-ui-calendar";
+import { CalendarSelectionEventData, RadCalendar, CalendarViewMode, CalendarDayViewStyle, CalendarDayViewEventSelectedData, CalendarEvent, CalendarMonthViewStyle, DayCellStyle } from "nativescript-ui-calendar";
 import { RadCalendarComponent } from "nativescript-ui-calendar/angular/calendar-directives";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { Provider } from "../../shared/models/provider.model";
@@ -157,6 +157,38 @@ export class CalendarModalViewComponent implements OnInit {
         dayViewStyle.showTitle = true;
 
         return dayViewStyle;
+    }
+
+    getMonthViewStyle(): CalendarMonthViewStyle {
+        const monthViewStyle = new CalendarMonthViewStyle();
+        monthViewStyle.backgroundColor = "white";
+        monthViewStyle.showTitle = true;
+        monthViewStyle.showWeekNumbers = false;
+        monthViewStyle.showDayNames = true;
+        monthViewStyle.selectionShape = "Round";
+        monthViewStyle.selectionShapeSize = 25;
+        monthViewStyle.selectionShapeColor = "Red";
+
+        const todayCellStyle = new DayCellStyle();
+        todayCellStyle.cellBackgroundColor = "white";
+        todayCellStyle.cellBorderWidth = 1;
+        todayCellStyle.cellBorderColor = "transparent";
+        todayCellStyle.cellTextColor = "blue";
+        monthViewStyle.todayCellStyle = todayCellStyle;
+
+        const dayCellStyle = new DayCellStyle();
+        dayCellStyle.cellAlignment = "Center"; // HACK
+        dayCellStyle.cellBackgroundColor = "white";
+        dayCellStyle.cellBorderWidth = 1;
+        dayCellStyle.cellBorderColor = "transparent";
+        dayCellStyle.cellTextColor = "#745151";
+        monthViewStyle.dayCellStyle = dayCellStyle;
+
+        const selectedCellStyle = new DayCellStyle();
+        selectedCellStyle.cellTextColor = "white";
+        monthViewStyle.selectedDayCellStyle = selectedCellStyle;
+
+        return monthViewStyle;
     }
 
     formatDate(date: Date): string {

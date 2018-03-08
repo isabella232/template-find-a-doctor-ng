@@ -8,18 +8,31 @@ import { Appointment } from "../models/appointment.model";
 export class AppointmentService {
     private _appointments: Array<Appointment>;
 
-    private _appointmentStore = Kinvey.DataStore.collection<Appointment>("Appointments");
-    private _appointmentsPromise: Promise<any>;
+    private _appointmentStore = Kinvey.DataStore.collection<Appointment>("Appointments", Kinvey.DataStoreType.Network);
 
-    load(): Promise<Appointment[]> {
+    getAppointmentById(id: string): Promise<Appointment> {
+        const appointmentIdQuery = new Kinvey.Query();
+        appointmentIdQuery.equalTo("appointment_id", id);
+        return this._appointmentStore.find(appointmentIdQuery).toPromise<any>().then((data) => {
+            if (data && data.length) {
+                return new Appointment(data[0]);
+            } else {
+                return null;
+            }
+        }).catch((error: Kinvey.BaseError) => {
+            alert({
+                title: "Oops something went wrong.",
+                message: error.message,
+                okButtonText: "Ok"
+            });
+            return null;
+        });
+    }
 
-        return this._appointmentStore.sync().then(() => {
-            const sortByDateQuery = new Kinvey.Query();
-            sortByDateQuery.ascending("start_date");
-            const stream = this._appointmentStore.find(sortByDateQuery);
-
-            return stream.toPromise();
-        }).then((data) => {
+    getAppointments(): Promise<Appointment[]> {
+        const sortByDateQuery = new Kinvey.Query();
+        sortByDateQuery.ascending("start_date");
+        return this._appointmentStore.find(sortByDateQuery).toPromise<Appointment[]>().then((data) => {
             this._appointments = [];
             data.forEach((appointmentData: any) => {
                 const appointment = new Appointment(appointmentData);
@@ -57,15 +70,5 @@ export class AppointmentService {
             });
             return { count: 0 };
         });
-    }
-
-    getAppointmentById(id: string): Appointment {
-        if (!id) {
-            return;
-        }
-
-        return this._appointments.filter((appointment) => {
-            return appointment.appointment_id === id;
-        })[0];
     }
 }

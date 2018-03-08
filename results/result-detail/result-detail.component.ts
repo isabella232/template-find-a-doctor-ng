@@ -138,10 +138,9 @@ export class ResultDetailComponent {
 			this.isLoading = true;
 			Kinvey.User.me().then(user => {
 				data = user && user.data as any;
-				return this._appointmentService.load();
-			}).then(appointments => {
+				return this._appointmentService.getAppointmentById(this.appointmentId);
+			}).then(appointment => {
 				this.isLoading = false;
-				const appointment = this._appointmentService.getAppointmentById(this.appointmentId);
 				if (!appointment) {
 					return;
 				}
