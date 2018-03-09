@@ -44,7 +44,16 @@ export class CalendarModalViewComponent implements OnInit {
 
     ngOnInit() {
         this.showHeader = true;
-        this.appointmentDayPicker.calendar.selectedDate = this.dateToday;
+        const calendar = this.appointmentDayPicker.calendar;
+        calendar.monthViewStyle = new CalendarMonthViewStyle();
+        if (calendar.android) {
+            calendar.android.setShowGridLines(false);
+            // Set the beginning / end of the day view events list to be 8 AM / 6 PM
+            calendar.android.getDayView().getDayEventsViewStyle().setStartTime(8 * 60 * 60 * 1000)
+            calendar.android.getDayView().getDayEventsViewStyle().setEndTime(18 * 60 * 60 * 1000)
+        }
+        calendar.selectedDate = this.dateToday;
+
     }
 
     onCloseButtonTap() {
@@ -66,7 +75,7 @@ export class CalendarModalViewComponent implements OnInit {
             rSeed = rSeed = (rSeed * 9301 + 49297) % 233280;
             return rSeed / 233280;
         }
-        const testEvents = [];
+        const testEvents: Array<CalendarEvent> = [];
         for (let startTime = 0; startTime < 16; startTime++) {
             const startDate = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate(),
                 9 + Math.floor(startTime / 2), 30 * (startTime % 2), 0, 0);
@@ -76,6 +85,7 @@ export class CalendarModalViewComponent implements OnInit {
             const testEvent = new CalendarEvent(isBusy ? this.unavailableText : this.availableText, startDate, endDate, false, isBusy ? new Color("Gray") : new Color("Green"));
             testEvents.push(testEvent);
         }
+
         this.appointmentDayPicker.eventSource = testEvents;
     }
 
