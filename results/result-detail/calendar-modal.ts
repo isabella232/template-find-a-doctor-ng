@@ -90,7 +90,7 @@ export class CalendarModalViewComponent implements OnInit {
     }
 
     onCalendarDateSelected(args: CalendarSelectionEventData) {
-        if (this.selectedDate !== args.date) {
+        if (this.selectedDate.getTime() !== args.date.getTime()) {
             this.selectedDate = args.date;
             if (args.object.viewMode === CalendarViewMode.Day) {
                 this._updateCalendarAppointments();
@@ -105,10 +105,9 @@ export class CalendarModalViewComponent implements OnInit {
             this.showHeader = false;
             calendar.displayedDate = this.selectedDate;
             calendar.viewMode = CalendarViewMode.Day;
-            const anyCalendar = <any>calendar; // HACK: ios property not exposed yet
-            if (anyCalendar._ios && anyCalendar._ios.presenter.dayView) {
-                anyCalendar._ios.presenter.dayView.eventsView.startTime = 8 * 3600;
-                anyCalendar._ios.presenter.dayView.eventsView.endTime = 18 * 3600;
+            if (calendar.ios && calendar.ios.presenter.dayView) {
+                calendar.ios.presenter.dayView.eventsView.startTime = 8 * 3600;
+                calendar.ios.presenter.dayView.eventsView.endTime = 18 * 3600;
             }
         }
 
