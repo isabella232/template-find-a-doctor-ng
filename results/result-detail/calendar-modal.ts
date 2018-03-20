@@ -90,9 +90,11 @@ export class CalendarModalViewComponent implements OnInit {
     }
 
     onCalendarDateSelected(args: CalendarSelectionEventData) {
-        this.selectedDate = args.date;
-        if (args.object.viewMode === CalendarViewMode.Day) {
-            this._updateCalendarAppointments();
+        if (this.selectedDate !== args.date) {
+            this.selectedDate = args.date;
+            if (args.object.viewMode === CalendarViewMode.Day) {
+                this._updateCalendarAppointments();
+            }
         }
     }
 
@@ -103,6 +105,11 @@ export class CalendarModalViewComponent implements OnInit {
             this.showHeader = false;
             calendar.displayedDate = this.selectedDate;
             calendar.viewMode = CalendarViewMode.Day;
+            const anyCalendar = <any>calendar; // HACK: ios property not exposed yet
+            if (anyCalendar._ios && anyCalendar._ios.presenter.dayView) {
+                anyCalendar._ios.presenter.dayView.eventsView.startTime = 8 * 3600;
+                anyCalendar._ios.presenter.dayView.eventsView.endTime = 18 * 3600;
+            }
         }
 
         this._updateCalendarAppointments();
@@ -170,13 +177,14 @@ export class CalendarModalViewComponent implements OnInit {
     }
 
     getMonthViewStyle(): CalendarMonthViewStyle {
+        const calendar = this.appointmentDayPicker.calendar;
         const monthViewStyle = new CalendarMonthViewStyle();
         monthViewStyle.backgroundColor = "white";
         monthViewStyle.showTitle = true;
         monthViewStyle.showWeekNumbers = false;
         monthViewStyle.showDayNames = true;
         monthViewStyle.selectionShape = "Round";
-        monthViewStyle.selectionShapeSize = 25;
+        monthViewStyle.selectionShapeSize = calendar.android ? 25 : 15;
         monthViewStyle.selectionShapeColor = "Red";
 
         const todayCellStyle = new DayCellStyle();
@@ -187,7 +195,9 @@ export class CalendarModalViewComponent implements OnInit {
         monthViewStyle.todayCellStyle = todayCellStyle;
 
         const dayCellStyle = new DayCellStyle();
-        dayCellStyle.cellAlignment = "Center"; // HACK
+        if (calendar.android) {
+            dayCellStyle.cellAlignment = "Center"; // HACK: set an invalid value in Android to actually center the content
+        }
         dayCellStyle.cellBackgroundColor = "white";
         dayCellStyle.cellBorderWidth = 1;
         dayCellStyle.cellBorderColor = "transparent";
@@ -195,6 +205,8 @@ export class CalendarModalViewComponent implements OnInit {
         monthViewStyle.dayCellStyle = dayCellStyle;
 
         const selectedCellStyle = new DayCellStyle();
+        selectedCellStyle.cellBorderWidth = 1;
+        selectedCellStyle.cellBorderColor = "transparent";
         selectedCellStyle.cellTextColor = "white";
         monthViewStyle.selectedDayCellStyle = selectedCellStyle;
 

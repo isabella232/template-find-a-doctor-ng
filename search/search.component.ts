@@ -47,6 +47,7 @@ export class SearchComponent {
         this.filterSpecialties = "";
         this.specialty = "";
         this.isSpecialtyLoading = true;
+        this.recentItems = new ObservableArray<Appointment>(0);
         const filterFunc = (item: Specialty): boolean => {
             return item.specialty.toLowerCase().includes(this.filterSpecialties.toLowerCase());
         };
@@ -65,7 +66,9 @@ export class SearchComponent {
             .then(appointments => {
                 // TODO: enable group header template when exposed by listview
                 // (<any>this.recentItemsListView.listView).defaultGroupTemplate = '<StackLayout class="m-b-15"><Label text="{{ category }}" class="text-muted text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label><StackLayout class="hr-light"></StackLayout></StackLayout>';
-                this.recentItems = new ObservableArray(appointments);
+                if (appointments) {
+                    this.recentItems = new ObservableArray(appointments);
+                }
             });
     }
 
