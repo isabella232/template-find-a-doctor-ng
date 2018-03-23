@@ -83,7 +83,9 @@ export class CalendarModalViewComponent implements OnInit {
             endDate.setMinutes(endDate.getMinutes() + 30);
             const isBusy = seedRandom() > 0.7;
             const testEvent = new CalendarEvent(isBusy ? this.unavailableText : this.availableText, startDate, endDate, false, isBusy ? new Color("Gray") : new Color("Green"));
-            testEvents.push(testEvent);
+            if (testEvent.startDate.getTime() > (new Date()).getTime()) {
+                testEvents.push(testEvent);
+            }
         }
 
         this.appointmentDayPicker.eventSource = testEvents;
