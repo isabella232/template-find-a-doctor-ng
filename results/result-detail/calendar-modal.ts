@@ -122,9 +122,10 @@ export class CalendarModalViewComponent implements OnInit {
         const selectedDate = args.eventData.startDate;
         Kinvey.User.me().then(user => {
             const data = user && user.data as any;
+
             dialogs.confirm({
                 title: `Dear ${(data && data.givenName) || "patient"}`,
-                message: `Please confirm the appointment with ${this.getProviderName(this.item)} on ${selectedDate.toLocaleString()}`,
+                message: `Please confirm the appointment with ${this.getProviderName(this.item)} on ${this._formatDateTime(selectedDate)}`,
                 okButtonText: "Confirm",
                 cancelButtonText: "Cancel"
             }).then(result => {
@@ -132,7 +133,7 @@ export class CalendarModalViewComponent implements OnInit {
                     // TODO: Create appointment
                     const appointment = new Appointment({
                         pd_appointment_uuid: "ef987691-0a19-447f-814d-f8f3abbf4859",
-                        appointment_id: "UYQDUHSMIRCA",
+                        appointment_id: this._generateId(),
                         appointment_type: "OV1",
                         patient: {
                             "first_name": "John",
@@ -216,5 +217,30 @@ export class CalendarModalViewComponent implements OnInit {
         const split = date.toDateString().split(" ");
         split.pop();
         return split.join(" ");
+    }
+
+	_formatDateTime(date: Date): string {
+        const locale = "en-us";
+        let hour = date.getHours();
+        let minutes = date.getMinutes().toString();
+        const pm = hour>=12 ? "PM" : "AM";
+
+        if (hour>12) {
+            hour-=12;
+        }
+        if (minutes.length === 1) {
+			minutes = "0" + minutes;
+		}
+
+        let formattedDate = `${date.toLocaleDateString(locale)} at ${hour}:${minutes}${pm}`;
+        return formattedDate;
+    }
+
+    _generateId(): string {
+        // e.g. "UYQDUHSMIRCA"
+        return "xxxxxxxxxxxx".replace(/x/g, () => { 
+            const r = Math.floor(Math.random() * 26) + "A".charCodeAt(0);
+            return String.fromCharCode(r);
+        })
     }
 }

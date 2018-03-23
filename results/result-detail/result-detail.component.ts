@@ -148,7 +148,7 @@ export class ResultDetailComponent {
 				const startDate = new Date(appointment.start_date);
 				dialogs.confirm({
 					title: `Dear ${(data && data.givenName) || "patient"}`,
-					message: `You are canceling the appointment with ${this.title} on ${startDate.toLocaleString()}`,
+					message: `You are canceling the appointment with ${this.title} on ${this._formatDateTime(startDate)}`,
 					okButtonText: "Confirm",
 					cancelButtonText: "Cancel"
 				}).then(result => {
@@ -168,4 +168,21 @@ export class ResultDetailComponent {
 			});
 		}
 	}
+
+	_formatDateTime(date: Date): string {
+		const locale = "en-us";
+		let hour = date.getHours();
+        let minutes = date.getMinutes().toString();
+        const pm = hour>=12 ? "PM" : "AM";
+
+        if (hour>12) {
+            hour-=12;
+        }
+        if (minutes.length === 1) {
+			minutes = "0" + minutes;
+		}
+
+        let formattedDate = `${date.toLocaleDateString(locale)} at ${hour}:${minutes}${pm}`;
+        return formattedDate;
+    }
 }
