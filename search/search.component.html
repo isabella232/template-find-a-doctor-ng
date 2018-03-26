@@ -65,5 +65,7 @@
             <ActivityIndicator rowSpan="2" class="activity-indicator" [busy]="isSpecialtyLoading"></ActivityIndicator>
         </GridLayout>
     </StackLayout>
-    <Button *ngIf="selectedFilter!==''" text="Find Physician" class="find-button" row="2" (tap)="onFindButtonTap()"></Button>
+    <StackLayout *ngIf="selectedFilter!==''" [class.c-bg-lg]="selectedFilter==='location'" class="p-b-25 p-t-10" row="2">
+        <Button text="Find Physician" class="platform-button find-button" (tap)="onFindButtonTap()"></Button>
+    </StackLayout>
 </GridLayout>

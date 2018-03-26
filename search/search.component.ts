@@ -169,7 +169,7 @@ export class SearchComponent {
     }
 
     specialtyGroupingFunc(item: Specialty): any {
-        return item.specialty[0].toUpperCase();
+        return (item && item.specialty && item.specialty[0].toUpperCase()) || "";
     }
 
     onSpecialtyFilterSubmit(args: EventData) {

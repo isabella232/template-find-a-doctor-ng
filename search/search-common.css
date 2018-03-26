@@ -23,10 +23,8 @@
 .find-button {
     background-color: #F42952;
     color: #efeff4;
-    text-transform: none;
     font-weight: bold;
-    padding-top: 10;
-    padding-bottom: 15;
+    width: 90%;
 }
 
 .checkmark {
