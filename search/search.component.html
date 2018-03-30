@@ -33,6 +33,12 @@
                         <StackLayout row="2" colSpan="3" class="hr-light m-t-10"></StackLayout>
                     </GridLayout>
                 </ng-template>
+                <ng-template tkGroupTemplate let-category="category">
+                    <StackLayout class="m-b-15">
+                        <Label [text]="category" class="text-muted t-14 p-l-15 p-t-10 p-b-7"></Label>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+                </ng-template>
             </RadListView>
         </GridLayout>
         <StackLayout *ngIf="selectedFilter==='location'">

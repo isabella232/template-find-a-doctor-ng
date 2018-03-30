@@ -30,7 +30,6 @@ export class SearchComponent {
     specialtyFilteringFunc: Function;
     appointmentsGroupingFunc: Function;
 
-    @ViewChild("recentItemsListView") recentItemsListView: RadListViewComponent;
     @ViewChild("specialtyListView") specialtyListView: RadListViewComponent;
 
     constructor(
@@ -54,7 +53,7 @@ export class SearchComponent {
         this.specialtyFilteringFunc = filterFunc.bind(this);
         const groupingFunc = (item: Appointment): string => {
             // non-braking space used to force Outdated group to be at the bottom
-            return this.isRecent(item) ? " Your Recent Appointments" : "\u00a0Outdated";
+            return this.isRecent(item) ? " Your Recent Appointments".toUpperCase() : "\u00a0Outdated".toUpperCase();
         }
         this.appointmentsGroupingFunc = groupingFunc.bind(this);
 
@@ -64,8 +63,6 @@ export class SearchComponent {
         });
         this._appointmentService.getAppointments()
             .then(appointments => {
-                // TODO: enable group header template when exposed by listview
-                // (<any>this.recentItemsListView.listView).defaultGroupTemplate = '<StackLayout class="m-b-15"><Label text="{{ category }}" class="text-muted text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label><StackLayout class="hr-light"></StackLayout></StackLayout>';
                 if (appointments) {
                     this.recentItems = new ObservableArray(appointments);
                 }
