@@ -14,8 +14,6 @@ export class ProviderService {
 
         return this._providerStore.find(npiQuery).toPromise()
             .then(data => {
-                // TODO: remove when received images display OK
-                data[0].small_image_url = "https://d585tldpucybw.cloudfront.net/sfimages/default-source/blogs/Author-images/sam_basu.jpg";
                 return data.length ? data[0] as Provider : null;
             })
             .catch((error: Kinvey.BaseError) => {
@@ -43,8 +41,6 @@ export class ProviderService {
                 if (data && data.length) {
                     data.forEach((providerData: any) => {
                         const provider = new Provider(providerData);
-                        // TODO: remove when received images display OK
-                        provider.small_image_url = "https://d585tldpucybw.cloudfront.net/sfimages/default-source/blogs/Author-images/sam_basu.jpg";
                         providers.push(provider);
                     });
                 }

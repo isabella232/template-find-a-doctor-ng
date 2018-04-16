@@ -125,7 +125,7 @@ export class SearchComponent {
 
     getProviderImage(appointment: Appointment): string {
         // TODO: get the provider's small image from the appointment
-        return "https://d585tldpucybw.cloudfront.net/sfimages/default-source/blogs/Author-images/sam_basu.jpg";
+        return "https://thumb9.shutterstock.com/display_pic_with_logo/102/172174202/stock-photo-portrait-of-confident-male-doctor-with-arms-crossed-standing-at-clinic-172174202.jpg";
     }
 
     getStartTime(start: string): string {
