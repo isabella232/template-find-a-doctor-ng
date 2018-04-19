@@ -26,7 +26,7 @@ export class PlanComponent {
 
     ngOnInit(): void {
         this.formatter = new Intl.NumberFormat("en-US", { style: 'currency', currency: 'USD' });
-        this.title = "Plan Information";
+        // this.title = "Plan Information";
         this.item = new Plan({});
         this.user = {};
         this.isLoading = true;

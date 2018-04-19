@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef, ViewChild } from "@angular/core";
+import { Component, ViewContainerRef, ViewChild, NgZone } from "@angular/core";
 import { EventData } from "data/observable";
 import { StackLayout } from "ui/layouts/stack-layout";
 import { SearchBar } from "ui/search-bar";
@@ -16,33 +16,36 @@ import { Specialty } from "./shared/specialty";
     selector: "SearchComponent",
     moduleId: module.id,
     templateUrl: "./search.component.html",
-    styleUrls: ["./search-common.css"]
+    styleUrls: ["./search-common.css"],
+    providers: [SpecialtyService, AppointmentService]
 })
 export class SearchComponent {
-    title: string;
-    selectedFilter: string;
-    specialty: string;
+    // title: string;
+    selectedFilter: string = "home";
+    specialty: string = "";
     specialtyItems: ObservableArray<Specialty>;
     recentItems: ObservableArray<any>;
-    zipCode: string;
-    filterSpecialties: string;
-    isSpecialtyLoading: boolean;
+    zipCode: string = " ";
+    filterSpecialties: string = "";
+    isSpecialtyLoading: boolean = true;
     specialtyFilteringFunc: Function;
     appointmentsGroupingFunc: Function;
 
     @ViewChild("specialtyListView") specialtyListView: RadListViewComponent;
+    @ViewChild("specialityFilterSearchBar") specialityFilterSearchBar: SearchBar;
 
     constructor(
         private _appointmentService: AppointmentService,
         private _providerService: ProviderService,
         private _specialtyService: SpecialtyService,
-        private _routerExtensions: RouterExtensions
+        private _routerExtensions: RouterExtensions,
+        private _ngZone: NgZone
     ) { }
 
     ngOnInit(): void {
-        this.title = "Find a Doctor";
-        this.selectedFilter = "";
-        this.zipCode = "";
+        // this.title = "Find a Doctor";
+        this.selectedFilter = "home";
+        this.zipCode = " ";
         this.filterSpecialties = "";
         this.specialty = "";
         this.isSpecialtyLoading = true;
@@ -60,25 +63,36 @@ export class SearchComponent {
         this._specialtyService.getSpecialties().then(specialities => {
             this.specialtyItems = new ObservableArray<Specialty>(specialities);
             this.isSpecialtyLoading = false;
+            console.log("Loaded specialities: " + JSON.stringify(this.specialtyItems));
         });
-        this._appointmentService.getAppointments()
+        // this._ngZone.run(()=>{
+            this._appointmentService.getAppointments()
             .then(appointments => {
                 if (appointments) {
                     this.recentItems = new ObservableArray(appointments);
                 }
+                console.log("Loaded appointments:" + + JSON.stringify(appointments));
             });
+        // })
     }
 
     onResetLabelTap() {
-        this.selectedFilter = "";
+        this.selectedFilter = "home";
         this.zipCode = "";
         this.specialty = "";
-        this.specialtyItems && this.specialtyItems.forEach(item => item.selected = false);
+        this.specialtyItems && this.specialtyItems.forEach(item => item.selected = false); 
+
+        // close keyboard in android
+        // this.specialityFilterSearchBar.dismissSoftInput();
     }
 
     onFilterButtonTap(args: EventData) {
         const sl = (<StackLayout>args.object).parent;
-        this.selectedFilter = sl.get("data-name");
+        this._ngZone.run(()=>{
+            this.selectedFilter = sl.get("data-name");
+        })
+        
+        console.log("onFilterButtonTap: " + this.selectedFilter);
     }
 
     onFindButtonTap(args: EventData) {
@@ -98,6 +112,8 @@ export class SearchComponent {
     }
 
     specialtySelected(args: ListViewEventData) {
+        console.log("specialtySelected");
+
         this.specialtyItems.forEach(item => item.selected = false);
         const selectedItems = args.object.getSelectedItems();
         const item = selectedItems && selectedItems[0];

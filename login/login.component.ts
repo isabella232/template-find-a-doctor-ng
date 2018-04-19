@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
 
         UserService.login(this._loginForm.email, this._loginForm.password)
             .then((user: Kinvey.User) => {
-                this._routerExtensions.navigate(["/search"],
+                this._routerExtensions.navigate(["/root"],
                     {
                         clearHistory: true,
                         animated: true,
