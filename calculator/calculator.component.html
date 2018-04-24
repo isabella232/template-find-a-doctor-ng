@@ -1,8 +1,33 @@
-<!-- <ActionBar class="action-bar" [title]="title">
-    <ActionItem android.position="actionBar" ios.position="right" (tap)="onProfileButtonTap()">
-        <Label text="&#xf2c2;" class="fa action-button text-right m-r-15"></Label>
-    </ActionItem>
-</ActionBar> -->
-<GridLayout rows="auto,*,auto" columns="*">
-    <Label text="This is the calculator component"></Label>
-</GridLayout>
+<StackLayout>
+    <GridLayout rows="auto,*,auto" class="c-bg-white">
+            <SearchBar hint="Filter..." [visibility]="!isLoading && (procedures && procedures.length) ? 'visible' : 'hidden'"
+                [(ngModel)]="proceduresFilter" 
+                (ngModelChange)="onProcedureFilterChange($event)" 
+                (submit)="onProcedureFilterSubmit($event)"
+                class="c-bg-lg"></SearchBar>
+            <RadListView #proceduresListView
+                row="1"
+                [items]="procedures"
+                selectionBehavior="Press"
+                (itemSelected)="procedureSelected($event)"
+                [filteringFunction]="procedureFilteringFunc">
+                <ng-template tkListItemTemplate let-item="item">
+                    <GridLayout class="c-bg-white p-t-10 p-l-15" columns="*,auto" rows="*,auto">
+                        <Label [text]="item.name" class="itemLabel t-18 p-b-10"></Label>
+                        <Label col="1" text="&#xf00c;" [visibility]="item.selected ? 'visible':'hidden'" class="fa checkmark t-19 text-right p-r-20 p-b-10"></Label>
+                        <StackLayout row="1" colspan="2" class="hr-light"></StackLayout>
+                    </GridLayout>
+                </ng-template>
+            </RadListView>
+
+            <StackLayout row="2" class="m-t-10">
+                <GridLayout columns="*, auto">
+                    <Label class="p-l-15 t-14" textWrap="true" text="You consent that we will use your current insurance information to make these calculations"></Label>
+                    <Switch col="1" #switch class="m-r-15" [(ngModel)]="hasConsentToSearch"></Switch>
+                </GridLayout>
+                <Button text="Submit" class="platform-button submit-button" [isEnabled]="hasConsentToSearch" (tap)="onSubmitButtonTap()" class="p-b-25 p-t-10"></Button>
+            </StackLayout>
+
+            <ActivityIndicator rowSpan="2" class="activity-indicator" [busy]="isLoading"></ActivityIndicator>
+        </GridLayout>
+</StackLayout>

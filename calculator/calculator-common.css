@@ -1,36 +1,6 @@
-.filter-button {
-    margin-top: 10;
-    width: 60;
-    height: 60;
-    border-width: 1;
-    border-radius: 30;
-    font-size: 24;
-    color: #5b57d9;
-    background-color: #efeff4;
-    border-color: #efeff4;
-}
-
-.filter-button.selected {
-    color: #efeff4;
-    background-color: #5b57d9;
-    border-color: #5b57d9;
-}
-
-.filter-button.active {
-    border-color: #5b57d9;
-}
-
-.find-button {
+.submit-button {
     background-color: #F42952;
     color: #efeff4;
     font-weight: bold;
     width: 90%;
-}
-
-.checkmark {
-    color: #F5486B;
-}
-
-.outdated {
-    opacity: 0.3;
 }

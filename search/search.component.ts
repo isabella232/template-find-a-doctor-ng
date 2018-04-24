@@ -20,14 +20,13 @@ import { Specialty } from "./shared/specialty";
     providers: [SpecialtyService, AppointmentService]
 })
 export class SearchComponent {
-    // title: string;
     selectedFilter: string = "home";
-    specialty: string = "";
+    specialty: string;
     specialtyItems: ObservableArray<Specialty>;
     recentItems: ObservableArray<any>;
-    zipCode: string = " ";
+    zipCode: string;
     filterSpecialties: string = "";
-    isSpecialtyLoading: boolean = true;
+    isSpecialtyLoading: boolean;
     specialtyFilteringFunc: Function;
     appointmentsGroupingFunc: Function;
 
@@ -43,11 +42,7 @@ export class SearchComponent {
     ) { }
 
     ngOnInit(): void {
-        // this.title = "Find a Doctor";
         this.selectedFilter = "home";
-        this.zipCode = " ";
-        this.filterSpecialties = "";
-        this.specialty = "";
         this.isSpecialtyLoading = true;
         this.recentItems = new ObservableArray<Appointment>(0);
         const filterFunc = (item: Specialty): boolean => {
@@ -65,15 +60,14 @@ export class SearchComponent {
             this.isSpecialtyLoading = false;
             console.log("Loaded specialities: " + JSON.stringify(this.specialtyItems));
         });
-        // this._ngZone.run(()=>{
-            this._appointmentService.getAppointments()
-            .then(appointments => {
-                if (appointments) {
-                    this.recentItems = new ObservableArray(appointments);
-                }
-                console.log("Loaded appointments:" + + JSON.stringify(appointments));
-            });
-        // })
+        
+        this._appointmentService.getAppointments()
+        .then(appointments => {
+            if (appointments) {
+                this.recentItems = new ObservableArray(appointments);
+            }
+            console.log("Loaded appointments:" + + JSON.stringify(appointments));
+        });
     }
 
     onResetLabelTap() {
@@ -88,9 +82,7 @@ export class SearchComponent {
 
     onFilterButtonTap(args: EventData) {
         const sl = (<StackLayout>args.object).parent;
-        this._ngZone.run(()=>{
-            this.selectedFilter = sl.get("data-name");
-        })
+        this.selectedFilter = sl.get("data-name");
         
         console.log("onFilterButtonTap: " + this.selectedFilter);
     }
