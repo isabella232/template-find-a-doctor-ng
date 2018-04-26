@@ -1,8 +1,3 @@
-<!-- <ActionBar class="action-bar" [title]="title">
-    <ActionItem android.position="actionBar" ios.position="right" (tap)="onProfileButtonTap()">
-        <Label text="&#xf2c2;" class="fa action-button text-right m-r-15"></Label>
-    </ActionItem>
-</ActionBar> -->
 <GridLayout rows="auto,*" columns="*">
     <StackLayout>
         <GridLayout rows="auto,auto" columns="*,*" class="m-t-10 p-l-15 p-r-15">
@@ -34,10 +29,10 @@
                     </GridLayout>
                 </ng-template>
                 <ng-template tkGroupTemplate let-category="category">
-                    <StackLayout class="m-b-15">
-                        <Label [text]="category" class="text-muted t-14 p-l-15 p-t-10 p-b-7"></Label>
-                        <StackLayout class="hr-light"></StackLayout>
-                    </StackLayout>
+                    <GridLayout height="40">
+                        <Label [text]="category" class="text-muted t-14 p-l-15 m-t-10 m-b-10"></Label>
+                        <StackLayout class="hr-light" verticalAlignment="bottom"></StackLayout>
+                    </GridLayout>
                 </ng-template>
             </RadListView>
         </GridLayout>
