@@ -3,7 +3,7 @@
         <Label text="&#xf2c2;" class="fa action-button text-right m-r-15"></Label>
     </ActionItem>
 </ActionBar> -->
-<GridLayout rows="auto,*,auto" columns="*">
+<GridLayout rows="auto,*" columns="*">
     <StackLayout>
         <GridLayout rows="auto,auto" columns="*,*" class="m-t-10 p-l-15 p-r-15">
             <Label text="Search by" class="text-muted text-uppercase t-12"></Label>
@@ -69,9 +69,9 @@
                 </ng-template>
             </RadListView>
             <ActivityIndicator rowSpan="2" class="activity-indicator" [busy]="isSpecialtyLoading"></ActivityIndicator>
-        </GridLayout>
+        </GridLayout> 
     </StackLayout>
-    <StackLayout *ngIf="selectedFilter!==''" [class.c-bg-lg]="selectedFilter==='location'" class="p-b-25 p-t-10" row="2">
-        <Button text="Find Physician" class="platform-button find-button" (tap)="onFindButtonTap()"></Button>
+    <StackLayout *ngIf="selectedFilter !== 'home'" class="p-t-10" row="1" verticalAlignment="bottom">
+        <Button text="Find Physician" class="find-button platform-button" (tap)="onFindButtonTap()"></Button>
     </StackLayout>
 </GridLayout>

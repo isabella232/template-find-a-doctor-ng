@@ -60,21 +60,21 @@ export class SearchComponent {
             this.isSpecialtyLoading = false;
             console.log("Loaded specialities: " + JSON.stringify(this.specialtyItems));
         });
-        
+
         this._appointmentService.getAppointments()
-        .then(appointments => {
-            if (appointments) {
-                this.recentItems = new ObservableArray(appointments);
-            }
-            console.log("Loaded appointments:" + + JSON.stringify(appointments));
-        });
+            .then(appointments => {
+                if (appointments) {
+                    this.recentItems = new ObservableArray(appointments);
+                }
+                console.log("Loaded appointments:" + + JSON.stringify(appointments));
+            });
     }
 
     onResetLabelTap() {
         this.selectedFilter = "home";
         this.zipCode = "";
         this.specialty = "";
-        this.specialtyItems && this.specialtyItems.forEach(item => item.selected = false); 
+        this.specialtyItems && this.specialtyItems.forEach(item => item.selected = false);
 
         // close keyboard in android
         // this.specialityFilterSearchBar.dismissSoftInput();
@@ -83,15 +83,18 @@ export class SearchComponent {
     onFilterButtonTap(args: EventData) {
         const sl = (<StackLayout>args.object).parent;
         this.selectedFilter = sl.get("data-name");
-        
+
         console.log("onFilterButtonTap: " + this.selectedFilter);
     }
 
     onFindButtonTap(args: EventData) {
+        // set values to "" if zipCode or speciality are undefined 
+        // since undefined is passed as "undefined" string in NG navigation
         let filter = {
-            zipCode: this.zipCode,
-            specialty: this.specialty
+            zipCode: this.zipCode || "",
+            specialty: this.specialty || ""
         };
+
         this._routerExtensions.navigate(["/results", filter],
             {
                 animated: true,
@@ -104,8 +107,6 @@ export class SearchComponent {
     }
 
     specialtySelected(args: ListViewEventData) {
-        console.log("specialtySelected");
-
         this.specialtyItems.forEach(item => item.selected = false);
         const selectedItems = args.object.getSelectedItems();
         const item = selectedItems && selectedItems[0];

@@ -65,9 +65,10 @@ refer to http://docs.nativescript.org/ui/theme.
 
 .platform-button {
     color: white;
-    font-size: 16;
-    height: 36;
-    width: 70%;
+    background-color: #F03B59;
+    height: 42;
+    width: 95%;
+    border-radius: 5;
     text-transform: none;
 }
 

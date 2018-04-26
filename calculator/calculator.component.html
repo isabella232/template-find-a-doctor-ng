@@ -20,12 +20,12 @@
                 </ng-template>
             </RadListView>
 
-            <StackLayout row="2" class="m-t-10">
+            <StackLayout row="2" class="p-t-15 consent-panel">
                 <GridLayout columns="*, auto">
-                    <Label class="p-l-15 t-14" textWrap="true" text="You consent that we will use your current insurance information to make these calculations"></Label>
+                    <Label class="p-l-15 t-14 consent-text" textWrap="true" text="You consent that we will use your current insurance information to make these calculations"></Label>
                     <Switch col="1" #switch class="m-r-15" [(ngModel)]="hasConsentToSearch"></Switch>
                 </GridLayout>
-                <Button text="Submit" class="platform-button submit-button" [isEnabled]="hasConsentToSearch" (tap)="onSubmitButtonTap()" class="p-b-25 p-t-10"></Button>
+                <Button text="Submit" class="submit-button platform-button" [class.active]="hasConsentToSearch" [isEnabled]="hasConsentToSearch" (tap)="onSubmitButtonTap()"></Button>
             </StackLayout>
 
             <ActivityIndicator rowSpan="2" class="activity-indicator" [busy]="isLoading"></ActivityIndicator>

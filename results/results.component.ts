@@ -18,8 +18,7 @@ export class ResultsComponent {
 	constructor(
 		private _providerService: ProviderService,
 		private _pageRoute: PageRoute,
-		private _routerExtensions: RouterExtensions
-	) { }
+		private _routerExtensions: RouterExtensions	) { }
 
 	ngOnInit(): void {
 		this.isLoading = true;
@@ -29,10 +28,10 @@ export class ResultsComponent {
 			.forEach((params) => {
 				params = params || {};
 				this._providerService.findProviders(params.specialty, params.zipCode)
-					.then(providers => {
-						this.isLoading = false;
-						this.resultItems = new ObservableArray<Provider>(providers);
-					})
+				.then(providers => {
+					this.isLoading = false;
+					this.resultItems = new ObservableArray<Provider>(providers);
+				})
 			});
 	}
 

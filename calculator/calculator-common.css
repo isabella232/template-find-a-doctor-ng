@@ -1,6 +1,15 @@
+.consent-panel {
+    background-color: #EFEFF4;
+}
+.consent-text {
+    color: #949494;
+}
+
+.submit-button.active {
+    background-color: #F03B59;
+}
+
 .submit-button {
-    background-color: #F42952;
-    color: #efeff4;
-    font-weight: bold;
-    width: 90%;
+    background-color: gray;
+    margin: 10 0;
 }

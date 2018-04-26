@@ -28,7 +28,7 @@ export class ProviderService {
     findProviders(specialty: string, zipCode: string): Promise<Provider[]> {
         const query = new Kinvey.Query();
         if (specialty) {
-            query.equalTo("specialty", specialty);
+            query.matches("specialty_search", "^.*" + specialty);
         }
         if (zipCode) {
             (specialty ? query.and() : query).equalTo("locations.zipcode", zipCode);
@@ -46,7 +46,7 @@ export class ProviderService {
                 }
 
                 return providers;
-            })
+            }, (err) => { console.log(err); })
             .catch((error: Kinvey.BaseError) => {
                 alert({
                     title: "Oops something went wrong.",
