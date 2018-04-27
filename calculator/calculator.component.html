@@ -1,8 +1,8 @@
 <StackLayout>
     <GridLayout rows="auto,*,auto" class="c-bg-white">
-            <SearchBar hint="Filter..." [visibility]="!isLoading && (procedures && procedures.length) ? 'visible' : 'hidden'"
-                [(ngModel)]="proceduresFilter" 
-                (ngModelChange)="onProcedureFilterChange($event)" 
+            <SearchBar #searchBar hint="Filter..." [visibility]="!isLoading && (procedures && procedures.length) ? 'visible' : 'hidden'"
+                [text]="proceduresFilter" 
+                (textChange)="onTextChanged($event)"
                 (submit)="onProcedureFilterSubmit($event)"
                 class="c-bg-lg"></SearchBar>
             <RadListView #proceduresListView

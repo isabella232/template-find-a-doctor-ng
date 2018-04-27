@@ -24,6 +24,7 @@ export class CalculatorComponent {
     procedureFilteringFunc: Function;
 
     @ViewChild("proceduresListView") proceduresListView: RadListViewComponent;
+    @ViewChild("searchBar") searchBar: any;
 
     constructor(        
         private _procedureService: ProcedureService,
@@ -42,8 +43,6 @@ export class CalculatorComponent {
     }
 
     procedureSelected(args: ListViewEventData) {
-        console.log("procedureSelected");
-
         this.procedures.forEach(item => item.selected = false);
         const selectedItems = args.object.getSelectedItems();
         const item = selectedItems && selectedItems[0];
@@ -51,6 +50,8 @@ export class CalculatorComponent {
             item.selected = true;
             this.procedure = item.procedure;
         }
+
+        this.searchBar.nativeElement.dismissSoftInput();
     }
 
     getFilteringFunc() : (item: Procedure) => boolean {
@@ -62,14 +63,13 @@ export class CalculatorComponent {
     }
 
     onProcedureFilterSubmit(args: EventData) {
-        if (args) {
-            const searchTextBar = <SearchBar>args.object;
-
-            searchTextBar.dismissSoftInput();
-        }
+        this.searchBar.nativeElement.dismissSoftInput();
     }
 
-    onProcedureFilterChange(args: EventData) {
+    onTextChanged(args: EventData) {
+        let searchBar = <SearchBar>args.object;
+
+        this.proceduresFilter = searchBar.text;
         this.proceduresListView.listView.refresh();
     }
 

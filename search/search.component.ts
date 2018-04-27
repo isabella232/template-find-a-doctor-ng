@@ -31,7 +31,7 @@ export class SearchComponent {
     appointmentsGroupingFunc: Function;
 
     @ViewChild("specialtyListView") specialtyListView: RadListViewComponent;
-    @ViewChild("specialityFilterSearchBar") specialityFilterSearchBar: SearchBar;
+    @ViewChild("specialityFilterSearchBar") specialityFilterSearchBar: any;
 
     constructor(
         private _appointmentService: AppointmentService,
@@ -114,6 +114,8 @@ export class SearchComponent {
             item.selected = true;
             this.specialty = item.specialty;
         }
+
+        this.specialityFilterSearchBar.nativeElement.dismissSoftInput();
     }
 
     onProfileButtonTap() {
@@ -161,7 +163,10 @@ export class SearchComponent {
             });
     }
 
-    onFilterSpecialtiesChange(args: EventData) {
+    onTextChanged(args: EventData) {
+        let searchBar = <SearchBar>args.object;
+
+        this.filterSpecialties = searchBar.text;
         this.specialtyListView.listView.refresh();
     }
 
