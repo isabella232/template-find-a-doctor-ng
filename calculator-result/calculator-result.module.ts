@@ -8,6 +8,7 @@ import { CalculatorResultRoutingModule } from "./calculator-result-routing.modul
 import { SharedModule } from "../shared/shared.module";
 
 import { ModalDialogService } from "nativescript-angular/modal-dialog";
+import { EstimateService } from "../shared/services/estimate.service";
 
 import { CalculatorRoutingModule } from "./calculator-routing.module";
 import { CalculatorResultComponent } from "./calculator-result.component";
@@ -25,7 +26,8 @@ import { CalculatorResultComponent } from "./calculator-result.component";
         CalculatorResultComponent
     ],
     providers: [
-        ModalDialogService
+        ModalDialogService,
+        EstimateService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

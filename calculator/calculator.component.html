@@ -25,7 +25,7 @@
                     <Label class="p-l-15 t-14 consent-text" textWrap="true" text="You consent that we will use your current insurance information to make these calculations"></Label>
                     <Switch col="1" #switch class="m-r-15" [(ngModel)]="hasConsentToSearch"></Switch>
                 </GridLayout>
-                <Button text="Submit" class="submit-button platform-button" [class.active]="hasConsentToSearch" [isEnabled]="hasConsentToSearch" (tap)="onSubmitButtonTap()"></Button>
+                <Button text="Submit" class="submit-button platform-button" [class.active]="hasConsentToSearch && !!procedure" [isEnabled]="hasConsentToSearch && !!procedure" (tap)="onSubmitButtonTap()"></Button>
             </StackLayout>
 
             <ActivityIndicator rowSpan="2" class="activity-indicator" [busy]="isLoading"></ActivityIndicator>

@@ -46,9 +46,10 @@ export class CalculatorComponent {
         this.procedures.forEach(item => item.selected = false);
         const selectedItems = args.object.getSelectedItems();
         const item = selectedItems && selectedItems[0];
+        
         if (item) {
             item.selected = true;
-            this.procedure = item.procedure;
+            this.procedure = item.name;
         }
 
         this.searchBar.nativeElement.dismissSoftInput();

@@ -1,8 +1,8 @@
 import { Component, ViewContainerRef } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
-import { ProviderService } from "../shared/services/provider.service";
-import { Provider } from "../shared/models/provider.model";
+import { EstimateService } from "../shared/services/estimate.service";
+import { Estimate } from "../shared/models/estimate.model";
 
 @Component({
 	selector: "CalculatorResultComponent",
@@ -11,29 +11,34 @@ import { Provider } from "../shared/models/provider.model";
 	styleUrls: ["./calculator-result-common.css"]
 })
 export class CalculatorResultComponent {
+	procedure: string;
 	title: string;
 	isLoading: boolean;
-	public resultItems: ObservableArray<Provider>;
+	public resultItems: Array<Estimate>;
 
 	constructor(
-		private _providerService: ProviderService,
+		private _estimateService: EstimateService,
 		private _pageRoute: PageRoute,
 		private _routerExtensions: RouterExtensions
 	) { }
 
 	ngOnInit(): void {
 		this.isLoading = true;
-		this.title = "Calculator Results";
-		// this._pageRoute.activatedRoute
-		// 	.switchMap((activatedRoute) => activatedRoute.params)
-		// 	.forEach((params) => {
-		// 		params = params || {};
-		// 		this._providerService.findProviders(params.specialty, params.zipCode)
-		// 			.then(providers => {
-		// 				this.isLoading = false;
-		// 				this.resultItems = new ObservableArray<Provider>(providers);
-		// 			})
-		// 	});
+
+		this._pageRoute.activatedRoute
+			.switchMap((activatedRoute) => activatedRoute.params)
+			.forEach((params) => {
+				params = params || {};
+
+				this.procedure = params.procedure;
+				this.title = this.procedure;
+				this._estimateService.getEstimates()
+					.then(estimates => {
+						this.isLoading = false;
+						console.log(estimates);
+						this.resultItems = estimates;
+					})
+			});
 	}
 
 	onBackButtonTap(): void {
