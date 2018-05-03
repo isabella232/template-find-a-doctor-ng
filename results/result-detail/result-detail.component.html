@@ -1,39 +1,41 @@
 <ActionBar class="action-bar" [title]="title">
     <NavigationButton android.systemIcon="ic_menu_back" (tap)="onBackButtonTap()"></NavigationButton>
 </ActionBar>
-<ScrollView>
-    <GridLayout rows="*">
-        <StackLayout [visibility]="isLoading ? 'hidden' : 'visible'">
-            <StackLayout class="c-bg-lg p-10">
-                <Image width="80" height="80" class="m-15 m-x-auto img-circle-large" [src]="item.small_image_url"></Image>
-                <Label [text]="title" class="c-black t-25 font-weight-bold text-center" textWrap="true"></Label>
-                <Label [text]="item.residencies[0] && item.residencies[0].institution_name" class="text-muted text-center" textWrap="true"></Label>
-                <Label [text]="item.specialty_primary[0]" class="c-black text-center m-5" textWrap="true"></Label>
-                <Button class="btn btn-margin btn-primary book-button platform-button" *ngIf="!btnRemove" text="Book an Appointment" (tap)="onBookButtonTap(item)"></Button>
-                <Button class="btn btn-margin btn-primary cancel-button platform-button" *ngIf="btnRemove" text="Cancel this Appointment"
-                    (tap)="onCancelButtonTap(item)"></Button>
+<GridLayout>
+    <ScrollView>
+        <GridLayout rows="*">
+            <StackLayout [visibility]="isLoading ? 'hidden' : 'visible'">
+                <StackLayout class="c-bg-lg p-10">
+                    <Image width="80" height="80" class="m-15 m-x-auto img-circle-large" [src]="item.small_image_url"></Image>
+                    <Label [text]="title" class="c-black t-25 font-weight-bold text-center" textWrap="true"></Label>
+                    <Label [text]="item.residencies[0] && item.residencies[0].institution_name" class="text-muted text-center" textWrap="true"></Label>
+                    <Label [text]="item.specialty_primary[0]" class="c-black text-center m-5" textWrap="true"></Label>
+                    <Button class="btn btn-margin btn-primary book-button platform-button" *ngIf="!btnRemove" text="Book an Appointment" (tap)="onBookButtonTap(item)"></Button>
+                    <Button class="btn btn-margin btn-primary cancel-button platform-button" *ngIf="btnRemove" text="Cancel this Appointment"
+                        (tap)="onCancelButtonTap(item)"></Button>
+                </StackLayout>
+                <GridLayout columns="*,3*" rows="auto,auto,auto,auto,auto,auto" class="p-l-15 t-17">
+                    <Label row="0" col="0" text="Education" class="c-black p-b-10 p-t-15"></Label>
+                    <Label row="0" col="1" [text]="formatEducation(item.education)" class="text-muted p-b-10 p-t-15" textWrap="true"></Label>
+                    <StackLayout row="1" colspan="2" class="hr-light"></StackLayout>
+                    <Label row="2" col="0" text="Residencies:" class="c-black p-b-10 p-t-15"></Label>
+                    <Label row="2" col="1" [text]="formatResidencies(item.residencies)" class="text-muted p-b-10 p-t-15" textWrap="true"></Label>
+                    <StackLayout row="3" colspan="2" class="hr-light"></StackLayout>
+                    <Label row="4" col="0" text="Degree:" class="c-black p-b-10 p-t-15"></Label>
+                    <Label row="4" col="1" [text]="item.degree" class="text-muted p-b-10 p-t-15"></Label>
+                    <StackLayout row="5" colspan="2" class="hr-light"></StackLayout>
+                </GridLayout>
+                <Label text="Contact Information" class="p-l-15 p-t-20 p-b-10 c-bg-lg text-muted text-uppercase" textWrap="true"></Label>
+                <StackLayout class="hr-light"></StackLayout>
+                <GridLayout columns="*,3*" rows="auto,auto,auto" class="p-l-15 t-17">
+                    <Label row="0" col="0" text="Phone:" class="c-black p-b-10 p-t-15"></Label>
+                    <Label row="0" col="1" [text]="item.phone" class="c-blue p-b-10 p-t-15" textWrap="true" (tap)="onPhoneTap(item)"></Label>
+                    <StackLayout row="1" colspan="2" class="hr-light"></StackLayout>
+                    <Label row="2" col="0" text="Locations:" class="c-black p-b-10 p-t-15"></Label>
+                    <Label row="2" col="1" [text]="formatLocations(item.locations)" class="text-muted p-b-10 p-t-15" textWrap="true"></Label>
+                </GridLayout>
             </StackLayout>
-            <GridLayout columns="*,3*" rows="auto,auto,auto,auto,auto,auto" class="p-l-15 t-17">
-                <Label row="0" col="0" text="Education" class="c-black p-b-10 p-t-15"></Label>
-                <Label row="0" col="1" [text]="formatEducation(item.education)" class="text-muted p-b-10 p-t-15" textWrap="true"></Label>
-                <StackLayout row="1" colspan="2" class="hr-light"></StackLayout>
-                <Label row="2" col="0" text="Residencies:" class="c-black p-b-10 p-t-15"></Label>
-                <Label row="2" col="1" [text]="formatResidencies(item.residencies)" class="text-muted p-b-10 p-t-15" textWrap="true"></Label>
-                <StackLayout row="3" colspan="2" class="hr-light"></StackLayout>
-                <Label row="4" col="0" text="Degree:" class="c-black p-b-10 p-t-15"></Label>
-                <Label row="4" col="1" [text]="item.degree" class="text-muted p-b-10 p-t-15"></Label>
-                <StackLayout row="5" colspan="2" class="hr-light"></StackLayout>
-            </GridLayout>
-            <Label text="Contact Information" class="p-l-15 p-t-20 p-b-10 c-bg-lg text-muted text-uppercase" textWrap="true"></Label>
-            <StackLayout class="hr-light"></StackLayout>
-            <GridLayout columns="*,3*" rows="auto,auto,auto" class="p-l-15 t-17">
-                <Label row="0" col="0" text="Phone:" class="c-black p-b-10 p-t-15"></Label>
-                <Label row="0" col="1" [text]="item.phone" class="c-blue p-b-10 p-t-15" textWrap="true" (tap)="onPhoneTap(item)"></Label>
-                <StackLayout row="1" colspan="2" class="hr-light"></StackLayout>
-                <Label row="2" col="0" text="Locations:" class="c-black p-b-10 p-t-15"></Label>
-                <Label row="2" col="1" [text]="formatLocations(item.locations)" class="text-muted p-b-10 p-t-15" textWrap="true"></Label>
-            </GridLayout>
-        </StackLayout>
-        <ActivityIndicator class="activity-indicator" [busy]="isLoading"></ActivityIndicator>
-    </GridLayout>
-</ScrollView>
+            <ActivityIndicator class="activity-indicator" [busy]="isLoading"></ActivityIndicator>
+        </GridLayout>
+    </ScrollView>
+</GridLayout>

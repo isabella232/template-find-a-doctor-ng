@@ -39,11 +39,8 @@ export class AppointmentService {
                 this._appointments.push(appointment);
             });
 
-            console.log("this._appointments:" + this._appointments);
             return this._appointments;
         }).catch((error: Kinvey.BaseError) => {
-            console.log("this._appointments error: " + error);
-
             alert({
                 title: "Oops something went wrong.",
                 message: error.message,

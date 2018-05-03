@@ -83,8 +83,6 @@ export class SearchComponent {
     onFilterButtonTap(args: EventData) {
         const sl = (<StackLayout>args.object).parent;
         this.selectedFilter = sl.get("data-name");
-
-        console.log("onFilterButtonTap: " + this.selectedFilter);
     }
 
     onFindButtonTap(args: EventData) {

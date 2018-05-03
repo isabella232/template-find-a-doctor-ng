@@ -3,7 +3,6 @@ import { Kinvey } from "kinvey-nativescript-sdk";
 import { Observable } from "rxjs/Rx";
 import { Provider } from "../../shared/models/provider.model";
 
-
 @Injectable()
 export class ProviderService {
     private _providerStore = Kinvey.DataStore.collection<Provider>("Providers");

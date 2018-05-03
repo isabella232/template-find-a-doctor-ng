@@ -26,7 +26,7 @@ export class CalculatorComponent {
     @ViewChild("proceduresListView") proceduresListView: RadListViewComponent;
     @ViewChild("searchBar") searchBar: any;
 
-    constructor(        
+    constructor(
         private _procedureService: ProcedureService,
         private _routerExtensions: RouterExtensions,
         private _ngZone: NgZone
@@ -46,18 +46,19 @@ export class CalculatorComponent {
         this.procedures.forEach(item => item.selected = false);
         const selectedItems = args.object.getSelectedItems();
         const item = selectedItems && selectedItems[0];
-        
+
         if (item) {
             item.selected = true;
-            this.procedure = item.name;
+            this.procedure = item;
         }
 
         this.searchBar.nativeElement.dismissSoftInput();
     }
 
-    getFilteringFunc() : (item: Procedure) => boolean {
-        const filterFunc = (item: Procedure): boolean => {            
-            return item.name.toLowerCase().includes(this.proceduresFilter.toLowerCase());
+    getFilteringFunc(): (item: Procedure) => boolean {
+        const filterFunc = (item: Procedure): boolean => {
+            return item.name.toLowerCase().includes(this.proceduresFilter.toLowerCase()) ||
+                item.keywords.toLowerCase().includes(this.proceduresFilter.toLowerCase());
         };
 
         return filterFunc;
@@ -75,12 +76,7 @@ export class CalculatorComponent {
     }
 
     onSubmitButtonTap(args: EventData) {
-        let query = {
-            procedure: this.procedure
-        };
-
-        console.log(query);
-        this._routerExtensions.navigate(["/calculator-result", query],
+        this._routerExtensions.navigate(["/calculator-result", this.procedure],
             {
                 animated: true,
                 transition: {

@@ -14,7 +14,7 @@
                 <ng-template tkListItemTemplate let-item="item">
                     <GridLayout class="c-bg-white p-t-10 p-l-15" columns="*,auto" rows="*,auto">
                         <Label [text]="item.name" class="itemLabel t-18 p-b-10"></Label>
-                        <Label col="1" text="&#xf00c;" [visibility]="item.selected ? 'visible':'hidden'" class="fa checkmark t-19 text-right p-r-20 p-b-10"></Label>
+                        <Label col="1" text="&#xf00c;" [visibility]="item.selected ? 'visible':'hidden'" class="fa pink-accent t-19 text-right p-r-20 p-b-10"></Label>
                         <StackLayout row="1" colspan="2" class="hr-light"></StackLayout>
                     </GridLayout>
                 </ng-template>
@@ -23,7 +23,7 @@
             <StackLayout row="2" class="p-t-15 consent-panel">
                 <GridLayout columns="*, auto">
                     <Label class="p-l-15 t-14 consent-text" textWrap="true" text="You consent that we will use your current insurance information to make these calculations"></Label>
-                    <Switch col="1" #switch class="m-r-15" [(ngModel)]="hasConsentToSearch"></Switch>
+                    <Switch col="1" #switch class="m-r-15 m-l-15" [(ngModel)]="hasConsentToSearch"></Switch>
                 </GridLayout>
                 <Button text="Submit" class="submit-button platform-button" [class.active]="hasConsentToSearch && !!procedure" [isEnabled]="hasConsentToSearch && !!procedure" (tap)="onSubmitButtonTap()"></Button>
             </StackLayout>

@@ -14,7 +14,7 @@ import { UserService } from "./shared/user.service";
     selector: "Login",
     moduleId: module.id,
     templateUrl: "./login.component.html",
-	styleUrls: ["./login-common.css"]
+    styleUrls: ["./login-common.css"]
 })
 export class LoginComponent implements OnInit {
     @ViewChild("loginFormElement") loginFormElement: RadDataFormComponent;
