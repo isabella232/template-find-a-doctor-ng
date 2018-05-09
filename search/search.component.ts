@@ -29,6 +29,7 @@ export class SearchComponent {
     isSpecialtyLoading: boolean;
     specialtyFilteringFunc: Function;
     appointmentsGroupingFunc: Function;
+    specialtyListViewTemplateSelector: Function;
 
     @ViewChild("specialtyListView") specialtyListView: RadListViewComponent;
     @ViewChild("specialityFilterSearchBar") specialityFilterSearchBar: any;
@@ -55,10 +56,13 @@ export class SearchComponent {
         }
         this.appointmentsGroupingFunc = groupingFunc.bind(this);
 
+        this.specialtyListViewTemplateSelector  = (item: Specialty, index: number, items: any) => {
+            return items.length === index + 1 ? "last" : "default";
+        }
+
         this._specialtyService.getSpecialties().then(specialities => {
             this.specialtyItems = new ObservableArray<Specialty>(specialities);
             this.isSpecialtyLoading = false;
-            console.log("Loaded specialities: " + JSON.stringify(this.specialtyItems));
         });
 
         this._appointmentService.getAppointments()
@@ -66,7 +70,6 @@ export class SearchComponent {
                 if (appointments) {
                     this.recentItems = new ObservableArray(appointments);
                 }
-                console.log("Loaded appointments:" + + JSON.stringify(appointments));
             });
     }
 
