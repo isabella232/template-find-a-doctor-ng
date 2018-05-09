@@ -11,6 +11,7 @@ import { ProviderService } from "../shared/services/provider.service";
 import { Appointment } from "../shared/models/appointment.model";
 import { RadListViewComponent } from "nativescript-ui-listview/angular";
 import { Specialty } from "./shared/specialty";
+import { isAndroid } from "platform";
 
 @Component({
     selector: "SearchComponent",
@@ -73,6 +74,13 @@ export class SearchComponent {
             });
     }
 
+    public specialtySearchBarLoaded(args){
+        var searchbar:SearchBar = <SearchBar>args.object;
+        if (isAndroid) {
+            searchbar.android.clearFocus();
+        }
+    }
+
     onResetLabelTap() {
         this.selectedFilter = "home";
         this.zipCode = "";
@@ -80,7 +88,7 @@ export class SearchComponent {
         this.specialtyItems && this.specialtyItems.forEach(item => item.selected = false);
 
         // close keyboard in android
-        // this.specialityFilterSearchBar.dismissSoftInput();
+        // this.specialityFilterSearchBar.nativeElement.dismissSoftInput();
     }
 
     onFilterButtonTap(args: EventData) {

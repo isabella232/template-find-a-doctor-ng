@@ -50,7 +50,7 @@
             </StackLayout>
         </StackLayout>
         <GridLayout rows="auto,*" *ngIf="selectedFilter==='specialty'" class="c-bg-white">
-            <SearchBar #specialityFilterSearchBar hint="Filter..." [visibility]="!isSpecialtyLoading && (specialtyItems && specialtyItems.length) ? 'visible' : 'hidden'"
+            <SearchBar #specialityFilterSearchBar hint="Filter..." (loaded)="specialtySearchBarLoaded($event)" [visibility]="!isSpecialtyLoading && (specialtyItems && specialtyItems.length) ? 'visible' : 'hidden'"
                 [text]="filterSpecialties" (textChange)="onTextChanged($event)" (submit)="onSpecialtyFilterSubmit($event)" class="c-bg-lg"></SearchBar>
             <RadListView #specialtyListView [groupingFunction]="specialtyGroupingFunc" row="1" [filteringFunction]="specialtyFilteringFunc"
                 [items]="specialtyItems" selectionBehavior="Press" (itemSelected)="specialtySelected($event)" [itemTemplateSelector]="specialtyListViewTemplateSelector">
