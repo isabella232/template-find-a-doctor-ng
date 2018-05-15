@@ -1,0 +1,55 @@
+.sub-title {
+    font-weight: bold;
+    text-align: center;
+    font-size: 20;
+    color: black;
+}
+
+.price-sub-title {
+    text-align: center;
+    font-weight: 500;
+    font-size: 26;
+    color: #5859D4;
+}
+
+.card {
+    background-color: white;
+    margin: 7.5 15;
+    padding: 20;
+    border-radius: 7.5;
+}
+
+.card-title {
+    font-size: 28;
+    font-weight: bold;
+    color: black;
+}
+
+.card-label {
+    font-size: 12;
+    margin: 5 0;
+    font-weight: 300;
+    color: black;
+}
+
+.card-price-range {
+    font-size: 24;
+    color: #5859D4;
+    padding: 5 0;
+}
+
+.card-price-avg {
+    font-size: 24;
+    color: white;
+    background-color: #5859D4;
+    border-radius: 3;
+    text-align: center;
+    padding: 5 15;
+    font-weight: 300;
+}
+
+.breakdown-text {
+    color: black;
+    font-size: 12;
+    font-weight: 300;
+}

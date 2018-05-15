@@ -1,7 +1,7 @@
-<ActionBar class="action-bar" [title]="title">
+<!-- <ActionBar class="action-bar" [title]="title">
     <NavigationButton android.systemIcon="ic_menu_close_clear_cancel" text="Close" (tap)="onBackButtonTap()"></NavigationButton>
     <ActionItem android.position="actionBar" ios.position="right" text="Log out" (tap)="onSignOutButtonTap()"></ActionItem>
-</ActionBar>
+</ActionBar> -->
 <ScrollView>
     <GridLayout rows="*" columns="*">
         <StackLayout [visibility]="isLoading ? 'hidden' : 'visible'">
@@ -11,41 +11,44 @@
                 <Label [text]="getUserName(user)" class="font-weight-bold c-black t-25" text="" textAlignment="center" textWrap="true"></Label>
                 <Label [text]="item.plan_name" class="c-black t-19 p-t-20 p-b-20" textAlignment="center" textWrap="true"></Label>
             </StackLayout>
-            <GridLayout columns="*,*" rows="auto,auto,auto,auto" class="p-l-15">
-                <Label row="0" col="0" text="ID" class="itemLabel t-19 p-t-10"></Label>
+            <GridLayout columns="*,*" rows="auto,auto,auto,auto">
+                <Label row="0" col="0" text="ID" class="itemLabel m-l-15 t-19 p-t-10"></Label>
                 <Label row="0" col="1" [text]="item.plan_id" class="c-cb label-right"></Label>
                 <StackLayout row="1" colspan="2" class="hr-light m-t-10"></StackLayout>
-                <Label row="2" col="0" text="Plan Level:" class="itemLabel t-19 p-t-10"></Label>
+                <Label row="2" col="0" text="Plan Level:" class="itemLabel m-l-15 t-19 p-t-10"></Label>
                 <Label row="2" col="1" [text]="item.metallic_level" class="c-cb text-uppercase label-right"></Label>
                 <StackLayout row="3" colspan="2" class="hr-light m-t-10"></StackLayout>
             </GridLayout>
             <Label text="Deductibles" class="c-bg-lg text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label>
-            <GridLayout columns="*,*" rows="auto,auto,auto,auto" class="p-l-15">
-                <Label row="0" col="0" text="Individuals:" class="itemLabel t-19 p-t-10"></Label>
+            <StackLayout class="hr-light"></StackLayout>
+            <GridLayout columns="*,*" rows="auto,auto,auto,auto">
+                <Label row="0" col="0" text="Individuals:" class="itemLabel m-l-15 t-19 p-t-10"></Label>
                 <Label row="0" col="1" [text]="formatCurrency(item.deductible && item.deductible.individual)" class="c-cb label-right"></Label>
                 <StackLayout row="1" colspan="2" class="hr-light m-t-10"></StackLayout>
-                <Label row="2" col="0" text="Family:" class="itemLabel t-19 p-t-10"></Label>
+                <Label row="2" col="0" text="Family:" class="itemLabel m-l-15 t-19 p-t-10"></Label>
                 <Label row="2" col="1" [text]="formatCurrency(item.deductible && item.deductible.family)" class="c-cb label-right"></Label>
                 <StackLayout row="3" colspan="2" class="hr-light m-t-10"></StackLayout>
             </GridLayout>
             <Label text="Out of Pocket Maximums" class="c-bg-lg text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label>
-            <GridLayout columns="*,*" rows="auto,auto,auto,auto" class="p-l-15">
-                <Label row="0" col="0" text="Individuals:" class="itemLabel t-19 p-t-10"></Label>
+            <StackLayout class="hr-light"></StackLayout>
+            <GridLayout columns="*,*" rows="auto,auto,auto,auto">
+                <Label row="0" col="0" text="Individuals:" class="itemLabel m-l-15 t-19 p-t-10"></Label>
                 <Label row="0" col="1" [text]="formatCurrency(item.deductible && item.max_out_of_pocket.individual)" class="c-cb label-right"></Label>
                 <StackLayout row="1" colspan="2" class="hr-light m-t-10"></StackLayout>
-                <Label row="2" col="0" text="Family:" class="itemLabel t-19 p-t-10"></Label>
+                <Label row="2" col="0" text="Family:" class="itemLabel m-l-15 t-19 p-t-10"></Label>
                 <Label row="2" col="1" [text]="formatCurrency(item.deductible && item.max_out_of_pocket.family)" class="c-cb label-right"></Label>
                 <StackLayout row="3" colspan="2" class="hr-light m-t-10"></StackLayout>
             </GridLayout>
             <Label text="Premiums" class="c-bg-lg text-uppercase t-14 p-l-15 p-t-10 p-b-7"></Label>
-            <GridLayout columns="*,*" rows="auto,auto,auto,auto,auto,auto" class="p-l-15">
-                <Label row="0" col="0" text="Monthly cost:" class="itemLabel t-19 p-t-10"></Label>
+            <StackLayout class="hr-light"></StackLayout>
+            <GridLayout columns="*,*" rows="auto,auto,auto,auto,auto,auto">
+                <Label row="0" col="0" text="Monthly cost:" class="itemLabel m-l-15 t-19 p-t-10"></Label>
                 <Label row="0" col="1" [text]="formatCurrency(item.premiums && item.premiums[0] && item.premiums[0].cost)" class="c-cb label-right"></Label>
                 <StackLayout row="1" colspan="2" class="hr-light m-t-10"></StackLayout>
-                <Label row="2" col="0" text="Adults:" class="itemLabel t-19 p-t-10"></Label>
+                <Label row="2" col="0" text="Adults:" class="itemLabel m-l-15 t-19 p-t-10"></Label>
                 <Label row="2" col="1" [text]="item.premiums && item.premiums[0] && item.premiums[0].adults" class="c-cb label-right"></Label>
                 <StackLayout row="3" colspan="2" class="hr-light m-t-10"></StackLayout>
-                <Label row="4" col="0" text="Children:" class="itemLabel t-19 p-t-10"></Label>
+                <Label row="4" col="0" text="Children:" class="itemLabel m-l-15 t-19 p-t-10"></Label>
                 <Label row="4" col="1" [text]="item.premiums && item.premiums[0] && item.premiums[0].children" class="c-cb label-right"></Label>
                 <StackLayout row="5" colspan="2" class="hr-light m-t-10"></StackLayout>
             </GridLayout>

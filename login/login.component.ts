@@ -14,7 +14,7 @@ import { UserService } from "./shared/user.service";
     selector: "Login",
     moduleId: module.id,
     templateUrl: "./login.component.html",
-	styleUrls: ["./login-common.css"]
+    styleUrls: ["./login-common.css"]
 })
 export class LoginComponent implements OnInit {
     @ViewChild("loginFormElement") loginFormElement: RadDataFormComponent;
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
 
         UserService.login(this._loginForm.email, this._loginForm.password)
             .then((user: Kinvey.User) => {
-                this._routerExtensions.navigate(["/search"],
+                this._routerExtensions.navigate(["/root"],
                     {
                         clearHistory: true,
                         animated: true,

@@ -21,14 +21,7 @@
 }
 
 .find-button {
-    background-color: #F42952;
-    color: #efeff4;
-    font-weight: bold;
-    width: 90%;
-}
-
-.checkmark {
-    color: #F5486B;
+    margin: 10 0;
 }
 
 .outdated {

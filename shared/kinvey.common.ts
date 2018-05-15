@@ -1,5 +1,4 @@
 import { Kinvey } from "kinvey-nativescript-sdk";
-
 import { Config } from "./config";
 
 Kinvey.init({
