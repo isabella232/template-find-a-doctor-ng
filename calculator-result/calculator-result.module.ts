@@ -10,7 +10,6 @@ import { SharedModule } from "../shared/shared.module";
 import { ModalDialogService } from "nativescript-angular/modal-dialog";
 import { EstimateService } from "../shared/services/estimate.service";
 
-import { CalculatorRoutingModule } from "./calculator-routing.module";
 import { CalculatorResultComponent } from "./calculator-result.component";
 
 @NgModule({
