@@ -88,7 +88,7 @@ export class SearchComponent {
         this.specialtyItems && this.specialtyItems.forEach(item => item.selected = false);
 
         // close keyboard in android
-        // this.specialityFilterSearchBar.nativeElement.dismissSoftInput();
+        this.specialityFilterSearchBar.nativeElement.dismissSoftInput();
     }
 
     onFilterButtonTap(args: EventData) {
