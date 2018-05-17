@@ -1,13 +1,22 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
+import { NativeScriptCommonModule } from "nativescript-angular/common";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 import { AppointmentService } from "./services/appointment.service";
 import { ProviderService } from "./services/provider.service";
 import { PlanService } from "./services/plan.service";
 
+import { SearchComponent } from "../search/search.component";
+
 @NgModule({
     imports: [
-        NativeScriptUIListViewModule
+        NativeScriptUIListViewModule,
+        NativeScriptCommonModule, 
+        NativeScriptFormsModule
+    ],
+    declarations: [
+        SearchComponent
     ],
     providers: [
         AppointmentService,
@@ -15,7 +24,8 @@ import { PlanService } from "./services/plan.service";
         PlanService
     ],
     exports: [
-        NativeScriptUIListViewModule
+        NativeScriptUIListViewModule,
+        SearchComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA

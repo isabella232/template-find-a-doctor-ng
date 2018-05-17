@@ -12,7 +12,7 @@ import { CalculatorComponent } from "./calculator.component";
         NativeScriptCommonModule,
         CalculatorRoutingModule,
         // NativeScriptUIListViewModule,
-        // NativeScriptFormsModule,
+        NativeScriptFormsModule,
         SharedModule
     ],
     declarations: [

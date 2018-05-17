@@ -57,7 +57,7 @@ export class SearchComponent {
         }
         this.appointmentsGroupingFunc = groupingFunc.bind(this);
 
-        this.specialtyListViewTemplateSelector  = (item: Specialty, index: number, items: any) => {
+        this.specialtyListViewTemplateSelector = (item: Specialty, index: number, items: any) => {
             return items.length === index + 1 ? "last" : "default";
         }
 
@@ -74,8 +74,8 @@ export class SearchComponent {
             });
     }
 
-    public specialtySearchBarLoaded(args){
-        var searchbar:SearchBar = <SearchBar>args.object;
+    public specialtySearchBarLoaded(args) {
+        var searchbar: SearchBar = <SearchBar>args.object;
         if (isAndroid) {
             searchbar.android.clearFocus();
         }
@@ -88,7 +88,9 @@ export class SearchComponent {
         this.specialtyItems && this.specialtyItems.forEach(item => item.selected = false);
 
         // close keyboard in android
-        this.specialityFilterSearchBar.nativeElement.dismissSoftInput();
+        if (isAndroid) {
+            this.specialityFilterSearchBar.nativeElement.dismissSoftInput();
+        }
     }
 
     onFilterButtonTap(args: EventData) {

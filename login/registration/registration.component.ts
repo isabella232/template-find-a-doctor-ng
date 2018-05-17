@@ -95,7 +95,7 @@ export class RegistrationComponent implements OnInit {
 
         UserService.signup(this._registrationForm)
             .then((user: Kinvey.User) => {
-                this._routerExtensions.navigate(["/search"],
+                this._routerExtensions.navigate([""],
                     {
                         clearHistory: true,
                         animated: true,

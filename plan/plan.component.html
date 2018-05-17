@@ -1,7 +1,3 @@
-<!-- <ActionBar class="action-bar" [title]="title">
-    <NavigationButton android.systemIcon="ic_menu_close_clear_cancel" text="Close" (tap)="onBackButtonTap()"></NavigationButton>
-    <ActionItem android.position="actionBar" ios.position="right" text="Log out" (tap)="onSignOutButtonTap()"></ActionItem>
-</ActionBar> -->
 <ScrollView>
     <GridLayout rows="*" columns="*">
         <StackLayout [visibility]="isLoading ? 'hidden' : 'visible'">
@@ -54,6 +50,9 @@
             </GridLayout>
             <StackLayout class="c-bg-lg">
                 <Label text="Benefits Summary" class="benefits-button c-bg-lg" (tap)="onBenefitsTap(item.benefits_summary_url)"></Label>
+            </StackLayout>
+            <StackLayout>
+                <Label text="Log Out" class="m-l-15 t-19 p-t-10 p-b-10 pink-accent" (tap)="onSignOutButtonTap()"></Label>
             </StackLayout>
         </StackLayout>
         <ActivityIndicator class="activity-indicator" [busy]="isLoading"></ActivityIndicator>
