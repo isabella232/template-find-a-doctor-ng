@@ -28,6 +28,7 @@ export class Plan implements Entity {
     public public_exchange: boolean;
     public state: string;
     public trading_partner_id: string;
+    public profile_image: string;
 
     constructor(options: any) {
         this._id = options._id;
@@ -44,5 +45,6 @@ export class Plan implements Entity {
         this.public_exchange = options.public_exchange;
         this.state = options.state || "";
         this.trading_partner_id = options.trading_partner_id || "";
+        this.profile_image = "";
     }
 }

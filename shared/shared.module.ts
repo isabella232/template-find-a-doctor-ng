@@ -9,6 +9,7 @@ import { PlanService } from "./services/plan.service";
 
 import { SearchComponent } from "../search/search.component";
 import { PlanComponent } from "../plan/plan.component";
+import { CalculatorComponent } from "../calculator/calculator.component";
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { PlanComponent } from "../plan/plan.component";
     ],
     declarations: [
         SearchComponent,
-        PlanComponent
+        PlanComponent,
+        CalculatorComponent
     ],
     providers: [
         AppointmentService,
@@ -28,7 +30,8 @@ import { PlanComponent } from "../plan/plan.component";
     exports: [
         NativeScriptUIListViewModule,
         SearchComponent,
-        PlanComponent
+        PlanComponent,
+        CalculatorComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA

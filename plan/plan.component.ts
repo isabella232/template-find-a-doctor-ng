@@ -37,7 +37,7 @@ export class PlanComponent {
             return this._planService.getPlanById(planId);
         }).then(plan => {
             // Display a placeholder when no image is available
-            this.noImage = !plan.profileImage;
+            this.noImage = !plan.profile_image;
             this.item = plan;
             this.isLoading = false;
         }, error => {

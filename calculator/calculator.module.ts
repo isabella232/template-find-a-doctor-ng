@@ -5,7 +5,6 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { SharedModule } from "../shared/shared.module";
 
 import { CalculatorRoutingModule } from "./calculator-routing.module";
-import { CalculatorComponent } from "./calculator.component";
 
 @NgModule({
     imports: [
@@ -14,9 +13,6 @@ import { CalculatorComponent } from "./calculator.component";
         // NativeScriptUIListViewModule,
         NativeScriptFormsModule,
         SharedModule
-    ],
-    declarations: [
-        CalculatorComponent
     ],
     providers: [
     ],
