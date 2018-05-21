@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
-import { Observable } from "rxjs/Rx";
 import { Estimate } from "../models/estimate.model";
-import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { Procedure } from "~/shared/models/procedure.model";
 
 @Injectable()

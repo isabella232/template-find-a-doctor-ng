@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
-import { Observable } from "rxjs/Rx";
 import { Plan } from "../models/plan.model";
-
 
 @Injectable()
 export class PlanService {

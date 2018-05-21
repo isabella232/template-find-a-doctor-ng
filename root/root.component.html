@@ -1,6 +1,11 @@
 <ActionBar class="action-bar" [title]="title"></ActionBar>
     
-<TabView [(ngModel)]="tabSelectedIndex" androidTabsPosition="bottom" class="tab-view" android:style="font-size:8" (selectedIndexChanged)="onSelectedIndexChanged($event)"
+<TabView [(ngModel)]="tabSelectedIndex"
+    (loaded)="tabViewLoaded($event)"
+    androidTabsPosition="bottom" 
+    class="tab-view" 
+    android:style="font-size:8"
+    (selectedIndexChanged)="onSelectedIndexChanged($event)"
     iosIconRenderingMode="alwaysOriginal">
     <ng-template tabItem title="Find Doctor" iconSource="{{ tabSelectedIndex === 0 ? getIconSource('find_doctor_active') : getIconSource('find_doctor') }}">
         <GridLayout android:style="font-size:16">

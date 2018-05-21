@@ -96,7 +96,7 @@ export class ResultDetailComponent {
 	}
 
 	goToSearch() {
-		this._routerExtensions.navigate(["/search"], {
+		this._routerExtensions.navigate(["/root"], {
 			clearHistory: true,
 			animated: true,
 			transition: {

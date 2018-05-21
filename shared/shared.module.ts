@@ -8,6 +8,7 @@ import { ProviderService } from "./services/provider.service";
 import { PlanService } from "./services/plan.service";
 
 import { SearchComponent } from "../search/search.component";
+import { PlanComponent } from "../plan/plan.component";
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { SearchComponent } from "../search/search.component";
         NativeScriptFormsModule
     ],
     declarations: [
-        SearchComponent
+        SearchComponent,
+        PlanComponent
     ],
     providers: [
         AppointmentService,
@@ -25,7 +27,8 @@ import { SearchComponent } from "../search/search.component";
     ],
     exports: [
         NativeScriptUIListViewModule,
-        SearchComponent
+        SearchComponent,
+        PlanComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA

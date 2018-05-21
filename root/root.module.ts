@@ -4,7 +4,6 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 import { RootComponent } from "./root.component";
 import { CalculatorComponent } from "../calculator/calculator.component";
-import { PlanComponent } from "../plan/plan.component";
 
 import { RootRoutingModule } from "./root-routing.module";
 import { SharedModule } from "../shared/shared.module";
@@ -19,7 +18,6 @@ import { SharedModule } from "../shared/shared.module";
     ],
     declarations: [
         RootComponent,
-        PlanComponent,
         CalculatorComponent
     ],
     providers: [

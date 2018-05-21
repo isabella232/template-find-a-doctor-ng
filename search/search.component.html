@@ -49,9 +49,15 @@
                 <StackLayout class="hr-light"></StackLayout>
             </StackLayout>
         </StackLayout>
-        <GridLayout rows="auto,*" *ngIf="selectedFilter==='specialty'" class="c-bg-white">
-            <SearchBar #specialityFilterSearchBar hint="Filter..." (loaded)="specialtySearchBarLoaded($event)" [visibility]="!isSpecialtyLoading && (specialtyItems && specialtyItems.length) ? 'visible' : 'hidden'"
-                [text]="filterSpecialties" (textChange)="onTextChanged($event)" (submit)="onSpecialtyFilterSubmit($event)" class="c-bg-lg"></SearchBar>
+        <GridLayout rows="auto,*" [visibility]="selectedFilter==='specialty' ? 'visible' : 'hidden'" class="c-bg-white">
+            <SearchBar #specialityFilterSearchBar 
+                hint="Filter..." 
+                (loaded)="specialtySearchBarLoaded($event)" 
+                [visibility]="!isSpecialtyLoading && (specialtyItems && specialtyItems.length) ? 'visible' : 'hidden'"
+                [text]="filterSpecialties" 
+                (textChange)="onTextChanged($event)" 
+                (submit)="onSpecialtyFilterSubmit($event)" 
+                class="c-bg-lg"></SearchBar>
             <RadListView #specialtyListView [groupingFunction]="specialtyGroupingFunc" row="1" [filteringFunction]="specialtyFilteringFunc"
                 [items]="specialtyItems" selectionBehavior="Press" (itemSelected)="specialtySelected($event)" [itemTemplateSelector]="specialtyListViewTemplateSelector">
                 <ng-template tkListItemTemplate let-item="item">

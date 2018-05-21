@@ -1,6 +1,7 @@
 <StackLayout>
     <GridLayout rows="auto,*,auto" class="c-bg-white">
-            <SearchBar #searchBar hint="Filter..." [visibility]="!isLoading && (procedures && procedures.length) ? 'visible' : 'hidden'"
+            <SearchBar #searchBar 
+                hint="Filter..." 
                 [text]="proceduresFilter" 
                 (textChange)="onTextChanged($event)"
                 (submit)="onProcedureFilterSubmit($event)"

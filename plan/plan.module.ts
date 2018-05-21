@@ -5,8 +5,6 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { SharedModule } from "../shared/shared.module";
 
 import { PlanRoutingModule } from "./plan-routing.module";
-import { PlanComponent } from "./plan.component";
-
 
 @NgModule({
     imports: [
@@ -15,9 +13,6 @@ import { PlanComponent } from "./plan.component";
         NativeScriptFormsModule,
         PlanRoutingModule,
         SharedModule
-    ],
-    declarations: [
-        PlanComponent
     ],
     providers: [
     ],
