@@ -1,11 +1,8 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
-
-import { SearchComponent } from "../search/search.component";
-import { RootComponent } from "./root.component";
-import { CalculatorComponent } from "../calculator/calculator.component";
-import { PlanComponent } from "../plan/plan.component";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
+
+import { RootComponent } from "./root.component";
 
 import { RootRoutingModule } from "./root-routing.module";
 import { SharedModule } from "../shared/shared.module";
@@ -13,16 +10,13 @@ import { SharedModule } from "../shared/shared.module";
 @NgModule({
     imports: [
         NativeScriptCommonModule,
-        NativeScriptFormsModule,
         RootRoutingModule,
         SharedModule,
-        RootRoutingModule
+        RootRoutingModule,
+        NativeScriptFormsModule
     ],
     declarations: [
-        SearchComponent,
-        RootComponent,
-        PlanComponent,
-        CalculatorComponent
+        RootComponent
     ],
     providers: [
     ],

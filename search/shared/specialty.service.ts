@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
-import { Observable } from "rxjs/Rx";
 import { Specialty } from "./specialty";
-import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 
 @Injectable()
 export class SpecialtyService {

@@ -32,11 +32,12 @@ export class PlanComponent {
         this.isLoading = true;
         Kinvey.User.me().then(user => {
             this.user = user && user.data;
-            const planId = (this.user && this.user.planId) || "33602TX0420001";
+            const planId = (this.user && this.user.planId) || "33602TX0420001"; // TODO: remove this hardcoded value
+
             return this._planService.getPlanById(planId);
         }).then(plan => {
             // Display a placeholder when no image is available
-            this.noImage = !plan.profileImage;
+            this.noImage = !plan.profile_image;
             this.item = plan;
             this.isLoading = false;
         }, error => {

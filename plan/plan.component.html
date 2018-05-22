@@ -1,12 +1,8 @@
-<!-- <ActionBar class="action-bar" [title]="title">
-    <NavigationButton android.systemIcon="ic_menu_close_clear_cancel" text="Close" (tap)="onBackButtonTap()"></NavigationButton>
-    <ActionItem android.position="actionBar" ios.position="right" text="Log out" (tap)="onSignOutButtonTap()"></ActionItem>
-</ActionBar> -->
 <ScrollView>
     <GridLayout rows="*" columns="*">
         <StackLayout [visibility]="isLoading ? 'hidden' : 'visible'">
             <StackLayout class="c-bg-lg">
-                <Image [visibility]="noImage ? 'collapsed' : 'visible'" width="80" height="80" class="p-10 m-x-auto img-circle-large" [src]="item.profileImage"></Image>
+                <Image [visibility]="noImage ? 'collapsed' : 'visible'" width="80" height="80" class="p-10 m-x-auto img-circle-large" [src]="item.profile_image"></Image>
                 <Label class="fa c-cb alt-user-image text-center m-20" text="&#xf2be;"></Label>
                 <Label [text]="getUserName(user)" class="font-weight-bold c-black t-25" text="" textAlignment="center" textWrap="true"></Label>
                 <Label [text]="item.plan_name" class="c-black t-19 p-t-20 p-b-20" textAlignment="center" textWrap="true"></Label>
@@ -54,6 +50,9 @@
             </GridLayout>
             <StackLayout class="c-bg-lg">
                 <Label text="Benefits Summary" class="benefits-button c-bg-lg" (tap)="onBenefitsTap(item.benefits_summary_url)"></Label>
+            </StackLayout>
+            <StackLayout>
+                <Label text="Log Out" class="m-l-15 t-19 p-t-10 p-b-10 pink-accent" (tap)="onSignOutButtonTap()"></Label>
             </StackLayout>
         </StackLayout>
         <ActivityIndicator class="activity-indicator" [busy]="isLoading"></ActivityIndicator>

@@ -7,18 +7,18 @@
             <Label class="sub-title m-t-15" text="Estimated Out-of-Pocket Range"></Label>
 
             <Label class="price-sub-title m-15" 
-                [text]="(getLowestPrice(resultItems) | currency:'USD':symbol:'1.0-0') + '-' + (getHighestPrice(resultItems) | currency:'USD':symbol:'1.0-0')"></Label>
+                [text]="(getLowestPrice(resultItems) | currency:'USD':'symbol':'1.0-0') + '-' + (getHighestPrice(resultItems) | currency:'USD':'symbol':'1.0-0')"></Label>
 
             <GridLayout *ngFor="let estimate of resultItems">
                 <GridLayout rows="auto, auto, auto, auto" columns="*, auto" class="card">
                     <Label row="0" colSpan="2" class="card-title" textWrap="true" [text]="estimate.label"></Label>
                     <StackLayout row="1" col="0" verticalAlignment="middle">
                         <Label class="card-label" text="Range"></Label>
-                        <Label class="card-price-range" [text]="(estimate.priceLow | currency:'USD':symbol:'1.0-0') + '-' + (estimate.priceHigh | currency:'USD':symbol:'1.0-0')"></Label>
+                        <Label class="card-price-range" [text]="(estimate.priceLow | currency:'USD':'symbol':'1.0-0') + '-' + (estimate.priceHigh | currency:'USD':'symbol':'1.0-0')"></Label>
                     </StackLayout>
                     <StackLayout row="1" col="1" verticalAlignment="middle">
                         <Label class="card-label" text="Average cost"></Label>
-                        <Label class="card-price-avg" [text]="estimate.priceAvg | currency:'USD':symbol:'1.0-0'"></Label>
+                        <Label class="card-price-avg" [text]="estimate.priceAvg | currency:'USD':'symbol':'1.0-0'"></Label>
                     </StackLayout>
                     <StackLayout row="2" col="0" colSpan="2" class="hr-light m-15"></StackLayout>
                     <Label row="3" colSpan="2" class="breakdown-text" textWrap="true" [text]="estimate.breakdown"></Label>
