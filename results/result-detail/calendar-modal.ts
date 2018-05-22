@@ -8,6 +8,7 @@ import * as dialogs from "tns-core-modules/ui/dialogs";
 import { Provider } from "../../shared/models/provider.model";
 import { AppointmentService } from "../../shared/services/appointment.service";
 import { Appointment } from "../../shared/models/appointment.model";
+import { isAndroid } from "tns-core-modules/ui/page/page";
 
 @Component({
     moduleId: module.id,
@@ -124,44 +125,54 @@ export class CalendarModalViewComponent implements OnInit {
         const selectedDate = args.eventData.startDate;
         Kinvey.User.me().then(user => {
             const data = user && user.data as any;
+            let startDate = args.eventData.startDate.toISOString();
+            let endDate = args.eventData.endDate.toISOString();
 
-            dialogs.confirm({
-                title: `Dear ${(data && data.givenName) || "patient"}`,
-                message: `Please confirm the appointment with ${this.getProviderName(this.item)} on ${this._formatDateTime(selectedDate)}`,
-                okButtonText: "Confirm",
-                cancelButtonText: "Cancel"
-            }).then(result => {
-                if (result) {
-                    // TODO: Create appointment
-                    const appointment = new Appointment({
-                        pd_appointment_uuid: "ef987691-0a19-447f-814d-f8f3abbf4859",
-                        appointment_id: this._generateId(),
-                        appointment_type: "OV1",
-                        patient: {
-                            "first_name": "John",
-                            "last_name": "Doe",
-                            "_uuid": "8b21f7b0-8535-11e4-a6cb-0800272e8da1",
-                            "phone": "800-555-1212",
-                            "member_id": "M000001",
-                            "birth_date": "1970-01-25",
-                            "email": "john@johndoe.com"
-                        },
-                        status: "booked",
-                        provider_scheduler_uuid: "8b21efa4-8535-11e4-a6cb-0800272e8da1",
-                        start_date: args.eventData.startDate.toISOString(),
-                        end_date: args.eventData.endDate.toISOString()
-                    });
-                    this._appointmentService.create(appointment).then(newAppointment => {
-                        this.params.closeCallback(args.eventData);
-                    });
-                }
-            });
+            // TODO: remove android check, show confirmation in iOS as well
+            if (isAndroid) {
+                dialogs.confirm({
+                    title: `Dear ${(data && data.givenName) || "patient"}`,
+                    message: `Please confirm the appointment with ${this.getProviderName(this.item)} on ${this._formatDateTime(selectedDate)}`,
+                    okButtonText: "Confirm",
+                    cancelButtonText: "Cancel"
+                }).then(result => {
+                    if (result) {
+                        this.createAppointment(startDate, endDate);
+                    }
+                });
+            } else {
+                this.createAppointment(startDate, endDate);
+            }
         }, error => {
             alert({
                 title: "Backend operation failed",
                 message: error.message,
                 okButtonText: "Ok"
             });
+        });
+    }
+
+    createAppointment(startDate: string, endDate: string) {
+        const appointment = new Appointment({
+            pd_appointment_uuid: "ef987691-0a19-447f-814d-f8f3abbf4859",
+            appointment_id: this._generateId(),
+            appointment_type: "OV1",
+            patient: {
+                "first_name": "John",
+                "last_name": "Doe",
+                "_uuid": "8b21f7b0-8535-11e4-a6cb-0800272e8da1",
+                "phone": "800-555-1212",
+                "member_id": "M000001",
+                "birth_date": "1970-01-25",
+                "email": "john@johndoe.com"
+            },
+            status: "booked",
+            provider_scheduler_uuid: "8b21efa4-8535-11e4-a6cb-0800272e8da1",
+            start_date: startDate,
+            end_date: endDate
+        });
+        this._appointmentService.create(appointment).then(newAppointment => {
+            this.params.closeCallback(true);
         });
     }
 
