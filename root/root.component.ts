@@ -24,13 +24,4 @@ export class RootComponent {
 
         this.title = selectedTabViewItem.title;
     }
-
-    public tabViewLoaded(args) {
-        // close the keyboard in Android at startup (triggered by the search bar in Calculator tab)
-        // TODO: utilize LayoutChange event when available in the official {N} version
-        if (isAndroid) {
-            let timer = setInterval(() => androidUtils.dismissSoftInput(), 250);
-            setTimeout(() => clearInterval(timer), 3000);
-        }
-    }
 }

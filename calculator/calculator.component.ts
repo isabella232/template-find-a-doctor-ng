@@ -7,6 +7,7 @@ import { SearchBar } from "ui/search-bar";
 import { EventData } from "data/observable";
 import { RadListViewComponent } from "nativescript-ui-listview/angular";
 import { RouterExtensions } from "nativescript-angular/router";
+import { isAndroid } from "tns-core-modules/ui/page/page";
 
 @Component({
     selector: "CalculatorComponent",
@@ -40,6 +41,14 @@ export class CalculatorComponent {
             this.procedures = new ObservableArray<Procedure>(procedures);
             this.isLoading = false;
         });
+    }
+
+    onSearchBarLayoutChange(args) {
+        let sb = <SearchBar>args.object;
+
+        if (isAndroid) {
+            sb.android.clearFocus();
+        }
     }
 
     procedureSelected(args: ListViewEventData) {

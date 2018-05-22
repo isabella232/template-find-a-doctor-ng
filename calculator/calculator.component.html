@@ -1,6 +1,7 @@
 <StackLayout>
     <GridLayout rows="auto,*,auto" class="c-bg-white">
             <SearchBar #searchBar 
+                (layoutChanged)="onSearchBarLayoutChange($event)"
                 hint="Filter..." 
                 [text]="proceduresFilter" 
                 (textChange)="onTextChanged($event)"
