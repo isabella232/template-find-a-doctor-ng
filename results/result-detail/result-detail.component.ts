@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef } from "@angular/core";
+import { Component, ViewContainerRef, NgModuleRef } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { Provider, ProviderResidency, ProviderLocation } from "../../shared/models/provider.model";
@@ -26,6 +26,7 @@ export class ResultDetailComponent {
 	constructor(
 		private _modalService: ModalDialogService,
 		private _vcRef: ViewContainerRef,
+		private _moduleRef: NgModuleRef<any>,
 		private _appointmentService: AppointmentService,
 		private _providerService: ProviderService,
 		private _pageRoute: PageRoute,
@@ -96,7 +97,7 @@ export class ResultDetailComponent {
 	}
 
 	goToSearch() {
-		this._routerExtensions.navigate(["/root"], {
+		this._routerExtensions.navigate([""], {
 			clearHistory: true,
 			animated: true,
 			transition: {
@@ -108,7 +109,7 @@ export class ResultDetailComponent {
 	}
 
 	onBookButtonTap(dataItem: Provider): void {
-		this.createModelView().then(result => {
+		this.createModаlView().then(result => {
 			if (result) {
 				this.goToSearch();
 			}
@@ -121,10 +122,10 @@ export class ResultDetailComponent {
 		});
 	}
 
-	private createModelView(): Promise<any> {
-		const today = new Date();
+	private createModаlView(): Promise<any> {
 		const options: ModalDialogOptions = {
 			viewContainerRef: this._vcRef,
+			moduleRef: this._moduleRef,
 			context: this.item,
 			fullscreen: false,
 		};
