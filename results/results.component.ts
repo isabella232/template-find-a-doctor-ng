@@ -1,5 +1,6 @@
 import { Component, ViewContainerRef } from "@angular/core";
-import { PageRoute, RouterExtensions } from "nativescript-angular/router";
+import { RouterExtensions } from "nativescript-angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { ProviderService } from "../shared/services/provider.service";
 import { Provider } from "../shared/models/provider.model";
@@ -17,22 +18,20 @@ export class ResultsComponent {
 
 	constructor(
 		private _providerService: ProviderService,
-		private _pageRoute: PageRoute,
+		private _activatedRoute: ActivatedRoute,
 		private _routerExtensions: RouterExtensions	) { }
 
 	ngOnInit(): void {
 		this.isLoading = true;
 		this.title = "Find Results";
-		this._pageRoute.activatedRoute
-			.switchMap((activatedRoute) => activatedRoute.params)
-			.forEach((params) => {
-				params = params || {};
-				this._providerService.findProviders(params.specialty, params.zipCode)
-				.then(providers => {
-					this.isLoading = false;
-					this.resultItems = new ObservableArray<Provider>(providers);
-				})
-			});
+		this._activatedRoute.params.subscribe(params => {
+			params = params || {};
+			this._providerService.findProviders(params.specialty, params.zipCode)
+			.then(providers => {
+				this.isLoading = false;
+				this.resultItems = new ObservableArray<Provider>(providers);
+			})
+		});
 	}
 
 	onBackButtonTap(): void {

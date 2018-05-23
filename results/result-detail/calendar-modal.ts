@@ -54,7 +54,6 @@ export class CalendarModalViewComponent implements OnInit {
             calendar.android.getDayView().getDayEventsViewStyle().setEndTime(18 * 60 * 60 * 1000)
         }
         calendar.selectedDate = this.dateToday;
-
     }
 
     onCloseButtonTap() {
