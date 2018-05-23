@@ -111,7 +111,10 @@ export class ResultDetailComponent {
 	onBookButtonTap(dataItem: Provider): void {
 		this.createModаlView().then(result => {
 			if (result) {
-				this.goToSearch();
+				// TODO: remove setTimeout - this works around an issue in navigation initiated from the callback of a modal dialog
+				setTimeout(() => {
+					this.goToSearch()
+				}, 1);
 			}
 		}).catch(error => {
 			alert({
