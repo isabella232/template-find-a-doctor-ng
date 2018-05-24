@@ -25,17 +25,20 @@ export class LoginComponent implements OnInit {
     constructor(
         private _page: Page,
         private _routerExtensions: RouterExtensions
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.isLoading = false;
 
         this._page.actionBarHidden = true;
-        this._loginForm = new LoginForm();
     }
 
     get loginForm(): LoginForm {
         return this._loginForm;
+    }
+
+    onLoginRootLoaded(args: any) {
+        this._loginForm = new LoginForm();
     }
 
     onEditorUpdate(args: DataFormEventData) {
