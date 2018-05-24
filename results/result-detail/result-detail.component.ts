@@ -1,5 +1,6 @@
 import { Component, ViewContainerRef, NgModuleRef } from "@angular/core";
-import { PageRoute, RouterExtensions } from "nativescript-angular/router";
+import { ActivatedRoute } from "@angular/router";
+import { RouterExtensions } from "nativescript-angular/router";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { Provider, ProviderResidency, ProviderLocation } from "../../shared/models/provider.model";
 import * as phoneModule from "nativescript-phone";
@@ -29,7 +30,7 @@ export class ResultDetailComponent {
 		private _moduleRef: NgModuleRef<any>,
 		private _appointmentService: AppointmentService,
 		private _providerService: ProviderService,
-		private _pageRoute: PageRoute,
+		private _activatedRoute: ActivatedRoute,
 		private _routerExtensions: RouterExtensions
 	) { }
 
@@ -38,26 +39,24 @@ export class ResultDetailComponent {
 		this.title = "Result Details";
 		this.item = new Provider({});
 		this.btnRemove = false;
-		this._pageRoute.activatedRoute
-			.switchMap((activatedRoute) => activatedRoute.params)
-			.forEach((params) => {
-				const npi = params.npi;
-				this.btnRemove = !!params.remove;
-				this.appointmentId = params.appointment;
-				if (npi) {
-					this._providerService.getProviderByNpi(npi).then(providerItem => {
-						this.item = providerItem;
-						this.title = this.item.prefix + ' ' + this.item.first_name + ' ' + this.item.last_name;
-						this.isLoading = false;
-					});
-				} else {
-					alert({
-						title: "Oops something went wrong.",
-						message: "Unknown Provider",
-						okButtonText: "Ok"
-					});
-				}
-			});
+		this._activatedRoute.params.subscribe(params => {
+			const npi = params.npi;
+			this.btnRemove = !!params.remove;
+			this.appointmentId = params.appointment;
+			if (npi) {
+				this._providerService.getProviderByNpi(npi).then(providerItem => {
+					this.item = providerItem;
+					this.title = this.item.prefix + ' ' + this.item.first_name + ' ' + this.item.last_name;
+					this.isLoading = false;
+				});
+			} else {
+				alert({
+					title: "Oops something went wrong.",
+					message: "Unknown Provider",
+					okButtonText: "Ok"
+				});
+			}
+		});
 	}
 
 	onBackButtonTap(): void {
