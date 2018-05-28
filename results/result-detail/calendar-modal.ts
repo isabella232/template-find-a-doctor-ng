@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { ModalDialogParams } from "nativescript-angular/modal-dialog";
-import { Page, Color } from "tns-core-modules/ui/page/page";
+import { Color } from "tns-core-modules/ui/page/page";
 import { CalendarSelectionEventData, RadCalendar, CalendarViewMode, CalendarDayViewStyle, CalendarDayViewEventSelectedData, CalendarEvent, CalendarMonthViewStyle, DayCellStyle } from "nativescript-ui-calendar";
 import { RadCalendarComponent } from "nativescript-ui-calendar/angular/calendar-directives";
 import * as dialogs from "tns-core-modules/ui/dialogs";
@@ -26,9 +26,7 @@ export class CalendarModalViewComponent implements OnInit {
 
     @ViewChild("appointmentDayPicker") appointmentDayPicker: RadCalendarComponent;
 
-    constructor(private _appointmentService: AppointmentService,
-        private params: ModalDialogParams,
-        private page: Page) {
+    constructor(private _appointmentService: AppointmentService, private params: ModalDialogParams) {
         this.dateToday = new Date();
         this.selectedDate = this.dateToday;
         //set the maximum date to today + one month
@@ -36,11 +34,6 @@ export class CalendarModalViewComponent implements OnInit {
         tempDate.setMonth(tempDate.getMonth() + 1);
         this.dateNextMonth = tempDate;
         this.item = params.context;
-        this.page.on("unloaded", () => {
-            // using the unloaded event to close the modal when there is user interaction
-            // e.g. user taps outside the modal page
-            this.params.closeCallback();
-        });
     }
 
     ngOnInit() {
