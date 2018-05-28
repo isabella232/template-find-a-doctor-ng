@@ -5,7 +5,7 @@
         <Label [text]="formatDate(selectedDate)" class="t-30 c-white font-weight-bold"></Label>
     </StackLayout>
     <RadCalendar #appointmentDayPicker row="1" colSpan="2" viewMode="Month" transitionMode="Slide" selectionMode="Single" (dateSelected)="onCalendarDateSelected($event)"
-        (dayViewEventSelected)="onCalendarEventSelected($event)" [minDate]="dateToday" [maxDate]="dateNextMonth" [dayViewStyle]="getDayViewStyle()"
+        (dayViewEventSelected)="onCalendarEventSelected($event)" [minDate]="dateToday" [dayViewStyle]="getDayViewStyle()"
         [monthViewStyle]="getMonthViewStyle()"></RadCalendar>
     <Button row="2" class="c-cb modal-button pull-right p-15" text="Cancel" (tap)="onCloseButtonTap()"></Button>
     <Button row="2" col="1" class="c-cb modal-button p-r-15" text="OK" (tap)="onOkButtonTap()" *ngIf="showHeader"></Button>

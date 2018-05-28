@@ -17,7 +17,6 @@ import { isAndroid } from "tns-core-modules/ui/page/page";
 
 export class CalendarModalViewComponent implements OnInit {
     showHeader: boolean;
-    dateNextMonth: Date;
     dateToday: Date;
     item: Provider;
     availableText: string = "Book Now";
@@ -29,10 +28,6 @@ export class CalendarModalViewComponent implements OnInit {
     constructor(private _appointmentService: AppointmentService, private params: ModalDialogParams) {
         this.dateToday = new Date();
         this.selectedDate = this.dateToday;
-        //set the maximum date to today + one month
-        const tempDate = new Date(this.dateToday.valueOf());
-        tempDate.setMonth(tempDate.getMonth() + 1);
-        this.dateNextMonth = tempDate;
         this.item = params.context;
     }
 
