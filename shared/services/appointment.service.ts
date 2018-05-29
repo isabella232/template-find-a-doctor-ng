@@ -55,18 +55,18 @@ export class AppointmentService {
                 message: error.message,
                 okButtonText: "Ok"
             });
-            return null;
+            throw error;
         });
     }
 
-    delete(appointment: Appointment): Promise<{ count: number }> {
+    delete(appointment: Appointment): Promise<any> {
         return this._appointmentStore.removeById(appointment._id).catch((error: Kinvey.BaseError) => {
             alert({
                 title: "Oops something went wrong.",
                 message: error.message,
                 okButtonText: "Ok"
             });
-            return { count: 0 };
+            throw error;
         });
     }
 }

@@ -124,11 +124,19 @@ export class CalendarModalViewComponent implements OnInit {
                     cancelButtonText: "Cancel"
                 }).then(result => {
                     if (result) {
-                        this.createAppointment(startDate, endDate);
+                        this.createAppointment(startDate, endDate).then(newAppointment => {
+                            this.params.closeCallback({ data: newAppointment });
+                        }, (error) => {
+                            this.params.closeCallback({ error: error });
+                        });
                     }
                 });
             } else {
-                this.createAppointment(startDate, endDate);
+                this.createAppointment(startDate, endDate).then(newAppointment => {
+                    this.params.closeCallback({ data: newAppointment });
+                }, (error) => {
+                    this.params.closeCallback({ error: error });
+                });
             }
         }, error => {
             alert({
@@ -158,9 +166,7 @@ export class CalendarModalViewComponent implements OnInit {
             start_date: startDate,
             end_date: endDate
         });
-        this._appointmentService.create(appointment).then(newAppointment => {
-            this.params.closeCallback(true);
-        });
+        return this._appointmentService.create(appointment);
     }
 
     getProviderName(providerItem: Provider) {

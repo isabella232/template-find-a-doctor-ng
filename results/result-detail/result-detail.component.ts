@@ -108,12 +108,17 @@ export class ResultDetailComponent {
 	}
 
 	onBookButtonTap(dataItem: Provider): void {
-		this.createModаlView().then(result => {
+		this.createModаlView().then( (result) => {
 			if (result) {
-				// TODO: remove setTimeout - this works around an issue in navigation initiated from the callback of a modal dialog
-				setTimeout(() => {
-					this.goToSearch()
-				}, 1);
+				if (result.data) {
+					// TODO: remove setTimeout - this works around an issue in navigation initiated from the callback of a modal dialog
+					setTimeout(() => {
+						this.goToSearch()
+					}, 1);
+				}
+				if (result.error) {
+					// handle modal dialog error if needed 
+				}
 			}
 		}).catch(error => {
 			alert({
@@ -156,16 +161,18 @@ export class ResultDetailComponent {
 					cancelButtonText: "Cancel"
 				}).then(result => {
 					if (result) {
-						this._appointmentService.delete(appointment).then(count => {
+						this._appointmentService.delete(appointment).then(res => {
 							this.goToSearch();
 						})
 					}
 				});
 			}, error => {
-				alert({
+				dialogs.alert({
 					title: "Backend operation failed",
 					message: error.message,
 					okButtonText: "Ok"
+				}).then(() => {
+					this.goToSearch();
 				});
 				this.isLoading = false;
 			});
