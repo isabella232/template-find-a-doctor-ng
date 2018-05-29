@@ -35,12 +35,6 @@ export class CalendarModalViewComponent implements OnInit {
         this.showHeader = true;
         const calendar = this.appointmentDayPicker.calendar;
         calendar.monthViewStyle = new CalendarMonthViewStyle();
-        if (calendar.android) {
-            calendar.android.setShowGridLines(false);
-            // Set the beginning / end of the day view events list to be 8 AM / 6 PM
-            calendar.android.getDayView().getDayEventsViewStyle().setStartTime(8 * 60 * 60 * 1000)
-            calendar.android.getDayView().getDayEventsViewStyle().setEndTime(18 * 60 * 60 * 1000)
-        }
         calendar.selectedDate = this.dateToday;
     }
 
@@ -81,8 +75,16 @@ export class CalendarModalViewComponent implements OnInit {
 
     onCalendarLoaded() {
         const calendar = this.appointmentDayPicker.calendar;
+        
+        if (calendar.android) {
+            calendar.android.setShowGridLines(false);
 
-        calendar.reload();
+            // Set the beginning / end of the day view events list to be 8 AM / 6 PM
+            calendar.android.getDayView().getDayEventsViewStyle().setStartTime(8 * 60 * 60 * 1000)
+            calendar.android.getDayView().getDayEventsViewStyle().setEndTime(18 * 60 * 60 * 1000)
+
+            calendar.reload();
+        }
     }
 
     onCalendarDateSelected(args: CalendarSelectionEventData) {
