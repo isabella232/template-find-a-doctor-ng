@@ -19,6 +19,7 @@ import { Kinvey } from "kinvey-nativescript-sdk";
 })
 export class ResultDetailComponent {
 	isLoading: boolean;
+	modalIsShown: boolean;
 	btnRemove: boolean;
 	title: string;
 	appointmentId: string;
@@ -108,7 +109,13 @@ export class ResultDetailComponent {
 	}
 
 	onBookButtonTap(dataItem: Provider): void {
-		this.createModаlView().then( (result) => {
+		if (this.modalIsShown) {
+			return; 
+		}
+
+		this.modalIsShown = true;
+
+		this.createModаlView().then((result) => {
 			if (result) {
 				if (result.data) {
 					// TODO: remove setTimeout - this works around an issue in navigation initiated from the callback of a modal dialog
@@ -120,6 +127,8 @@ export class ResultDetailComponent {
 					// handle modal dialog error if needed 
 				}
 			}
+
+			this.modalIsShown = false;
 		}).catch(error => {
 			alert({
 				title: "Oops something went wrong.",
@@ -134,7 +143,7 @@ export class ResultDetailComponent {
 			viewContainerRef: this._vcRef,
 			moduleRef: this._moduleRef,
 			context: this.item,
-			fullscreen: false,
+			fullscreen: false
 		};
 
 		return this._modalService.showModal(CalendarModalViewComponent, options);

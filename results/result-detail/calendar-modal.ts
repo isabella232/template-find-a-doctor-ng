@@ -79,6 +79,12 @@ export class CalendarModalViewComponent implements OnInit {
         this.appointmentDayPicker.eventSource = testEvents;
     }
 
+    onCalendarLoaded() {
+        const calendar = this.appointmentDayPicker.calendar;
+
+        calendar.reload();
+    }
+
     onCalendarDateSelected(args: CalendarSelectionEventData) {
         if (this.selectedDate.getTime() !== args.date.getTime()) {
             this.selectedDate = args.date;
