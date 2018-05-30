@@ -122,30 +122,20 @@ export class CalendarModalViewComponent implements OnInit {
             const data = user && user.data as any;
             let startDate = args.eventData.startDate.toISOString();
             let endDate = args.eventData.endDate.toISOString();
-
-            // TODO: remove android check, show confirmation in iOS as well
-            if (isAndroid) {
-                dialogs.confirm({
-                    title: `Dear ${(data && data.givenName) || "patient"}`,
-                    message: `Please confirm the appointment with ${this.getProviderName(this.item)} on ${this._formatDateTime(selectedDate)}`,
-                    okButtonText: "Confirm",
-                    cancelButtonText: "Cancel"
-                }).then(result => {
-                    if (result) {
-                        this.createAppointment(startDate, endDate).then(newAppointment => {
-                            this.params.closeCallback({ data: newAppointment });
-                        }, (error) => {
-                            this.params.closeCallback({ error: error });
-                        });
-                    }
-                });
-            } else {
-                this.createAppointment(startDate, endDate).then(newAppointment => {
-                    this.params.closeCallback({ data: newAppointment });
-                }, (error) => {
-                    this.params.closeCallback({ error: error });
-                });
-            }
+            dialogs.confirm({
+                title: `Dear ${(data && data.givenName) || "patient"}`,
+                message: `Please confirm the appointment with ${this.getProviderName(this.item)} on ${this._formatDateTime(selectedDate)}`,
+                okButtonText: "Confirm",
+                cancelButtonText: "Cancel"
+            }).then(result => {
+                if (result) {
+                    this.createAppointment(startDate, endDate).then(newAppointment => {
+                        this.params.closeCallback({ data: newAppointment });
+                    }, (error) => {
+                        this.params.closeCallback({ error: error });
+                    });
+                }
+            });
         }, error => {
             alert({
                 title: "Backend operation failed",
