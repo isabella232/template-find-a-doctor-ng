@@ -75,6 +75,10 @@
                         <StackLayout row="1" colspan="2" class="hr-light"></StackLayout>
                     </GridLayout>
                 </ng-template>
+                
+                <ng-template tkGroupTemplate let-category="category">
+                    <Label [text]="category" height="50" backgroundColor="white" paddingLeft="15"></Label>
+                </ng-template>
             </RadListView>
             <ActivityIndicator rowSpan="2" class="activity-indicator" [busy]="isSpecialtyLoading"></ActivityIndicator>
         </GridLayout>
