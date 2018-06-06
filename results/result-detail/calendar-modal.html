@@ -4,7 +4,7 @@
         <Label [text]="selectedDate.getFullYear()" class="t-16 text-muted"></Label>
         <Label [text]="formatDate(selectedDate)" class="t-30 c-white font-weight-bold"></Label>
     </StackLayout>
-    <RadCalendar #appointmentDayPicker (loaded)="onCalendarLoaded($event)" row="1" colSpan="2" viewMode="Month" transitionMode="Slide" selectionMode="Single" (dateSelected)="onCalendarDateSelected($event)"
+    <RadCalendar #appointmentDayPicker (loaded)="onCalendarLoaded()" row="1" colSpan="2" viewMode="Month" transitionMode="Slide" selectionMode="Single" (dateSelected)="onCalendarDateSelected($event)"
         (dayViewEventSelected)="onCalendarEventSelected($event)" [minDate]="dateToday" [dayViewStyle]="getDayViewStyle()"
         [monthViewStyle]="getMonthViewStyle()"></RadCalendar>
     <Button row="2" class="c-cb modal-button pull-right p-15" text="Cancel" (tap)="onCloseButtonTap()"></Button>
