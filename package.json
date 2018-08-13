@@ -11,7 +11,6 @@
     },
     "name": "tns-template-find-a-doctor-ng",
     "displayName": "Find a Doctor with Kinvey",
-    "main": "main.js",
     "version": "1.0.1",
     "description": "Template to book an appointment using a Kinvey backend.",
     "license": "SEE LICENSE IN LICENSE",
@@ -65,9 +64,5 @@
         "nativescript-dev-webpack": "~0.15.1",
         "tns-platform-declarations": "^4.2.0",
         "typescript": "~2.8.2"
-    },
-    "scripts": {
-        "preinstall": "node tools/preinstall.js",
-        "postinstall": "node tools/postinstall.js"
     }
 }
