@@ -1,7 +1,16 @@
 {
+    "nativescript": {
+        "id": "org.nativescript.FindDoctor",
+        "templateVersion": "v2",
+        "tns-android": {
+            "version": "4.1.3"
+        },
+        "tns-ios": {
+            "version": "4.1.1"
+        }
+    },
     "name": "tns-template-find-a-doctor-ng",
     "displayName": "Find a Doctor with Kinvey",
-    "main": "main.js",
     "version": "1.0.0",
     "description": "Template to book an appointment using a Kinvey backend.",
     "license": "SEE LICENSE IN LICENSE",
@@ -21,8 +30,11 @@
         "url": "https://github.com/NativeScript/template-find-a-doctor-ng"
     },
     "homepage": "https://github.com/NativeScript/template-find-a-doctor-ng",
-    "android": {
-        "v8Flags": "--expose_gc"
+    "bugs": {
+        "url": "https://github.com/NativeScript/NativeScript/issues"
+    },
+    "scripts": {
+        "lint": "tslint \"app/**/*.ts\""
     },
     "dependencies": {
         "@angular/animations": "~6.0.6",
@@ -44,7 +56,7 @@
         "reflect-metadata": "~0.1.10",
         "rxjs": "~6.1.0",
         "rxjs-compat": "~6.1.0",
-        "tns-core-modules": "4.1.0",
+        "tns-core-modules": "~4.1.0",
         "zone.js": "~0.8.18"
     },
     "devDependencies": {
@@ -54,9 +66,5 @@
         "nativescript-dev-webpack": "~0.14.0",
         "tns-platform-declarations": "~4.0.0",
         "typescript": "~2.7.2"
-    },
-    "scripts": {
-        "preinstall": "node tools/preinstall.js",
-        "postinstall": "node tools/postinstall.js"
     }
 }
