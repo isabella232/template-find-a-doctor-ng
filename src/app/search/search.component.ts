@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef, ViewChild, NgZone } from "@angular/core";
-import { EventData } from "data/observable";
-import { StackLayout } from "ui/layouts/stack-layout";
-import { SearchBar } from "ui/search-bar";
+import { EventData } from "tns-core-modules/data/observable";
+import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
+import { SearchBar } from "tns-core-modules/ui/search-bar";
 import { ListViewEventData } from "nativescript-ui-listview";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { RouterExtensions } from "nativescript-angular/router";
@@ -11,7 +11,7 @@ import { ProviderService } from "../shared/services/provider.service";
 import { Appointment } from "../shared/models/appointment.model";
 import { RadListViewComponent } from "nativescript-ui-listview/angular";
 import { Specialty } from "./shared/specialty";
-import { isAndroid } from "platform";
+import { isAndroid } from "tns-core-modules/platform";
 
 @Component({
     selector: "SearchComponent",

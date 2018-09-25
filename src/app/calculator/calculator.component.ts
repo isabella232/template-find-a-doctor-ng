@@ -3,8 +3,8 @@ import { ListViewEventData } from "nativescript-ui-listview";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { ProcedureService } from "../shared/services/procedure.service"
 import { Procedure } from "../shared/models/procedure.model";
-import { SearchBar } from "ui/search-bar";
-import { EventData } from "data/observable";
+import { SearchBar } from "tns-core-modules/ui/search-bar";
+import { EventData } from "tns-core-modules/data/observable";
 import { RadListViewComponent } from "nativescript-ui-listview/angular";
 import { RouterExtensions } from "nativescript-angular/router";
 import { isAndroid } from "tns-core-modules/ui/page/page";

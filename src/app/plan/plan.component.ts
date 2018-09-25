@@ -3,7 +3,7 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { Kinvey } from "kinvey-nativescript-sdk";
 import { Plan } from "../shared/models/plan.model";
 import { PlanService } from "../shared/services/plan.service";
-import { openUrl } from "utils/utils";
+import { openUrl } from "tns-core-modules/utils/utils";
 
 @Component({
     selector: "PlanComponent",
