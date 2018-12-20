@@ -1,49 +1,38 @@
 import { Injectable } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
+import { RapidHealthProviders } from "~/app/shared/models/rapidHealthProviders.model";
+import { RapidHealthProviderErrors } from "~/app/shared/models/rapidHealthProviderErrors.model";
 import { Provider } from "../../shared/models/provider.model";
 
 @Injectable()
 export class ProviderService {
-    private _providerStore = Kinvey.DataStore.collection<Provider>("Providers");
 
-    getProviderByNpi(npi: string): Promise<Provider> {
-        const npiQuery = new Kinvey.Query();
-        npiQuery.equalTo("npi", npi);
+    dataStoreType = Kinvey.DataStoreType.Network;
+    // tslint:disable-next-line:max-line-length
+    private _rapidproviderStore = Kinvey.DataStore.collection<RapidHealthProviders>("RapidHealthProviders/Provider", this.dataStoreType);
+    private _rapidproviderErrorsStore = Kinvey.DataStore.collection<RapidHealthProviderErrors>("RapidHealthProviderErrors", this.dataStoreType);
 
-        return this._providerStore.find(npiQuery).toPromise()
-            .then(data => {
-                return data.length ? data[0] as Provider : null;
-            })
-            .catch((error: Kinvey.BaseError) => {
-                alert({
-                    title: "Oops something went wrong.",
-                    message: error.message,
-                    okButtonText: "Ok"
-                });
-                return null;
-            });
-    }
-    findProviders(specialty: string, zipCode: string): Promise<Provider[]> {
+    // tslint:disable-next-line:max-line-length
+    findRapidHealthProviders(specialty: string, zipCode: string, latLong: string): Promise<Array<RapidHealthProviders>> {
+
         const query = new Kinvey.Query();
+
         if (specialty) {
-            query.matches("specialty_search", "^.*" + specialty);
+            query.equalTo("specialty", specialty);
         }
         if (zipCode) {
-            (specialty ? query.and() : query).equalTo("locations.zipcode", zipCode);
+            (specialty ? query.and() : query).equalTo("zipcode", zipCode);
+        }
+        if (latLong && !zipCode) {
+            (specialty ? query.and() : query).equalTo("lat_lon", latLong);
         }
 
-        const providersPromise = this._providerStore.find(query).toPromise()
-            .then((data) => {
-                const providers = [];
+        const rapidprovidersPromise = this._rapidproviderStore.find(query).toPromise()
+            .then((response) => {
+                let rapidproviders = [];
+                rapidproviders =  response as Array<RapidHealthProviders>;
 
-                if (data && data.length) {
-                    data.forEach((providerData: any) => {
-                        const provider = new Provider(providerData);
-                        providers.push(provider);
-                    });
-                }
-
-                return providers;
+                return rapidproviders;
             }, (err) => { console.log(err); })
             .catch((error: Kinvey.BaseError) => {
                 alert({
@@ -51,13 +40,26 @@ export class ProviderService {
                     message: error.message,
                     okButtonText: "Ok"
                 });
+
                 return null;
             });
 
-        return providersPromise;
+        return rapidprovidersPromise;
     }
 
-    getProviders(): Promise<Provider[]> {
-        return this.findProviders(null, null);
+    saveItem(item : RapidHealthProviderErrors): RapidHealthProviderErrors {
+        
+
+        const rapidprovidersPromise = this._rapidproviderErrorsStore.save(item)
+        .then((function(item){
+            console.log(item);
+            return item;
+        }))
+        .catch(function(error){
+            console.log(error);
+        }
+        );
+      return item;
     }
+
 }
